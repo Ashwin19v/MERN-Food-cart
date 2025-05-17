@@ -1,0 +1,802 @@
+[
+  {
+    "id": 215,
+    "name": "Veg Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 8.1,
+    "image": "https://foodish-api.com/images/biryani/biryani13.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 94,
+    "name": "Veggie Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 9.18,
+    "image": "https://foodish-api.com/images/burger/burger8.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 349,
+    "name": "Chocolate Donut",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 9.03,
+    "image": "https://foodish-api.com/images/dessert/dessert2.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 148,
+    "name": "Chicken Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 5.54,
+    "image": "https://foodish-api.com/images/burger/burger4.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 380,
+    "name": "Vanilla Ice Cream",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 9.0,
+    "image": "https://foodish-api.com/images/dessert/dessert4.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 390,
+    "name": "Vanilla Ice Cream",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 12.61,
+    "image": "https://foodish-api.com/images/dessert/dessert14.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 376,
+    "name": "Chocolate Donut",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 8.23,
+    "image": "https://foodish-api.com/images/dessert/dessert29.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 95,
+    "name": "Veggie Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 6.15,
+    "image": "https://foodish-api.com/images/burger/burger9.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 8,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 7.74,
+    "image": "https://foodish-api.com/images/pizza/pizza9.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 432,
+    "name": "Strawberry Cake",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 13.39,
+    "image": "https://foodish-api.com/images/dessert/dessert27.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 385,
+    "name": "Vanilla Ice Cream",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 14.83,
+    "image": "https://foodish-api.com/images/dessert/dessert13.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 188,
+    "name": "Chicken Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 8.15,
+    "image": "https://foodish-api.com/images/biryani/biryani15.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 386,
+    "name": "Vanilla Ice Cream",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 5.71,
+    "image": "https://foodish-api.com/images/dessert/dessert10.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 326,
+    "name": "Penne Arrabiata",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 5.02,
+    "image": "https://foodish-api.com/images/pasta/pasta8.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 78,
+    "name": "Veggie Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 14.64,
+    "image": "https://foodish-api.com/images/pizza/pizza21.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 169,
+    "name": "Chicken Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 6.18,
+    "image": "https://foodish-api.com/images/burger/burger25.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 414,
+    "name": "Strawberry Cake",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 8.23,
+    "image": "https://foodish-api.com/images/dessert/dessert9.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 79,
+    "name": "Veggie Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 7.06,
+    "image": "https://foodish-api.com/images/pizza/pizza22.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 120,
+    "name": "Cheeseburger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 7.59,
+    "image": "https://foodish-api.com/images/burger/burger5.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 270,
+    "name": "Pasta Alfredo",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 8.15,
+    "image": "https://foodish-api.com/images/pasta/pasta10.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 422,
+    "name": "Strawberry Cake",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 14.32,
+    "image": "https://foodish-api.com/images/dessert/dessert17.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 166,
+    "name": "Chicken Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 14.51,
+    "image": "https://foodish-api.com/images/burger/burger22.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 230,
+    "name": "Veg Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 11.13,
+    "image": "https://foodish-api.com/images/biryani/biryani28.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 268,
+    "name": "Pasta Alfredo",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 9.66,
+    "image": "https://foodish-api.com/images/pasta/pasta8.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 75,
+    "name": "Veggie Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 8.8,
+    "image": "https://foodish-api.com/images/pizza/pizza18.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 372,
+    "name": "Chocolate Donut",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 14.04,
+    "image": "https://foodish-api.com/images/dessert/dessert25.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 49,
+    "name": "Pepperoni Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 13.92,
+    "image": "https://foodish-api.com/images/pizza/pizza21.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 304,
+    "name": "Spaghetti Bolognese",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 9.79,
+    "image": "https://foodish-api.com/images/pasta/pasta15.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 198,
+    "name": "Chicken Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 9.11,
+    "image": "https://foodish-api.com/images/biryani/biryani25.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 1,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 10.41,
+    "image": "https://foodish-api.com/images/pizza/pizza2.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 347,
+    "name": "Penne Arrabiata",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 12.21,
+    "image": "https://foodish-api.com/images/pasta/pasta29.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 241,
+    "name": "Mutton Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 6.25,
+    "image": "https://foodish-api.com/images/biryani/biryani10.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 165,
+    "name": "Chicken Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 9.67,
+    "image": "https://foodish-api.com/images/burger/burger21.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 182,
+    "name": "Chicken Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 6.09,
+    "image": "https://foodish-api.com/images/biryani/biryani9.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 81,
+    "name": "Veggie Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 13.09,
+    "image": "https://foodish-api.com/images/pizza/pizza24.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 6,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 8.95,
+    "image": "https://foodish-api.com/images/pizza/pizza7.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 162,
+    "name": "Chicken Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 8.42,
+    "image": "https://foodish-api.com/images/burger/burger18.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 381,
+    "name": "Vanilla Ice Cream",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 5.51,
+    "image": "https://foodish-api.com/images/dessert/dessert5.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 391,
+    "name": "Vanilla Ice Cream",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 6.55,
+    "image": "https://foodish-api.com/images/dessert/dessert15.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 17,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 12.65,
+    "image": "https://foodish-api.com/images/pizza/pizza18.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 90,
+    "name": "Veggie Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 5.19,
+    "image": "https://foodish-api.com/images/burger/burger4.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 202,
+    "name": "Chicken Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 5.91,
+    "image": "https://foodish-api.com/images/biryani/biryani29.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 10,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 14.83,
+    "image": "https://foodish-api.com/images/pizza/pizza11.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 30,
+    "name": "Pepperoni Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 12.1,
+    "image": "https://foodish-api.com/images/pizza/pizza2.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 353,
+    "name": "Chocolate Donut",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 11.58,
+    "image": "https://foodish-api.com/images/dessert/dessert6.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 59,
+    "name": "Veggie Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 6.86,
+    "image": "https://foodish-api.com/images/pizza/pizza2.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 133,
+    "name": "Cheeseburger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 9.64,
+    "image": "https://foodish-api.com/images/burger/burger18.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 151,
+    "name": "Chicken Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 8.65,
+    "image": "https://foodish-api.com/images/burger/burger7.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 236,
+    "name": "Mutton Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 14.56,
+    "image": "https://foodish-api.com/images/biryani/biryani5.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 25,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 10.18,
+    "image": "https://foodish-api.com/images/pizza/pizza26.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 175,
+    "name": "Chicken Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 14.62,
+    "image": "https://foodish-api.com/images/biryani/biryani2.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 48,
+    "name": "Pepperoni Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 5.08,
+    "image": "https://foodish-api.com/images/pizza/pizza20.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 356,
+    "name": "Chocolate Donut",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 14.9,
+    "image": "https://foodish-api.com/images/dessert/dessert12.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 425,
+    "name": "Strawberry Cake",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 14.47,
+    "image": "https://foodish-api.com/images/dessert/dessert20.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 34,
+    "name": "Pepperoni Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 10.06,
+    "image": "https://foodish-api.com/images/pizza/pizza6.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 44,
+    "name": "Pepperoni Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 10.49,
+    "image": "https://foodish-api.com/images/pizza/pizza16.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 243,
+    "name": "Mutton Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 13.66,
+    "image": "https://foodish-api.com/images/biryani/biryani12.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 335,
+    "name": "Penne Arrabiata",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 5.92,
+    "image": "https://foodish-api.com/images/pasta/pasta17.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 13,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 5.58,
+    "image": "https://foodish-api.com/images/pizza/pizza14.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 207,
+    "name": "Veg Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 10.94,
+    "image": "https://foodish-api.com/images/biryani/biryani5.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 105,
+    "name": "Veggie Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 13.68,
+    "image": "https://foodish-api.com/images/burger/burger19.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 33,
+    "name": "Pepperoni Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 9.49,
+    "image": "https://foodish-api.com/images/pizza/pizza5.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 367,
+    "name": "Chocolate Donut",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 14.29,
+    "image": "https://foodish-api.com/images/dessert/dessert20.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 302,
+    "name": "Spaghetti Bolognese",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 8.19,
+    "image": "https://foodish-api.com/images/pasta/pasta13.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 300,
+    "name": "Spaghetti Bolognese",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 10.63,
+    "image": "https://foodish-api.com/images/pasta/pasta11.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 323,
+    "name": "Penne Arrabiata",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 6.61,
+    "image": "https://foodish-api.com/images/pasta/pasta5.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 65,
+    "name": "Veggie Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 13.87,
+    "image": "https://foodish-api.com/images/pizza/pizza8.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 310,
+    "name": "Spaghetti Bolognese",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 8.38,
+    "image": "https://foodish-api.com/images/pasta/pasta21.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 200,
+    "name": "Chicken Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 5.04,
+    "image": "https://foodish-api.com/images/biryani/biryani27.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 264,
+    "name": "Pasta Alfredo",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 10.61,
+    "image": "https://foodish-api.com/images/pasta/pasta4.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 237,
+    "name": "Mutton Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 5.15,
+    "image": "https://foodish-api.com/images/biryani/biryani6.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 45,
+    "name": "Pepperoni Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 14.83,
+    "image": "https://foodish-api.com/images/pizza/pizza17.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 289,
+    "name": "Pasta Alfredo",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 10.14,
+    "image": "https://foodish-api.com/images/pasta/pasta29.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 121,
+    "name": "Cheeseburger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 6.7,
+    "image": "https://foodish-api.com/images/burger/burger6.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 2,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 12.4,
+    "image": "https://foodish-api.com/images/pizza/pizza3.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 282,
+    "name": "Pasta Alfredo",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 8.52,
+    "image": "https://foodish-api.com/images/pasta/pasta22.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 221,
+    "name": "Veg Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 10.77,
+    "image": "https://foodish-api.com/images/biryani/biryani19.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 191,
+    "name": "Chicken Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 7.53,
+    "image": "https://foodish-api.com/images/biryani/biryani18.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 361,
+    "name": "Chocolate Donut",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 9.36,
+    "image": "https://foodish-api.com/images/dessert/dessert14.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 340,
+    "name": "Penne Arrabiata",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 8.32,
+    "image": "https://foodish-api.com/images/pasta/pasta22.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 308,
+    "name": "Spaghetti Bolognese",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 5.89,
+    "image": "https://foodish-api.com/images/pasta/pasta19.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 157,
+    "name": "Chicken Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 13.14,
+    "image": "https://foodish-api.com/images/burger/burger13.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 240,
+    "name": "Mutton Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 8.63,
+    "image": "https://foodish-api.com/images/biryani/biryani9.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 395,
+    "name": "Vanilla Ice Cream",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 13.17,
+    "image": "https://foodish-api.com/images/dessert/dessert19.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 363,
+    "name": "Chocolate Donut",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 11.63,
+    "image": "https://foodish-api.com/images/dessert/dessert16.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 22,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 13.87,
+    "image": "https://foodish-api.com/images/pizza/pizza23.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 387,
+    "name": "Vanilla Ice Cream",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 8.27,
+    "image": "https://foodish-api.com/images/dessert/dessert11.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 379,
+    "name": "Vanilla Ice Cream",
+    "description": "End your meal on a sweet note with our delightful dessert options.\nFrom warm chocolate brownies to chilled fruit custards, there's a treat for every craving.\nOur desserts are freshly made with high-quality ingredients and lots of love.\nTry our donuts glazed with chocolate or vanilla, or indulge in creamy cheesecakes.\nWe also offer ice creams in exotic flavors and seasonal fruit-based sweets.\nPerfect for sharing or enjoying solo, our desserts bring joy in every bite.",
+    "price": 14.42,
+    "image": "https://foodish-api.com/images/dessert/dessert3.jpg",
+    "category": "Desserts"
+  },
+  {
+    "id": 127,
+    "name": "Cheeseburger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 8.5,
+    "image": "https://foodish-api.com/images/burger/burger12.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 52,
+    "name": "Pepperoni Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 11.81,
+    "image": "https://foodish-api.com/images/pizza/pizza24.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 177,
+    "name": "Chicken Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 7.33,
+    "image": "https://foodish-api.com/images/biryani/biryani4.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 291,
+    "name": "Spaghetti Bolognese",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 13.02,
+    "image": "https://foodish-api.com/images/pasta/pasta2.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 18,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 7.07,
+    "image": "https://foodish-api.com/images/pizza/pizza19.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 26,
+    "name": "Margherita Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 12.71,
+    "image": "https://foodish-api.com/images/pizza/pizza27.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 256,
+    "name": "Mutton Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 7.69,
+    "image": "https://foodish-api.com/images/biryani/biryani25.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 288,
+    "name": "Pasta Alfredo",
+    "description": "Delight in our pasta dishes that combine rich sauces with perfectly cooked noodles.\nWe offer a wide range of choices, from Alfredo and Marinara to spicy Arrabiata.\nAll sauces are made in-house with premium ingredients like aged cheese and fresh herbs.\nEach pasta type \u2013 whether penne, fettuccine, or spaghetti \u2013 is cooked al dente for the best texture.\nTopped with your choice of protein or veggies, every bite bursts with creamy or tangy goodness.\nServed with garlic bread and a sprinkle of parmesan, it's a comforting Italian classic.",
+    "price": 6.93,
+    "image": "https://foodish-api.com/images/pasta/pasta28.jpg",
+    "category": "Pasta"
+  },
+  {
+    "id": 194,
+    "name": "Chicken Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 7.14,
+    "image": "https://foodish-api.com/images/biryani/biryani21.jpg",
+    "category": "Rice Dishes"
+  },
+  {
+    "id": 111,
+    "name": "Veggie Burger",
+    "description": "Sink your teeth into our juicy burgers made from premium cuts of meat and fresh vegetables.\nOur patties are seasoned with a secret blend of herbs and grilled to juicy perfection.\nServed in soft, toasted buns with a generous helping of lettuce, tomatoes, and pickles.\nYou can customize your burger with a variety of sauces and add-ons like cheese, bacon, or fried eggs.\nVegetarian and vegan options are also available, made with plant-based patties that don\u2019t compromise on taste.\nEvery burger is made to order, ensuring maximum freshness and satisfaction.",
+    "price": 11.03,
+    "image": "https://foodish-api.com/images/burger/burger25.jpg",
+    "category": "Burgers"
+  },
+  {
+    "id": 43,
+    "name": "Pepperoni Pizza",
+    "description": "Our pizzas are handcrafted with the finest ingredients, ensuring every bite is packed with flavor.\nWe use fresh, locally-sourced tomatoes for our sauce, slow-cooked to perfection.\nEach pizza is topped with 100% mozzarella cheese and your favorite toppings.\nThe dough is made fresh daily, hand-stretched for that authentic, crisp-yet-chewy texture.\nBaked in a stone oven for an ideal crust, every slice offers the perfect balance of crunch and softness.\nWhether you're a fan of classic Margherita or loaded meat feasts, there's something for everyone.",
+    "price": 10.22,
+    "image": "https://foodish-api.com/images/pizza/pizza15.jpg",
+    "category": "Pizza"
+  },
+  {
+    "id": 259,
+    "name": "Mutton Biryani",
+    "description": "Our rice dishes are a fusion of tradition and flavor, offering a hearty meal experience.\nWe start with premium basmati or jasmine rice, cooked to fluffy perfection.\nSpices are roasted and ground in-house to bring authentic taste and aroma to every dish.\nTry our chicken, lamb, or vegetarian biryani \u2013 each layered with flavor and slow-cooked to excellence.\nGarnished with fried onions, mint, and boiled eggs, it's a wholesome treat.\nServed hot and fresh, our rice dishes will leave you feeling satisfied and comforted.",
+    "price": 10.17,
+    "image": "https://foodish-api.com/images/biryani/biryani28.jpg",
+    "category": "Rice Dishes"
+  }
+]
