@@ -17,7 +17,6 @@ import type {
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
-// API configuration
 const api = axios.create({
   baseURL: "http://localhost:5000/api",
   headers: {
@@ -26,11 +25,8 @@ const api = axios.create({
 });
 
 export const StoreProvider = ({ children }: { children: ReactNode }) => {
-  // State
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
-  );
+  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
@@ -48,7 +44,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         cleanupAuth();
       }
     };
-
     initializeAuth();
   }, [token]);
 
@@ -62,7 +57,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.get("/auth/user");
       setUser(data.data);
-      console.log(data.data);
     } catch (error: any) {
       if (error.response?.status === 401) {
         cleanupAuth();
@@ -73,11 +67,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Auth functions
+  // Auth functions remain the same
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
-
     try {
       const { data } = await api.post("/auth/login", { email, password });
       setToken(data.token);
@@ -93,12 +86,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const register = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     setError(null);
-
     try {
       await api.post("/auth/register", { name, email, password });
     } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message || "Registration failed";
+      const errorMessage = error.response?.data?.message || "Registration failed";
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -115,8 +106,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     setFavorites([]);
   };
 
-  // Cart functions
-
+  // Cart functions remain the same
   const getCartItems = async () => {
     setIsLoading(true);
     try {
@@ -188,8 +178,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Order functions
-  const getOrders = async () => {
+  // Other functions (orders, favorites, reviews) remain the same
+   const getOrders = async () => {
     setIsLoading(true);
     try {
       const { data } = await api.get("/orders/me");
@@ -347,7 +337,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Calculate cart total
+  // ...
+
   const cartTotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -356,41 +347,30 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   return (
     <StoreContext.Provider
       value={{
-        // Auth
         user,
         token,
         login,
         register,
         logout,
-
-        // Cart
         cartItems,
         addToCart,
         removeFromCart,
         updateCartQuantity,
         clearCart,
         cartTotal,
-
-        // Orders
         orders,
         getOrders,
         createOrder,
         cancelOrder,
-
-        // Favorites
         favorites,
         getFavorites,
         addToFavorites,
         removeFromFavorites,
-
-        // Reviews
         reviews,
         getProductReviews,
         addReview,
         updateReview,
         deleteReview,
-
-        // UI State
         isLoading,
         error,
       }}
@@ -400,7 +380,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Custom hook
 export const useStore = () => {
   const context = useContext(StoreContext);
   if (!context) {

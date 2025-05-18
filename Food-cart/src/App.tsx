@@ -1,5 +1,7 @@
+// src/App.tsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { StoreProvider } from "./context/store";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -12,6 +14,7 @@ import ProductPage from "./pages/ProductPage";
 import CheckoutPage from "./pages/Checkout";
 import Layout from "./components/Layout";
 import PageNotFound from "./pages/PageNotFound";
+import CategoryPage from "./pages/CategoryPage";
 
 function App() {
   return (
@@ -28,6 +31,7 @@ function App() {
             <Route element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="products" element={<ProductPage />} />
+              <Route path="category/:categoryName" element={<CategoryPage />} />
               <Route path="settings" element={<Settings />} />
               <Route path="cart" element={<Cart />} />
               <Route path="favourites" element={<Favourite />} />
