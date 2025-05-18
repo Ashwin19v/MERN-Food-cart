@@ -26,7 +26,9 @@ const api = axios.create({
 
 export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token")
+  );
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
@@ -89,7 +91,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       await api.post("/auth/register", { name, email, password });
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Registration failed";
+      const errorMessage =
+        error.response?.data?.message || "Registration failed";
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -179,7 +182,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Other functions (orders, favorites, reviews) remain the same
-   const getOrders = async () => {
+  const getOrders = async () => {
     setIsLoading(true);
     try {
       const { data } = await api.get("/orders/me");

@@ -11,12 +11,25 @@ const CategoryPage = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const api = axios.create({
+    baseURL: "http://localhost:5000/api",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`/api/products/category/${categoryName}`);
+        const token = localStorage.getItem("token");
+        const response = await api.get(`/products/category/Burgers`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
+
         setProducts(response.data.data || []);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -34,7 +47,7 @@ const CategoryPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 px-4 sm:px-6 py-8">
       <div className="max-w-7xl mx-auto">
-        <button 
+        <button
           onClick={() => navigate(-1)}
           className="mb-6 flex items-center text-orange-500 hover:text-orange-600 transition-colors"
         >

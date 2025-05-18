@@ -4,12 +4,9 @@ const productController = require("../controllers/productController");
 const auth = require("../middleware/auth");
 router.use(auth);
 
-router.get("/products", productController.getProducts);
-router.get("/products/:id", productController.getProductById);
-router.get("/products/search", productController.searchProducts);
-router.get(
-  "/products/category/:category",
-  productController.getProductsByCategory
-);
+router.get("/search", productController.searchProducts);
+router.get("/category/:category", productController.getProductsByCategory);
+router.get("/:id", productController.getProductById);
+router.get("/", productController.getProducts);
 
 module.exports = router;

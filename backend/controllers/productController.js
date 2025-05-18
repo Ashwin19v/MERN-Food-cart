@@ -27,7 +27,6 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-
 exports.searchProducts = async (req, res) => {
   try {
     const { q } = req.query;
@@ -56,7 +55,10 @@ exports.searchProducts = async (req, res) => {
 exports.getProductsByCategory = async (req, res) => {
   try {
     const { category } = req.params;
+    console.log(category);
+
     const products = await Product.find({ category });
+    // console.log(products);
 
     res.status(200).json({
       success: true,
