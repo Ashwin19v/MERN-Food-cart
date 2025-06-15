@@ -13,6 +13,7 @@ import type {
   Review,
   FavoriteItem,
   StoreContextType,
+  Product
 } from "../types/types";
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -36,18 +37,72 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [categoryProducts, setCategoryProducts] = useState<any[]>([]);
+  const [popularProducts, setPopularProducts] = useState<any[]>([]);
+
+
+
   useEffect(() => {
     const initializeAuth = async () => {
       if (token) {
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         localStorage.setItem("token", token);
         await getCurrentUser();
-      } else {
-        cleanupAuth();
       }
+      // else {
+      // cleanupAuth();
+      // }
     };
     initializeAuth();
   }, [token]);
+
+
+  const fetchPopularProducts = async () => {
+    if (!token) return; // ✅ don't fetch if no token
+
+    setIsLoading(true);
+    try {
+      const response = await api.get("/products");
+      const popular = response.data.data?.slice(0, 3) || [];
+      setPopularProducts(popular);
+    } catch (error) {
+      console.error("Error fetching popular products:", error);
+      setPopularProducts([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchPopularProducts();
+  }, []);
+
+
+  const fetchProductsByCategory = async (categoryName: string): Promise<Product[]> => {
+    try {
+
+      const response = await api.get(`/products/category/${categoryName}`);
+      return response.data.data || [];
+    } catch (error) {
+      console.error("Error fetching category products:", error);
+      return [];
+    }
+  };
+
+  const fetchProductById = async (productId: string): Promise<Product | null> => {
+    try {
+      if (!token) return null;
+      const response = await api.get(`/products/${productId}`);
+      return response.data.data || null;
+    } catch (error) {
+      console.error("Error fetching product by ID:", error);
+      return null;
+    }
+  }
 
   const cleanupAuth = () => {
     delete api.defaults.headers.common["Authorization"];
@@ -61,7 +116,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       setUser(data.data);
     } catch (error: any) {
       if (error.response?.status === 401) {
-        cleanupAuth();
+        // cleanupAuth();
         setError("Session expired. Please login again.");
       } else {
         setError(error.response?.data?.message || "Failed to get user data");
@@ -76,6 +131,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.post("/auth/login", { email, password });
       setToken(data.token);
+      console.log("Login successful, token:", data.token); // ✅ LOG TOKEN
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Login failed";
       setError(errorMessage);
@@ -123,27 +179,41 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const addToCart = async (item: CartItem) => {
-    setIsLoading(true);
+   useEffect(() => {
+    if (token) {
+      getCartItems();
+    }
+  }, [token,]);
+
+
+  const addToCart = async (productId: string, quantity: number = 1) => {
+    if (!token) {
+      setError("Please login to add items to cart");
+      return;
+    }
+
     try {
       const { data } = await api.post("/cart/add", {
-        productId: item._id,
-        quantity: item.quantity,
+        productId,
+        quantity,
+        
       });
+
+      console.log("Cart Response:", data); // ✅ LOG RESPONSE
       setCartItems(data.data.items);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Failed to add item");
+      console.error("Failed to add to cart:", error.response?.data || error.message);
       throw error;
-    } finally {
-      setIsLoading(false);
     }
   };
+
+
 
   const removeFromCart = async (id: string) => {
     setIsLoading(true);
     try {
       await api.delete(`/cart/items/${id}`);
-      setCartItems((prev) => prev.filter((item) => item._id !== id));
+      getCartItems();
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to remove item");
       throw error;
@@ -152,11 +222,11 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const updateCartQuantity = async (id: string, quantity: number) => {
+  const updateCartQuantity = async (productId: string, quantity: number) => {
     setIsLoading(true);
     try {
       const { data } = await api.put("/cart/update", {
-        productId: id,
+        productId,
         quantity,
       });
       setCartItems(data.data.items);
@@ -376,6 +446,17 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         deleteReview,
         isLoading,
         error,
+
+
+        fetchPopularProducts,
+        popularProducts,
+        activeCategory,
+        setActiveCategory,
+        getCartItems,
+
+        fetchProductsByCategory,
+
+        fetchProductById,
       }}
     >
       {children}

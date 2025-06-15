@@ -30,7 +30,7 @@ function App() {
           <Route path="/dashboard" element={<ProtectedRoute />}>
             <Route element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="products" element={<ProductPage />} />
+              <Route path="products/:productId" element={<ProductPage />} />
               <Route path="category/:categoryName" element={<CategoryPage />} />
               <Route path="settings" element={<Settings />} />
               <Route path="cart" element={<Cart />} />

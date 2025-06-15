@@ -1,12 +1,24 @@
 const Product = require("../models/Product");
 
 exports.getProducts = async (req, res) => {
-  const products = await Product.find();
-  res.json(products);
+  try {
+    const products = await Product.find();
+    res.status(200).json({
+      success: true,
+      data: products
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching products",
+      error: error.message
+    });
+  }
 };
 
 exports.getProductById = async (req, res) => {
   try {
+
     const product = await Product.findById(req.params.id);
     if (!product) {
       return res.status(404).json({
@@ -55,10 +67,7 @@ exports.searchProducts = async (req, res) => {
 exports.getProductsByCategory = async (req, res) => {
   try {
     const { category } = req.params;
-    console.log(category);
-
     const products = await Product.find({ category });
-    // console.log(products);
 
     res.status(200).json({
       success: true,
@@ -73,3 +82,4 @@ exports.getProductsByCategory = async (req, res) => {
     });
   }
 };
+

@@ -1,4 +1,4 @@
- export interface User {
+export interface User {
   _id: string;
   name: string;
   email: string;
@@ -44,6 +44,15 @@ export interface FavoriteItem {
   };
 }
 
+export interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  rating?: number;
+  image: string;
+  // add other fields like description, category, etc., if needed
+}
+
 export interface StoreContextType {
   // Auth
   user: User | null;
@@ -59,6 +68,7 @@ export interface StoreContextType {
   updateCartQuantity: (id: string, quantity: number) => Promise<void>;
   clearCart: () => Promise<void>;
   cartTotal: number;
+  fetchCartItems: () => Promise<void>;
 
   // Orders
   orders: Order[];
@@ -90,4 +100,18 @@ export interface StoreContextType {
   // UI State
   isLoading: boolean;
   error: string | null;
+
+  
+
+  fetchPopularProducts: () => Promise<void>;
+  handleSeeMoreClick: () => void;
+  popularProducts: any[];
+  activeCategory: string;
+  setActiveCategory: React.Dispatch<React.SetStateAction<string>>;
+
+  fetchProductsByCategory: (categoryName: string) => Promise<any[]>;
+  categoryProducts: any[];
+  setCategoryProducts: React.Dispatch<React.SetStateAction<any[]>>;
+
+  fetchProductById: (productId: string) => Promise<Product | null>;
 }

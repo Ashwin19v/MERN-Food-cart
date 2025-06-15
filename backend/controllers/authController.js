@@ -63,7 +63,7 @@ exports.getUser = async (req, res) => {
       });
     }
 
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user).select("-password");
 
     if (!user) {
       return res.status(404).json({
@@ -89,7 +89,7 @@ exports.getUser = async (req, res) => {
 exports.updateCredentials = async (req, res) => {
   try {
     const { name, email, password, currentPassword, phone, address } = req.body;
-    const userId = req.user._id;
+    const userId = req.user;
 
     // Get user with password
     const user = await User.findById(userId);

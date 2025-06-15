@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Product from "../components/Product";
+import { useStore } from "../context/store";
 import {
   ChevronRight,
   Search,
@@ -41,55 +42,36 @@ const foodCategories = [
 ];
 
 const HomePage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [categoryProducts, setCategoryProducts] = useState<any[]>([]);
-  const [popularProducts, setPopularProducts] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { fetchPopularProducts, fetchProductsByCategory, popularProducts, activeCategory, setActiveCategory, } = useStore();
   const navigate = useNavigate();
-
-  const fetchProductsByCategory = async (category: string) => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(`/api/products/category/${category}`);
-      setCategoryProducts(response.data.data || []);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      setCategoryProducts([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const fetchPopularProducts = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get("/api/products");
-      const popular = response.data.data?.slice(0, 3) || [];
-      setPopularProducts(popular);
-    } catch (error) {
-      console.error("Error fetching popular products:", error);
-      setPopularProducts([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPopularProducts();
-  }, []);
-
-  useEffect(() => {
-    if (activeCategory !== "All") {
-      fetchProductsByCategory(activeCategory);
-    } else {
-      setCategoryProducts([]);
-    }
-  }, [activeCategory]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categoryProducts, setCategoryProducts] = useState<any[]>([]);
 
   const handleSeeMoreClick = () => {
-    navigate(`/category/${activeCategory.toLowerCase()}`);
+    navigate(`/dashboard/category/${activeCategory}`);
   };
+
+  const handleProductIdPage = (product) =>{
+    console.log("hii")
+    navigate(`/dashboard/products/${product}`)
+  }
+
+  useEffect(() => {
+    const fetchCategoryProducts = async () => {
+      if (activeCategory && activeCategory !== "All") {
+        const products = await fetchProductsByCategory(activeCategory);
+        setCategoryProducts(products);
+        console.log(products)
+      } else {
+        setCategoryProducts([]); // Clear if "All"
+      }
+    };
+
+    fetchCategoryProducts();
+  }, [activeCategory]);
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 px-4 sm:px-6 py-8 text-gray-800 overflow-x-hidden">
@@ -216,11 +198,10 @@ const HomePage = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                    activeCategory === category
-                      ? "bg-orange-500 text-white shadow-md"
-                      : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
-                  }`}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category
+                    ? "bg-orange-500 text-white shadow-md"
+                    : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
+                    }`}
                 >
                   {category}
                 </motion.button>
@@ -262,6 +243,7 @@ const HomePage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
+                  onClick={() => handleProductIdPage(product._id)}
                 >
                   <Product
                     dish={{
@@ -271,30 +253,34 @@ const HomePage = () => {
                       time: "15-20 min",
                       img: product.image,
                     }}
+                   
                   />
                 </motion.div>
               ))}
-              
-              {/* See More Button as 6th item */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden cursor-pointer transition-all flex items-center justify-center"
-                onClick={handleSeeMoreClick}
-              >
-                <div className="p-6 text-center">
-                  <div className="text-orange-500 text-4xl font-bold mb-2">
-                    +{Math.max(categoryProducts.length - 5, 0)}
+
+              {/* ✅ Only show "Show More" card if there are more than 5 products */}
+              {categoryProducts.length > 5 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden cursor-pointer transition-all flex items-center justify-center"
+                  onClick={handleSeeMoreClick}
+                >
+                  <div className="p-6 text-center">
+                    <div className="text-orange-500 text-4xl font-bold mb-2">
+                      +{categoryProducts.length - 5}
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      Show More {activeCategory}
+                    </h3>
+                    <ChevronRight className="w-8 h-8 mx-auto mt-2 text-orange-500" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    Show More {activeCategory}
-                  </h3>
-                  <ChevronRight className="w-8 h-8 mx-auto mt-2 text-orange-500" />
-                </div>
-              </motion.div>
+                </motion.div>
+              )}
             </div>
+
           )}
         </motion.section>
 
@@ -322,8 +308,9 @@ const HomePage = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
+                    onClick={() => handleProductIdPage(product._id)}
                   >
-                    <Product
+                    <Product               
                       dish={{
                         name: product.name,
                         price: product.price,
@@ -331,7 +318,9 @@ const HomePage = () => {
                         time: "15-20 min",
                         img: product.image,
                       }}
+                      
                     />
+
                   </motion.div>
                 ))}
             </div>
@@ -339,142 +328,7 @@ const HomePage = () => {
         )}
 
         {/* Reviews Section */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="mb-20"
-        >
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-10 text-center">
-            Customer Reviews
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                name: "Alice Johnson",
-                comment: "Amazing food and quick delivery!",
-                rating: 5,
-                img: "https://randomuser.me/api/portraits/women/44.jpg",
-                date: "2 days ago",
-              },
-              {
-                name: "John Smith",
-                comment: "Loved the sushi! Fresh and tasty.",
-                rating: 4,
-                img: "https://randomuser.me/api/portraits/men/32.jpg",
-                date: "1 week ago",
-              },
-              {
-                name: "Sara Williams",
-                comment: "Perfect for family dinners.",
-                rating: 5,
-                img: "https://randomuser.me/api/portraits/women/68.jpg",
-                date: "3 days ago",
-              },
-              {
-                name: "Michael Brown",
-                comment: "The pizza arrived hot and delicious.",
-                rating: 5,
-                img: "https://randomuser.me/api/portraits/men/75.jpg",
-                date: "5 days ago",
-              },
-            ].map((review, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-all"
-              >
-                <div className="flex items-center mb-4">
-                  <img
-                    src={review.img}
-                    alt={review.name}
-                    className="w-12 h-12 rounded-full object-cover mr-4"
-                  />
-                  <div>
-                    <h4 className="font-semibold text-gray-800">{review.name}</h4>
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-4 h-4 ${
-                            i < review.rating
-                              ? "text-amber-400 fill-current"
-                              : "text-gray-300"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <p className="text-gray-600 mb-3 italic">"{review.comment}"</p>
-                <p className="text-xs text-gray-400">{review.date}</p>
-              </motion.div>
-            ))}
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl shadow-md p-6 text-white"
-            >
-              <h3 className="text-xl font-bold mb-3">Share Your Experience</h3>
-              <p className="mb-6">
-                We'd love to hear about your food journey with us!
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-2 bg-white text-orange-500 rounded-full font-medium shadow-lg"
-              >
-                Write a Review
-              </motion.button>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* Newsletter CTA */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="bg-gradient-to-r from-orange-500 to-amber-500 rounded-2xl p-8 md:p-12 text-white mb-20"
-        >
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl md:text-4xl font-bold mb-4">
-              Get 10% Off Your First Order
-            </h2>
-            <p className="text-lg mb-8 max-w-2xl mx-auto">
-              Subscribe to our newsletter and stay updated with delicious deals!
-            </p>
-
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
-              whileHover={{ scale: 1.01 }}
-            >
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-grow px-4 py-3 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
-              />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-white text-orange-500 font-semibold rounded-full shadow-lg"
-              >
-                Subscribe
-              </motion.button>
-            </motion.div>
-          </div>
-        </motion.section>
+       
       </section>
     </div>
   );

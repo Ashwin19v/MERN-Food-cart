@@ -6,10 +6,10 @@ const auth = require("../middleware/auth");
 // Protect all cart routes
 router.use(auth);
 
-router.get("/cart", cartController.getCart);
-router.post("/cart/add", cartController.addToCart);
-router.put("/cart/update", cartController.updateCartItem);
-router.delete("/cart/items/:productId", cartController.removeFromCart);
-router.delete("/cart/clear", cartController.clearCart);
+router.get("/", cartController.getCart);
+router.post("/add", cartController.addToCart);
+router.put("/update", cartController.updateCartItem);
+router.delete("/items/:productId", cartController.removeFromCart);
+router.delete("/clear", cartController.clearCart);
 
 module.exports = router;
