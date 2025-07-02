@@ -4,9 +4,16 @@ export interface User {
   email: string;
   role: "user" | "admin";
 }
-
-export interface CartItem {
+export interface Product{
   _id: string;
+  name: string;
+  price: number;
+  image: string;
+};
+export interface CartItem {
+
+  _id: string;
+  product: Product
   name: string;
   price: number;
   quantity: number;
@@ -63,12 +70,13 @@ export interface StoreContextType {
 
   // Cart
   cartItems: CartItem[];
-  addToCart: (item: CartItem) => Promise<void>;
+  addToCart: (productId: string, quantity?: number) => Promise<void>;
   removeFromCart: (id: string) => Promise<void>;
   updateCartQuantity: (id: string, quantity: number) => Promise<void>;
   clearCart: () => Promise<void>;
   cartTotal: number;
-  fetchCartItems: () => Promise<void>;
+  getCartItems: () => Promise<void>;
+
 
   // Orders
   orders: Order[];
@@ -101,10 +109,8 @@ export interface StoreContextType {
   isLoading: boolean;
   error: string | null;
 
-  
-
   fetchPopularProducts: () => Promise<void>;
-  handleSeeMoreClick: () => void;
+  // handleSeeMoreClick: () => void;
   popularProducts: any[];
   activeCategory: string;
   setActiveCategory: React.Dispatch<React.SetStateAction<string>>;

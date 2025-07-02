@@ -8,7 +8,6 @@ import {
 } from "react-icons/fi";
 import { GiChiliPepper, GiWeightScale } from "react-icons/gi";
 import { useParams } from "react-router-dom";
-import { nav } from "framer-motion/client";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../context/store";
 
@@ -17,7 +16,7 @@ import { useStore } from "../context/store";
 const ProductPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
-  console.log(productId)
+  // console.log(productId)
   const { fetchProductById, addToCart } = useStore();
 
 

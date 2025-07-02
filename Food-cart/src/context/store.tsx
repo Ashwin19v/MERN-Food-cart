@@ -13,7 +13,7 @@ import type {
   Review,
   FavoriteItem,
   StoreContextType,
-  Product
+  Product,
 } from "../types/types";
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -37,13 +37,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [categoryProducts, setCategoryProducts] = useState<any[]>([]);
   const [popularProducts, setPopularProducts] = useState<any[]>([]);
-
-
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -58,7 +55,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     };
     initializeAuth();
   }, [token]);
-
 
   const fetchPopularProducts = async () => {
     if (!token) return; // ✅ don't fetch if no token
@@ -76,15 +72,14 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-
   useEffect(() => {
     fetchPopularProducts();
   }, []);
 
-
-  const fetchProductsByCategory = async (categoryName: string): Promise<Product[]> => {
+  const fetchProductsByCategory = async (
+    categoryName: string
+  ): Promise<Product[]> => {
     try {
-
       const response = await api.get(`/products/category/${categoryName}`);
       return response.data.data || [];
     } catch (error) {
@@ -93,7 +88,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const fetchProductById = async (productId: string): Promise<Product | null> => {
+  const fetchProductById = async (
+    productId: string
+  ): Promise<Product | null> => {
     try {
       if (!token) return null;
       const response = await api.get(`/products/${productId}`);
@@ -102,7 +99,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       console.error("Error fetching product by ID:", error);
       return null;
     }
-  }
+  };
 
   const cleanupAuth = () => {
     delete api.defaults.headers.common["Authorization"];
@@ -179,12 +176,11 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (token) {
       getCartItems();
     }
-  }, [token,]);
-
+  }, [token]);
 
   const addToCart = async (productId: string, quantity: number = 1) => {
     if (!token) {
@@ -196,18 +192,18 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       const { data } = await api.post("/cart/add", {
         productId,
         quantity,
-        
       });
 
       console.log("Cart Response:", data); // ✅ LOG RESPONSE
       setCartItems(data.data.items);
     } catch (error: any) {
-      console.error("Failed to add to cart:", error.response?.data || error.message);
+      console.error(
+        "Failed to add to cart:",
+        error.response?.data || error.message
+      );
       throw error;
     }
   };
-
-
 
   const removeFromCart = async (id: string) => {
     setIsLoading(true);
@@ -413,7 +409,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   // ...
 
   const cartTotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + item.product.price * item.quantity,
     0
   );
 
@@ -447,7 +443,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         error,
 
-
         fetchPopularProducts,
         popularProducts,
         activeCategory,
@@ -457,6 +452,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         fetchProductsByCategory,
 
         fetchProductById,
+
+        
+        categoryProducts,
+        setCategoryProducts,
       }}
     >
       {children}

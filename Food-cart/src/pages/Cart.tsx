@@ -5,17 +5,20 @@ import { Trash2, ShoppingCart, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CartPage = () => {
-  const { cartItems, getCartItems, updateCartQuantity, removeFromCart,  } = useStore();
-
+  const { cartItems, updateCartQuantity, removeFromCart, isLoading,cartTotal } =
+    useStore();
 
  
-
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
-  );
   const deliveryFee = 2.99;
-  const total = subtotal + deliveryFee;
+  const total = cartTotal + deliveryFee;
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
@@ -91,7 +94,10 @@ const CartPage = () => {
                         <div className="flex items-center space-x-4">
                           <button
                             onClick={() =>
-                              updateCartQuantity(item._id, item.quantity - 1)
+                              updateCartQuantity(
+                                item.product._id,
+                                item.quantity - 1
+                              )
                             }
                             disabled={item.quantity <= 1}
                             className="px-3 py-1 border rounded hover:bg-gray-100 disabled:opacity-50"
@@ -101,14 +107,17 @@ const CartPage = () => {
                           <span>{item.quantity}</span>
                           <button
                             onClick={() =>
-                              updateCartQuantity(item._id, item.quantity + 1)
+                              updateCartQuantity(
+                                item.product._id,
+                                item.quantity + 1
+                              )
                             }
                             className="px-3 py-1 border rounded hover:bg-gray-100"
                           >
                             +
                           </button>
                           <button
-                            onClick={() => removeFromCart(item._id)}
+                            onClick={() => removeFromCart(item.product._id)}
                             className="text-red-500 hover:text-red-700"
                             aria-label="Remove item"
                           >
@@ -137,7 +146,7 @@ const CartPage = () => {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
-                  <span className="font-medium">${subtotal.toFixed(2)}</span>
+                  <span className="font-medium">${cartTotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Delivery Fee</span>
