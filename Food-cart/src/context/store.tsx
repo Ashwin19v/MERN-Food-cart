@@ -72,10 +72,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  useEffect(() => {
-    fetchPopularProducts();
-  }, []);
-
   const fetchProductsByCategory = async (
     categoryName: string
   ): Promise<Product[]> => {
@@ -111,6 +107,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.get("/auth/user");
       setUser(data.data);
+      console.log("Current user data:", data.data); // ✅ LOG USER DATA
     } catch (error: any) {
       if (error.response?.status === 401) {
         // cleanupAuth();
@@ -179,6 +176,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (token) {
       getCartItems();
+      getFavorites();
     }
   }, [token]);
 
@@ -296,8 +294,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const getFavorites = async () => {
     setIsLoading(true);
     try {
-      const { data } = await api.get("/favorites");
+      const { data } = await api.get("/favorites/get");
       setFavorites(data.data);
+      // setIsLoading(false);
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to fetch favorites");
       throw error;
@@ -309,7 +308,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const addToFavorites = async (productId: string) => {
     setIsLoading(true);
     try {
-      const { data } = await api.post("/favorites", { productId });
+      const { data } = await api.post("/favorites/add", { productId });
       setFavorites((prev) => [...prev, data.data]);
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to add to favorites");
@@ -323,9 +322,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       await api.delete(`/favorites/${productId}`);
-      setFavorites((prev) =>
-        prev.filter((item) => item.product._id !== productId)
-      );
+      getFavorites();
     } catch (error: any) {
       setError(
         error.response?.data?.message || "Failed to remove from favorites"
@@ -453,7 +450,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
 
         fetchProductById,
 
-        
         categoryProducts,
         setCategoryProducts,
       }}

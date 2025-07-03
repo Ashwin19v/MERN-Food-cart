@@ -3,16 +3,18 @@ import {
   User,
   Edit,
   Lock,
-  MapPin,
+
   Clock,
   Heart,
   ShoppingCart,
   LogOut,
 } from "lucide-react";
-import { useState } from "react";
+import {  useState } from "react";
 import { Link } from "react-router-dom";
+import { useStore } from "../context/store";
 
 const ProfilePage = () => {
+  const{user} = useStore();
   const [activeTab, setActiveTab] = useState("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState({
@@ -102,12 +104,12 @@ const ProfilePage = () => {
                   <input
                     type="text"
                     name="name"
-                    value={formData.name}
+                    value={user?.name}
                     onChange={handleInputChange}
                     className="flex-1 border-b border-gray-300 focus:border-orange-500 outline-none py-1"
                   />
                 ) : (
-                  <div className="flex-1 font-medium">{userData.name}</div>
+                  <div className="flex-1 font-medium">{user?.name}</div>
                 )}
               </div>
 
@@ -117,12 +119,12 @@ const ProfilePage = () => {
                   <input
                     type="email"
                     name="email"
-                    value={formData.email}
+                    value={user?.email}
                     onChange={handleInputChange}
                     className="flex-1 border-b border-gray-300 focus:border-orange-500 outline-none py-1"
                   />
                 ) : (
-                  <div className="flex-1 font-medium">{userData.email}</div>
+                  <div className="flex-1 font-medium">{user?.email}</div>
                 )}
               </div>
 
@@ -320,9 +322,9 @@ const ProfilePage = () => {
                   </motion.button>
                 </div>
                 <h2 className="text-xl font-bold text-gray-800">
-                  {userData.name}
+                  {user?.name}
                 </h2>
-                <p className="text-gray-500 text-sm">{userData.email}</p>
+                <p className="text-gray-500 text-sm">{user?.email}</p>
               </div>
 
               <nav className="space-y-2">

@@ -56,13 +56,6 @@ exports.login = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    if (!req.user || !req.user.id) {
-      return res.status(401).json({
-        success: false,
-        message: "Authentication required",
-      });
-    }
-
     const user = await User.findById(req.user).select("-password");
 
     if (!user) {

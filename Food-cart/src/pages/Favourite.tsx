@@ -1,80 +1,27 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, X, ChevronRight, Clock, Star } from "lucide-react";
-import Product from "../components/Product";
-import { useState } from "react";
+import { Heart, ChevronRight } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useStore } from "../context/store";
 
 const FavoritesPage = () => {
-  const popularDishes = [
-    {
-      name: "Cheesy Burger",
-      price: "$8.99",
-      rating: 4.8,
-      time: "15-20 min",
-      img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&auto=format&fit=crop&q=60",
-    },
-    {
-      name: "California Sushi",
-      price: "$12.50",
-      rating: 4.9,
-      time: "20-25 min",
-      img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=60",
-    },
-    {
-      name: "Pepperoni Pizza",
-      price: "$10.99",
-      rating: 4.7,
-      time: "15-25 min",
-      img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&auto=format&fit=crop&q=60",
-    },
-    {
-      name: "Chocolate Lava",
-      price: "$6.50",
-      rating: 4.9,
-      time: "10-15 min",
-      img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500&auto=format&fit=crop&q=60",
-    },
-    {
-      name: "Greek Salad",
-      price: "$9.25",
-      rating: 4.6,
-      time: "10-15 min",
-      img: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=500&auto=format&fit=crop&q=60",
-    },
-    {
-      name: "Beef Tacos",
-      price: "$11.75",
-      rating: 4.8,
-      time: "15-20 min",
-      img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=500&auto=format&fit=crop&q=60",
-    },
-  ];
-  const [favorites, setFavorites] = useState([
-    {
-      id: 1,
-      name: "Cheesy Burger",
-      price: 8.99,
-      rating: 4.8,
-      time: "15-20 min",
-      img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&auto=format&fit=crop&q=60",
-    },
-    {
-      id: 2,
-      name: "California Sushi",
-      price: 12.5,
-      rating: 4.9,
-      time: "20-25 min",
-      img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=60",
-    },
-    {
-      id: 3,
-      name: "Chocolate Lava",
-      price: 6.5,
-      rating: 4.9,
-      time: "10-15 min",
-      img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500&auto=format&fit=crop&q=60",
-    },
-  ]);
+  const { favorites, removeFromFavorites, isLoading, error } = useStore();
+
+  const handleRemoveFromFavorites = async (productId: string) => {
+    try {
+      await removeFromFavorites(productId);
+    } catch (err) {
+      console.error("Error removing from favorites:", err);
+    }
+  };
+
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
@@ -93,13 +40,19 @@ const FavoritesPage = () => {
               Your Favorites
             </motion.h1>
             <Link
-              to="/menu"
+              to="/dashboard"
               className="text-orange-500 hover:text-orange-600 flex items-center"
             >
               Explore Menu
               <ChevronRight className="ml-1" size={18} />
             </Link>
           </div>
+
+          {error && (
+            <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
+              {error}
+            </div>
+          )}
 
           <AnimatePresence>
             {favorites.length === 0 ? (
@@ -119,7 +72,7 @@ const FavoritesPage = () => {
                   Tap the heart icon on menu items to save them here
                 </p>
                 <Link
-                  to="/menu"
+                  to="/dashboard"
                   className="px-6 py-3 bg-orange-500 text-white rounded-lg font-medium inline-block hover:bg-orange-600 transition-colors"
                 >
                   Browse Menu
@@ -130,8 +83,48 @@ const FavoritesPage = () => {
                 layout
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
               >
-                {popularDishes.map((id, item) => (
-                  <Product dish={item} i={id} />
+                {favorites.map((favorite) => (
+                  <motion.div
+                    key={favorite._id}
+                    layout
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="bg-white rounded-xl shadow-sm overflow-hidden"
+                  >
+                    <div className="relative">
+                      <img
+                        src={favorite.product.image}
+                        alt={favorite.product.name}
+                        className="w-full h-48 object-cover"
+                      />
+                      <button
+                        onClick={() =>
+                          handleRemoveFromFavorites(favorite.product._id)
+                        }
+                        className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-red-50 transition-colors"
+                      >
+                        <Heart
+                          className="text-red-500 fill-current"
+                          size={20}
+                        />
+                      </button>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        {favorite.product.name}
+                      </h3>
+                      <p className="text-orange-500 font-medium mt-1">
+                        ${favorite.product.price.toFixed(2)}
+                      </p>
+                      <Link
+                        to={`/dashboard/products/${favorite.product._id}`}
+                        className="mt-3 inline-block text-sm text-orange-500 hover:text-orange-600"
+                      >
+                        View Details
+                      </Link>
+                    </div>
+                  </motion.div>
                 ))}
               </motion.div>
             )}

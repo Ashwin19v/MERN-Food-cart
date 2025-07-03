@@ -5,11 +5,13 @@ const Product = require("../models/Product");
 exports.addToFavorites = async (req, res) => {
   try {
     const { productId } = req.body;
+    console.log("Adding to favorites:", productId);
 
     const favorite = await Favorite.create({
-      user: req.user._id,
+      user: req.user,
       product: productId,
     });
+    console.log("Favorite created:");
 
     await favorite.populate("product");
 
@@ -35,8 +37,9 @@ exports.addToFavorites = async (req, res) => {
 
 // Get user's favorites
 exports.getFavorites = async (req, res) => {
+
   try {
-    const favorites = await Favorite.find({ user: req.user._id })
+    const favorites = await Favorite.find({ user: req.user })
       .populate("product")
       .sort("-createdAt");
 
@@ -58,9 +61,10 @@ exports.getFavorites = async (req, res) => {
 exports.removeFromFavorites = async (req, res) => {
   try {
     const favorite = await Favorite.findOneAndDelete({
-      user: req.user._id,
+      user: req.user,
       product: req.params.productId,
     });
+    console.log("Removing favorite:", req.params.productId);
 
     if (!favorite) {
       return res.status(404).json({
@@ -86,7 +90,7 @@ exports.removeFromFavorites = async (req, res) => {
 exports.checkFavorite = async (req, res) => {
   try {
     const favorite = await Favorite.findOne({
-      user: req.user._id,
+      user: req.user,
       product: req.params.productId,
     });
 

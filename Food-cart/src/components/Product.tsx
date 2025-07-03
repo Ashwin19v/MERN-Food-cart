@@ -2,7 +2,9 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 
+
 const Product = ({ dish }: any) => {
+
   return (
     <motion.div
       whileHover={{ y: -5 }}
@@ -24,7 +26,7 @@ const Product = ({ dish }: any) => {
           <div className="flex items-center">
             <Star className="w-4 h-4 text-amber-400 fill-current" />
             <span className="ml-1 text-sm text-gray-600">
-              {dish.rating.toFixed(1)}
+              {/* {dish.rating.toFixed(1)} */}
             </span>
           </div>
           <span className="text-sm text-gray-500">{dish.time}</span>

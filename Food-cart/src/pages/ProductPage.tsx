@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-  FiMinus,
-  FiPlus,
-  FiHeart,
-  FiClock,
-  FiStar,
-} from "react-icons/fi";
+import { FiMinus, FiPlus, FiHeart, FiClock, FiStar } from "react-icons/fi";
 import { GiChiliPepper, GiWeightScale } from "react-icons/gi";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../context/store";
 
-
-
 const ProductPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   // console.log(productId)
-  const { fetchProductById, addToCart } = useStore();
-
+  const { fetchProductById, addToCart, addToFavorites } = useStore();
 
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -42,7 +33,6 @@ const ProductPage = () => {
   }, [productId, fetchProductById]);
 
   const handleOnClick = async () => {
-    console.log("Clicked Add to Cart"); // ✅ Confirm button click
     try {
       await addToCart(productId, quantity);
       console.log("Item added successfully");
@@ -52,23 +42,37 @@ const ProductPage = () => {
     }
   };
 
-
-
-  if (loading) return <div className="text-center py-20 text-xl font-medium">Loading...</div>;
+  if (loading)
+    return (
+      <div className="text-center py-20 text-xl font-medium">Loading...</div>
+    );
   if (error || !product)
-    return <div className="text-center text-red-500 py-20">{error || "Something went wrong."}</div>;
+    return (
+      <div className="text-center text-red-500 py-20">
+        {error || "Something went wrong."}
+      </div>
+    );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8"
-    // onClick={onClick}
+    <div
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8"
+      // onClick={onClick}
     >
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb */}
         <nav className="mb-8">
           <ol className="flex items-center space-x-2 text-sm text-gray-500">
-            <li><a href="/" className="hover:text-gray-900">Home</a></li>
+            <li>
+              <a href="/" className="hover:text-gray-900">
+                Home
+              </a>
+            </li>
             <li>/</li>
-            <li><a href="/menu" className="hover:text-gray-900">Menu</a></li>
+            <li>
+              <a href="/menu" className="hover:text-gray-900">
+                Menu
+              </a>
+            </li>
             <li>/</li>
             <li className="text-gray-900">{product.name}</li>
           </ol>
@@ -104,7 +108,9 @@ const ProductPage = () => {
 
             {/* Price Section */}
             <div className="flex items-baseline space-x-4">
-              <span className="text-3xl font-bold text-gray-900">${product.price}</span>
+              <span className="text-3xl font-bold text-gray-900">
+                ${product.price}
+              </span>
               {product.originalPrice && (
                 <>
                   <span className="text-xl text-gray-500 line-through">
@@ -148,14 +154,16 @@ const ProductPage = () => {
                   {[...Array(5)].map((_, idx) => (
                     <GiChiliPepper
                       key={idx}
-                      className={`w-5 h-5 ${idx < product.spicyLevel ? "text-red-500" : "text-gray-200"}`}
+                      className={`w-5 h-5 ${
+                        idx < product.spicyLevel
+                          ? "text-red-500"
+                          : "text-gray-200"
+                      }`}
                     />
                   ))}
                 </div>
               </div>
             </div>
-
-
 
             {/* Quantity and Actions */}
             <div className="space-y-6">
@@ -167,7 +175,9 @@ const ProductPage = () => {
                   >
                     <FiMinus />
                   </button>
-                  <span className="w-12 text-center font-medium">{quantity}</span>
+                  <span className="w-12 text-center font-medium">
+                    {quantity}
+                  </span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
                     className="p-3 hover:bg-gray-100 rounded-full transition-colors"
@@ -181,12 +191,16 @@ const ProductPage = () => {
               </div>
 
               <div className="flex space-x-4">
-                <button className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-2xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-medium"
+                <button
+                  className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-2xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-medium"
                   onClick={() => handleOnClick()}
                 >
                   Add to Cart
                 </button>
-                <button className="p-4 border border-gray-200 rounded-2xl hover:bg-gray-50 transition-colors">
+                <button
+                  className="p-4 border border-gray-200 rounded-2xl hover:bg-gray-50 transition-colors"
+                  onClick={() => addToFavorites(productId)}
+                >
                   <FiHeart className="w-6 h-6" />
                 </button>
               </div>
