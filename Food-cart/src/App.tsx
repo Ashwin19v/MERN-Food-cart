@@ -15,6 +15,7 @@ import CheckoutPage from "./pages/Checkout";
 import Layout from "./components/Layout";
 import PageNotFound from "./pages/PageNotFound";
 import CategoryPage from "./pages/CategoryPage";
+// import ReviewPage from "./pages/Review";
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
               <Route path="cart" element={<Cart />} />
               <Route path="favourites" element={<Favourite />} />
               <Route path="checkout" element={<CheckoutPage />} />
+              {/* <Route path="review" element={<ReviewPage />} /> */}
+
+              {/* <Route path="products/:productId/review" element={<ReviewPage />} /> */}
             </Route>
           </Route>
 

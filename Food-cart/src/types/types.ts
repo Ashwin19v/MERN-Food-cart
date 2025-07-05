@@ -4,7 +4,7 @@ export interface User {
   email: string;
   role: "user" | "admin";
 }
-export interface Product{
+export interface Product {
   _id: string;
   name: string;
   price: number;
@@ -18,6 +18,16 @@ export interface CartItem {
   price: number;
   quantity: number;
   image: string;
+}
+export interface Review {
+  _id: string;
+  rating: number;
+  comment: string;
+  user: {
+    _id: string;
+    name: string;
+  };
+  createdAt: string;
 }
 
 export interface Order {

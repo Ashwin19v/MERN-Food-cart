@@ -11,9 +11,9 @@ const {
 router.use(auth);
 
 // Review routes
-router.post("/reviews", createReview);
-router.get("/products/:productId/reviews", getProductReviews);
-router.patch("/reviews/:id", updateReview);
-router.delete("/reviews/:id", deleteReview);
+router.post("/add", createReview);
+router.get("/:productId", getProductReviews);
+router.put("/:id", updateReview);
+router.delete("/:id", deleteReview);
 
 module.exports = router;

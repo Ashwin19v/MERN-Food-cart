@@ -42,12 +42,32 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [categoryProducts, setCategoryProducts] = useState<any[]>([]);
   const [popularProducts, setPopularProducts] = useState<any[]>([]);
 
+  const [userData, setUserData] = useState<User>({
+    name: user?.name || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
+    address: user?.address || "",
+  });
+
+  const [formData, setFormData] = useState({
+    name: user?.name || "",
+    phone: user?.phone || "",
+    address: user?.address || "",
+    currentPassword: "",
+    newPassword: "",
+  });
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  
+
   useEffect(() => {
     const initializeAuth = async () => {
       if (token) {
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         localStorage.setItem("token", token);
         await getCurrentUser();
+        await fetchUserData();
       }
       // else {
       // cleanupAuth();
@@ -147,6 +167,53 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       throw new Error(errorMessage);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // fetch user data after login/register
+  const fetchUserData = async () => {
+    try {
+      const { data } = await api.get("/auth/user"); // assumes /api/auth/user
+      setUserData(data.data);
+
+      setFormData((prev) => ({
+        ...prev,
+        name: data.data.name || "",
+        phone: data.data.phone || "",
+        address: data.data.address || "",
+      }));
+    } catch (err) {
+      console.error("Failed to fetch user data:", err);
+    }
+  };
+
+
+  // settings functions
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const updateUserProfile = async () => {
+    try {
+      const response = await api.put("/auth/user/update", {
+        name: formData.name,
+        phone: formData.phone,
+        address: formData.address,
+        currentPassword: formData.currentPassword,
+        password: formData.newPassword,
+      });
+
+      if (response.data && response.data.data) {
+        setUserData(response.data.data);
+        setIsEditing(false);
+        alert("Profile updated successfully!");
+      } else {
+        alert("Unexpected response");
+      }
+    } catch (error: any) {
+      console.error("Error updating profile:", error);
+      alert(error.response?.data?.message || "Update failed");
     }
   };
 
@@ -337,7 +404,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const getProductReviews = async (productId: string) => {
     setIsLoading(true);
     try {
-      const { data } = await api.get(`/products/${productId}/reviews`);
+      const { data } = await api.get(`/reviews/${productId}`);
       setReviews(data.data);
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to fetch reviews");
@@ -354,7 +421,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     setIsLoading(true);
     try {
-      const { data } = await api.post(`/reviews`, {
+      const { data } = await api.post(`/reviews/add`, {
         productId,
         rating,
         comment,
@@ -375,7 +442,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     setIsLoading(true);
     try {
-      const { data } = await api.patch(`/reviews/${reviewId}`, {
+      const { data } = await api.put(`/reviews/${reviewId}`, {
         rating,
         comment,
       });
@@ -394,7 +461,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       await api.delete(`/reviews/${reviewId}`);
-      setReviews((prev) => prev.filter((review) => review._id !== reviewId));
+      // kjkisjc
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to delete review");
       throw error;
@@ -452,6 +519,18 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
 
         categoryProducts,
         setCategoryProducts,
+
+
+        userData,
+        formData,
+        isEditing,
+        setIsEditing,
+        setFormData,
+        handleInputChange,
+        updateUserProfile,
+        setUserData,
+
+        fetchUserData
       }}
     >
       {children}

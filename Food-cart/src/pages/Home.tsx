@@ -52,7 +52,7 @@ const HomePage = () => {
     navigate(`/dashboard/category/${activeCategory}`);
   };
 
-  const handleProductIdPage = (product) =>{
+  const handleProductIdPage = (product) => {
     console.log("hii")
     navigate(`/dashboard/products/${product}`)
   }
@@ -253,7 +253,7 @@ const HomePage = () => {
                       time: "15-20 min",
                       img: product.image,
                     }}
-                   
+
                   />
                 </motion.div>
               ))}
@@ -310,7 +310,7 @@ const HomePage = () => {
                     transition={{ delay: i * 0.1 }}
                     onClick={() => handleProductIdPage(product._id)}
                   >
-                    <Product               
+                    <Product
                       dish={{
                         name: product.name,
                         price: product.price,
@@ -318,7 +318,7 @@ const HomePage = () => {
                         time: "15-20 min",
                         img: product.image,
                       }}
-                      
+
                     />
 
                   </motion.div>
@@ -328,7 +328,56 @@ const HomePage = () => {
         )}
 
         {/* Reviews Section */}
-       
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mb-20"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
+            What Our Customers Say
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2 }}
+                className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300"
+              >
+                <div className="flex items-center mb-4">
+                  <img
+                    src={`https://i.pravatar.cc/150?img=${i + 30}`}
+                    alt="User"
+                    className="w-12 h-12 rounded-full mr-4"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-gray-800">
+                      {["Aarav", "Priya", "Ravi"][i]}
+                    </h4>
+                    <div className="flex text-yellow-400">
+                      {[...Array(5)].map((_, starIndex) => (
+                        <Star key={starIndex} className="w-4 h-4 fill-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-600 text-sm">
+                  {
+                    [
+                      "Amazing food and super fast delivery. Loved the packaging!",
+                      "The sushi was fresh and delicious. Will order again.",
+                      "I always order my lunch from here. Great taste and quality!",
+                    ][i]
+                  }
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
       </section>
     </div>
   );

@@ -79,51 +79,37 @@ exports.getUser = async (req, res) => {
   }
 };
 
+
+
+
 exports.updateCredentials = async (req, res) => {
   try {
-    const { name, email, password, currentPassword, phone, address } = req.body;
+    const { name, password, currentPassword, phone, address } = req.body;
     const userId = req.user;
 
-    // Get user with password
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select("+password");;
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    // Validate current password if trying to change password
+    // If user wants to update password, check currentPassword
     if (password) {
       const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {
-        return res.status(400).json({
-          success: false,
-          message: "Current password is incorrect",
-        });
+        return res.status(400).json({ success: false, message: "Current password is incorrect" });
       }
     }
 
-    // Update fields
     const updates = {};
     if (name) updates.name = name;
-    if (email) updates.email = email;
     if (phone) updates.phone = phone;
     if (address) updates.address = address;
+    if (password) updates.password = await bcrypt.hash(password, 10);
 
-    if (password) {
-      updates.password = await bcrypt.hash(password, 10);
-    }
-
-    // Update user
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $set: updates },
-      {
-        new: true,
-        runValidators: true,
-        select: "-password",
-      }
+      { new: true, runValidators: true, select: "-password" }
     );
 
     res.status(200).json({
@@ -132,12 +118,6 @@ exports.updateCredentials = async (req, res) => {
       data: updatedUser,
     });
   } catch (error) {
-    if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: "Email already exists",
-      });
-    }
     res.status(500).json({
       success: false,
       message: "Error updating profile",
