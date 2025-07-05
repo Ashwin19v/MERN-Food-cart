@@ -1,4 +1,3 @@
-// HomePage.tsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -16,30 +15,51 @@ import axios from "axios";
 
 const foodCategories = [
   {
-    name: "Burgers",
-    img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+    name: "Rice Dishes",
+    img: "https://foodish-api.com/images/biryani/biryani15.jpg",
   },
   {
-    name: "Sushi",
-    img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c",
+    name: "Burgers",
+    img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
   },
   {
     name: "Pizza",
     img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
   },
   {
+    name: "Pasta",
+    img: "https://foodish-api.com/images/pasta/pasta8.jpg",
+  },
+  {
     name: "Desserts",
     img: "https://images.unsplash.com/photo-1551024506-0bccd828d307",
   },
+];
+
+const staticPopularDishes = [
   {
-    name: "Salads",
-    img: "https://images.unsplash.com/photo-1546793665-c74683f339c1",
+    name: "Chicken Biryani",
+    price: 180,
+    rating: 4.6,
+    time: "20-25 min",
+    img: "https://foodish-api.com/images/biryani/biryani10.jpg",
   },
   {
-    name: "Tacos",
-    img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47",
+    name: "Veg Pizza",
+    price: 120,
+    rating: 4.3,
+    time: "15-20 min",
+    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+  },
+  {
+    name: "Chocolate Cake",
+    price: 90,
+    rating: 4.8,
+    time: "10-15 min",
+    img: "https://images.unsplash.com/photo-1551024506-0bccd828d307",
   },
 ];
+
 
 const HomePage = () => {
   const {
@@ -57,17 +77,19 @@ const HomePage = () => {
     navigate(`/category/${activeCategory}`);
   };
 
+  // Function to handle navigation to product details page
+
   const handleProductIdPage = (product) => {
-    console.log("hii");
     navigate(`/products/${product}`);
   };
 
+  // Fetch popular products on initial render
   useEffect(() => {
     const fetchCategoryProducts = async () => {
       if (activeCategory && activeCategory !== "All") {
         const products = await fetchProductsByCategory(activeCategory);
         setCategoryProducts(products);
-        console.log(products);
+        // console.log(products);
       } else {
         setCategoryProducts([]); // Clear if "All"
       }
@@ -128,23 +150,21 @@ const HomePage = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          {[
-            {
-              icon: <Clock className="w-6 h-6" />,
-              title: "Fast Delivery",
-              description: "Get your food delivered in under 30 minutes",
-            },
-            {
-              icon: <ShieldCheck className="w-6 h-6" />,
-              title: "Food Safety",
-              description: "All restaurants follow strict safety protocols",
-            },
-            {
-              icon: <Bike className="w-6 h-6" />,
-              title: "Live Tracking",
-              description: "Track your order in real-time",
-            },
-          ].map((feature, index) => (
+          {[{
+            icon: <Clock className="w-6 h-6" />,
+            title: "Fast Delivery",
+            description: "Get your food delivered in under 30 minutes",
+          },
+          {
+            icon: <ShieldCheck className="w-6 h-6" />,
+            title: "Food Safety",
+            description: "All restaurants follow strict safety protocols",
+          },
+          {
+            icon: <Bike className="w-6 h-6" />,
+            title: "Live Tracking",
+            description: "Track your order in real-time",
+          }].map((feature, index) => (
             <motion.div
               key={index}
               whileHover={{ y: -5 }}
@@ -194,23 +214,20 @@ const HomePage = () => {
           </h2>
 
           <div className="flex flex-wrap justify-center gap-4 mb-8">
-            {["All", ...foodCategories.map((cat) => cat.name)].map(
-              (category) => (
-                <motion.button
-                  key={category}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setActiveCategory(category)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                    activeCategory === category
-                      ? "bg-orange-500 text-white shadow-md"
-                      : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
+            {["All", ...foodCategories.map((cat) => cat.name)].map((category) => (
+              <motion.button
+                key={category}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setActiveCategory(category)}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category
+                  ? "bg-orange-500 text-white shadow-md"
+                  : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
                   }`}
-                >
-                  {category}
-                </motion.button>
-              )
-            )}
+              >
+                {category}
+              </motion.button>
+            ))}
           </div>
 
           {activeCategory === "All" ? (
@@ -241,53 +258,59 @@ const HomePage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {categoryProducts.slice(0, 5).map((product: any, i: number) => (
-                <motion.div
-                  key={product._id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  onClick={() => handleProductIdPage(product._id)}
-                >
-                  <Product
-                    dish={{
-                      name: product.name,
-                      price: product.price,
-                      rating: product.rating || 4.5,
-                      time: "15-20 min",
-                      img: product.image,
-                    }}
-                  />
-                </motion.div>
-              ))}
+              {categoryProducts
+                .filter((product) =>
+                  product.name.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+                .slice(0, 5)
+                .map((product: any, i: number) => (
+                  <motion.div
+                    key={product._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    onClick={() => handleProductIdPage(product._id)}
+                  >
+                    <Product
+                      dish={{
+                        name: product.name,
+                        price: product.price,
+                        rating: product.rating || 4.5,
+                        time: "15-20 min",
+                        img: product.image,
+                      }}
+                    />
+                  </motion.div>
+                ))}
 
-              {/* ✅ Only show "Show More" card if there are more than 5 products */}
-              {categoryProducts.length > 5 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden cursor-pointer transition-all flex items-center justify-center"
-                  onClick={handleSeeMoreClick}
-                >
-                  <div className="p-6 text-center">
-                    <div className="text-orange-500 text-4xl font-bold mb-2">
-                      +{categoryProducts.length - 5}
+              {categoryProducts.filter((product) =>
+                product.name.toLowerCase().includes(searchQuery.toLowerCase())
+              ).length > 5 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden cursor-pointer transition-all flex items-center justify-center"
+                    onClick={handleSeeMoreClick}
+                  >
+                    <div className="p-6 text-center">
+                      <div className="text-orange-500 text-4xl font-bold mb-2">
+                        +{categoryProducts.length - 5}
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        Show More {activeCategory}
+                      </h3>
+                      <ChevronRight className="w-8 h-8 mx-auto mt-2 text-orange-500" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-800">
-                      Show More {activeCategory}
-                    </h3>
-                    <ChevronRight className="w-8 h-8 mx-auto mt-2 text-orange-500" />
-                  </div>
-                </motion.div>
-              )}
+                  </motion.div>
+                )}
             </div>
           )}
         </motion.section>
 
         {/* Popular Dishes */}
-        {activeCategory === "All" && (
+        {/* {activeCategory === "All" && (
           <motion.section
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -321,6 +344,38 @@ const HomePage = () => {
                         img: product.image,
                       }}
                     />
+                  </motion.div>
+                ))}
+            </div>
+          </motion.section>
+        )} */}
+
+        {/* Popular Dishes (Static) */}
+        {activeCategory === "All" && (
+          <motion.section
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="mb-20"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
+              Popular Dishes
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {staticPopularDishes
+                .filter((dish) =>
+                  dish.name.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+                .map((dish, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                  >
+                    <Product dish={dish} />
                   </motion.div>
                 ))}
             </div>

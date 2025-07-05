@@ -9,11 +9,12 @@ import {
 } from "lucide-react";
 import { useStore } from "../context/store";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const {
     user,
+    logout,
     userData,
     formData,
     isEditing,
@@ -28,7 +29,16 @@ const ProfilePage = () => {
 
   const [activeTab, setActiveTab] = useState("profile");
   const [orderProducts, setOrderProducts] = useState({});
+  const navigate = useNavigate();
 
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
+  // Fetch product data for orders
   useEffect(() => {
     const fetchAllProducts = async () => {
       const productMap = {};
@@ -184,23 +194,19 @@ const ProfilePage = () => {
               <h4 className="font-semibold text-lg text-gray-800 mb-1">
                 Order ID: {order._id}
               </h4>
-
               <p className="text-sm text-gray-500 mb-1">
                 Date: {new Date(order.createdAt).toLocaleString()}
               </p>
-
               <p className="text-sm text-gray-600 mb-1">
                 Payment Method:{" "}
                 <span className="font-medium capitalize">
                   {order.paymentMethod}
                 </span>
               </p>
-
               <p className="text-sm text-gray-600 mb-1">
                 Shipping Address:{" "}
                 <span className="font-medium">{order.ShippingAddress}</span>
               </p>
-
               <p className="text-sm text-gray-600 mb-2">
                 Paid:{" "}
                 <span
@@ -215,11 +221,10 @@ const ProfilePage = () => {
               <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 w-full">
                 {order.items.map((item, index) => {
                   const product = orderProducts[item.product];
-
                   return (
                     <div
                       key={index}
-                      className="border p-3 rounded-lg shadow-sm flex flex-col items-center "
+                      className="border p-3 rounded-lg shadow-sm flex flex-col items-center"
                     >
                       {product ? (
                         <>
@@ -231,7 +236,6 @@ const ProfilePage = () => {
                           <p className="font-semibold text-gray-800">
                             {product.name}
                           </p>
-                        
                         </>
                       ) : (
                         <p className="text-gray-400">Loading product...</p>
@@ -254,63 +258,57 @@ const ProfilePage = () => {
     }
 
     if (activeTab === "favorites") {
-      const visibleFavorites = favorites.slice(0, 5); // Show first 5
-
+      const visibleFavorites = favorites.slice(0, 5);
       return (
         <motion.div className="bg-white p-6 rounded-2xl shadow-lg">
-          {favorites && favorites.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mx-auto">
-                {visibleFavorites.map((item: any) => (
-                  <div
-                    key={item._id}
-                    className="border rounded-xl p-4 flex flex-col items-center shadow-md hover:shadow-xl transition-shadow duration-300 group bg-gradient-to-tr from-white to-gray-50"
-                  >
-                    <div className="relative w-full h-full mb-3">
-                      <img
-                        src={item.product.image}
-                        alt={item.product.name}
-                        className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-
-                    <div className="font-semibold text-gray-800 text-center text-lg">
-                      {item.product.name}
-                    </div>
-
-                    <div className="text-orange-500 font-bold mt-2 text-base">
-                      ${item.product.price}
-                    </div>
+          {favorites.length ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mx-auto">
+              {visibleFavorites.map((item: any) => (
+                <div
+                  key={item._id}
+                  className="border rounded-xl p-4 flex flex-col items-center shadow-md hover:shadow-xl transition-shadow duration-300 group bg-gradient-to-tr from-white to-gray-50"
+                >
+                  <div className="relative w-full h-full mb-3">
+                    <img
+                      src={item.product.image}
+                      alt={item.product.name}
+                      className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
-                ))}
+                  <div className="font-semibold text-gray-800 text-center text-lg">
+                    {item.product.name}
+                  </div>
+                  <div className="text-orange-500 font-bold mt-2 text-base">
+                    ${item.product.price}
+                  </div>
+                </div>
+              ))}
 
-                {/* Show "+X More Items" if favorites > 5 */}
-                {favorites.length > 5 && (
-                  <Link
-                    to="/favourites"
-                    className="flex  items-center justify-center"
+              {favorites.length > 5 && (
+                <Link
+                  to="/favourites"
+                  className="flex items-center justify-center"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden cursor-pointer transition-all flex items-center justify-center gap-4 group bg-gradient-to-tr from-white to-gray-50"
                   >
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
-                      whileHover={{ scale: 1.05 }}
-                      className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden cursor-pointer transition-all flex  items-center justify-center gap-4 group bg-gradient-to-tr from-white to-gray-50"
-                    >
-                      <div className="p-6 text-center">
-                        <div className="text-orange-500 text-4xl font-bold mb-2">
-                          +{favorites.length - 5}
-                        </div>
-                        <h3 className="text-lg font-semibold text-gray-800">
-                          Show More Favourites
-                        </h3>
-                        <ChevronRight className="w-8 h-8 mx-auto mt-2 text-orange-500" />
+                    <div className="p-6 text-center">
+                      <div className="text-orange-500 text-4xl font-bold mb-2">
+                        +{favorites.length - 5}
                       </div>
-                    </motion.div>
-                  </Link>
-                )}
-              </div>
-            </>
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        Show More Favourites
+                      </h3>
+                      <ChevronRight className="w-8 h-8 mx-auto mt-2 text-orange-500" />
+                    </div>
+                  </motion.div>
+                </Link>
+              )}
+            </div>
           ) : (
             <div className="flex flex-col items-center justify-center text-gray-500 py-10">
               <Heart size={50} className="text-gray-300 mb-4" />
@@ -385,7 +383,13 @@ const ProfilePage = () => {
                   Favorites
                 </motion.button>
 
-                <motion.button className="w-full text-left px-4 py-3 rounded-lg flex items-center text-gray-600 hover:bg-gray-100 mt-8">
+                <motion.button
+                  onClick={() => {
+                    logout();
+                    navigate("/login");
+                  }}
+                  className="w-full text-left px-4 py-3 rounded-lg flex items-center text-gray-600 hover:bg-gray-100 mt-8"
+                >
                   <LogOut className="mr-3" size={18} />
                   Sign Out
                 </motion.button>

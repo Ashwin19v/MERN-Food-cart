@@ -3,6 +3,7 @@ import {
   useContext,
   useState,
   useEffect,
+  useCallback,
   type ReactNode,
 } from "react";
 import axios from "axios";
@@ -60,6 +61,12 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
 
   const [isEditing, setIsEditing] = useState(false);
 
+  const [rating, setRating] = useState<number>(0);
+  const [comment, setComment] = useState<string>("");
+  const [editingReviewId, setEditingReviewId] = useState<string | null>(null);
+  const [isReviewLoading, setIsReviewLoading] = useState(false);
+
+
   useEffect(() => {
     const initializeAuth = async () => {
       if (token) {
@@ -91,6 +98,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // fetch products by category
+
   const fetchProductsByCategory = async (
     categoryName: string
   ): Promise<Product[]> => {
@@ -103,6 +112,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // fetch product by ID
   const fetchProductById = async (
     productId: string
   ): Promise<Product | null> => {
@@ -116,17 +126,22 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // cleanup auth function
+
   const cleanupAuth = () => {
     delete api.defaults.headers.common["Authorization"];
     localStorage.removeItem("token");
     setUser(null);
   };
 
+  // get current user data
+  // This function fetches the current user data from the server
+  
   const getCurrentUser = async () => {
     try {
       const { data } = await api.get("/auth/user");
       setUser(data.data);
-      console.log("Current user data:", data.data); // ✅ LOG USER DATA
+      // console.log("Current user data:", data.data); // ✅ LOG USER DATA
     } catch (error: any) {
       if (error.response?.status === 401) {
         // cleanupAuth();
@@ -144,7 +159,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.post("/auth/login", { email, password });
       setToken(data.token);
-      console.log("Login successful, token:", data.token); // ✅ LOG TOKEN
+      // console.log("Login successful, token:", data.token); // ✅ LOG TOKEN
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Login failed";
       setError(errorMessage);
@@ -153,6 +168,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
     }
   };
+
+  // Register function
 
   const register = async (name: string, email: string, password: string) => {
     setIsLoading(true);
@@ -194,6 +211,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Update user profile function
+
   const updateUserProfile = async () => {
     try {
       const response = await api.put("/auth/user/update", {
@@ -216,6 +235,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       alert(error.response?.data?.message || "Update failed");
     }
   };
+
+  // Logout function
 
   const logout = () => {
     cleanupAuth();
@@ -240,6 +261,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Fetch cart items when token is available
+
   useEffect(() => {
     if (token) {
       getCartItems();
@@ -247,6 +270,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       getOrders();
     }
   }, [token]);
+
+  // Add to cart function
 
   const addToCart = async (productId: string, quantity: number = 1) => {
     if (!token) {
@@ -260,7 +285,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         quantity,
       });
 
-      console.log("Cart Response:", data); // ✅ LOG RESPONSE
+      // console.log("Cart Response:", data); // ✅ LOG RESPONSE
       setCartItems(data.data.items);
     } catch (error: any) {
       console.error(
@@ -270,6 +295,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       throw error;
     }
   };
+
+  // Remove from cart function
 
   const removeFromCart = async (id: string) => {
     setIsLoading(true);
@@ -283,6 +310,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
     }
   };
+
+  // Update cart quantity function
 
   const updateCartQuantity = async (productId: string, quantity: number) => {
     setIsLoading(true);
@@ -299,6 +328,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
     }
   };
+
+  // Clear cart function
 
   const clearCart = async () => {
     setIsLoading(true);
@@ -328,6 +359,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Create order function
+
   const createOrder = async (orderData: Partial<Order>) => {
     setIsLoading(true);
     try {
@@ -343,6 +376,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
     }
   };
+
+  // Cancel order function
 
   const cancelOrder = async (orderId: string) => {
     setIsLoading(true);
@@ -376,6 +411,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Add to favorites function
+
   const addToFavorites = async (productId: string) => {
     setIsLoading(true);
     try {
@@ -388,6 +425,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
     }
   };
+
+  // Remove from favorites function
 
   const removeFromFavorites = async (productId: string) => {
     setIsLoading(true);
@@ -405,18 +444,19 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Review functions
-  const getProductReviews = async (productId: string) => {
+  const getProductReviews = useCallback(async (productId: string) => {
     setIsLoading(true);
     try {
       const { data } = await api.get(`/reviews/${productId}`);
       setReviews(data.data);
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to fetch reviews");
-      throw error;
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+//  Add review function
 
   const addReview = async (
     productId: string,
@@ -438,6 +478,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
     }
   };
+
+  //  Update review function
 
   const updateReview = async (
     reviewId: string,
@@ -461,6 +503,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+
+  // Delete review function
   const deleteReview = async (reviewId: string) => {
     setIsLoading(true);
     try {
@@ -474,7 +518,41 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // ...
+  // Handle review submission
+  const handleReviewSubmit = async (productId: string) => {
+    if (!rating || !comment.trim()) return;
+
+    if (editingReviewId) {
+      await updateReview(editingReviewId, rating, comment);
+      setEditingReviewId(null);
+    } else {
+      await addReview(productId, rating, comment);
+    }
+
+    setRating(0);
+    setComment("");
+  };
+
+  // Handle review edit and delete
+
+  const handleReviewEdit = (
+    id: string,
+    existingRating: number,
+    existingComment: string
+  ) => {
+    setEditingReviewId(id);
+    setRating(existingRating);
+    setComment(existingComment);
+  };
+
+  const handleReviewDelete = async (reviewId: string) => {
+    if (window.confirm("Are you sure you want to delete this review?")) {
+      await deleteReview(reviewId);
+    }
+  };
+
+
+  // Calculate cart total
 
   const cartTotal = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
@@ -534,6 +612,17 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         setUserData,
 
         fetchUserData,
+
+        rating,
+        setRating,
+        comment,
+        setComment,
+        editingReviewId,
+        setEditingReviewId,
+        handleReviewSubmit,
+        handleReviewEdit,
+        handleReviewDelete,
+        isReviewLoading,
       }}
     >
       {children}

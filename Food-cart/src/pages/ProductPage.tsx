@@ -44,7 +44,7 @@ const ProductPage = () => {
   const handleOnClick = async () => {
     try {
       await addToCart(productId, quantity);
-      console.log("Item added successfully");
+      // console.log("Item added successfully");
       navigate("/cart");
     } catch (err) {
       console.error("Error adding to cart:", err);
@@ -72,16 +72,11 @@ const ProductPage = () => {
         <nav className="mb-8">
           <ol className="flex items-center space-x-2 text-sm text-gray-500">
             <li>
-              <a href="/" className="hover:text-gray-900">
+              <a href="/dashboard" className="hover:text-gray-900">
                 Home
               </a>
             </li>
-            <li>/</li>
-            <li>
-              <a href="/menu" className="hover:text-gray-900">
-                Menu
-              </a>
-            </li>
+            {/* <li>/</li> */}
             <li>/</li>
             <li className="text-gray-900">{product.name}</li>
           </ol>
