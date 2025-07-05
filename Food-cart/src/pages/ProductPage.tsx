@@ -10,7 +10,15 @@ const ProductPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   // console.log(productId)
-  const { fetchProductById, addToCart, addToFavorites, addReview, deleteReview, updateReview, reviews, } = useStore();
+  const {
+    fetchProductById,
+    addToCart,
+    addToFavorites,
+    addReview,
+    deleteReview,
+    updateReview,
+    reviews,
+  } = useStore();
 
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -37,7 +45,7 @@ const ProductPage = () => {
     try {
       await addToCart(productId, quantity);
       console.log("Item added successfully");
-      navigate("/dashboard/cart");
+      navigate("/cart");
     } catch (err) {
       console.error("Error adding to cart:", err);
     }
@@ -57,7 +65,7 @@ const ProductPage = () => {
   return (
     <div
       className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8"
-    // onClick={onClick}
+      // onClick={onClick}
     >
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb */}
@@ -155,10 +163,11 @@ const ProductPage = () => {
                   {[...Array(5)].map((_, idx) => (
                     <GiChiliPepper
                       key={idx}
-                      className={`w-5 h-5 ${idx < product.spicyLevel
+                      className={`w-5 h-5 ${
+                        idx < product.spicyLevel
                           ? "text-red-500"
                           : "text-gray-200"
-                        }`}
+                      }`}
                     />
                   ))}
                 </div>
@@ -207,11 +216,11 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
+        <div className="max-w-7xl mx-auto mt-12">
+          <ReviewPage productId={productId} />
+        </div>
       </div>
       {/* review */}
-      <div className="">
-        <ReviewPage productId={productId} />
-      </div>
     </div>
   );
 };

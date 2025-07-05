@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useStore } from "../context/store"; 
+import { useStore } from "../context/store";
 import Product from "../components/Product";
 import { ChevronLeft } from "lucide-react";
 import { motion } from "framer-motion";
@@ -12,10 +12,10 @@ const CategoryPage = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleProductIdPage = (product) =>{
-    console.log("hii")
-    navigate(`/dashboard/products/${product}`)
-  }
+  const handleProductIdPage = (product) => {
+    console.log("hii");
+    navigate(`/products/${product}`);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -69,7 +69,6 @@ const CategoryPage = () => {
                     time: "15-20 min",
                     img: product.image,
                   }}
-                    
                 />
               </motion.div>
             ))}

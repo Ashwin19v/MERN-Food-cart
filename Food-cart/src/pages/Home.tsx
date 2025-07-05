@@ -42,27 +42,32 @@ const foodCategories = [
 ];
 
 const HomePage = () => {
-
-  const { fetchPopularProducts, fetchProductsByCategory, popularProducts, activeCategory, setActiveCategory, } = useStore();
+  const {
+    fetchPopularProducts,
+    fetchProductsByCategory,
+    popularProducts,
+    activeCategory,
+    setActiveCategory,
+  } = useStore();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryProducts, setCategoryProducts] = useState<any[]>([]);
 
   const handleSeeMoreClick = () => {
-    navigate(`/dashboard/category/${activeCategory}`);
+    navigate(`/category/${activeCategory}`);
   };
 
   const handleProductIdPage = (product) => {
-    console.log("hii")
-    navigate(`/dashboard/products/${product}`)
-  }
+    console.log("hii");
+    navigate(`/products/${product}`);
+  };
 
   useEffect(() => {
     const fetchCategoryProducts = async () => {
       if (activeCategory && activeCategory !== "All") {
         const products = await fetchProductsByCategory(activeCategory);
         setCategoryProducts(products);
-        console.log(products)
+        console.log(products);
       } else {
         setCategoryProducts([]); // Clear if "All"
       }
@@ -70,8 +75,6 @@ const HomePage = () => {
 
     fetchCategoryProducts();
   }, [activeCategory]);
-
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 px-4 sm:px-6 py-8 text-gray-800 overflow-x-hidden">
@@ -198,10 +201,11 @@ const HomePage = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category
-                    ? "bg-orange-500 text-white shadow-md"
-                    : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
-                    }`}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                    activeCategory === category
+                      ? "bg-orange-500 text-white shadow-md"
+                      : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
+                  }`}
                 >
                   {category}
                 </motion.button>
@@ -253,7 +257,6 @@ const HomePage = () => {
                       time: "15-20 min",
                       img: product.image,
                     }}
-
                   />
                 </motion.div>
               ))}
@@ -280,7 +283,6 @@ const HomePage = () => {
                 </motion.div>
               )}
             </div>
-
           )}
         </motion.section>
 
@@ -318,9 +320,7 @@ const HomePage = () => {
                         time: "15-20 min",
                         img: product.image,
                       }}
-
                     />
-
                   </motion.div>
                 ))}
             </div>
@@ -360,7 +360,10 @@ const HomePage = () => {
                     </h4>
                     <div className="flex text-yellow-400">
                       {[...Array(5)].map((_, starIndex) => (
-                        <Star key={starIndex} className="w-4 h-4 fill-yellow-400" />
+                        <Star
+                          key={starIndex}
+                          className="w-4 h-4 fill-yellow-400"
+                        />
                       ))}
                     </div>
                   </div>

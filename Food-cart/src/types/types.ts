@@ -9,11 +9,10 @@ export interface Product {
   name: string;
   price: number;
   image: string;
-};
+}
 export interface CartItem {
-
   _id: string;
-  product: Product
+  product: Product;
   name: string;
   price: number;
   quantity: number;
@@ -86,7 +85,6 @@ export interface StoreContextType {
   clearCart: () => Promise<void>;
   cartTotal: number;
   getCartItems: () => Promise<void>;
-
 
   // Orders
   orders: Order[];

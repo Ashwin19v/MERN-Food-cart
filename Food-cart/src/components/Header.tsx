@@ -2,16 +2,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, User, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useStore } from "../context/store";
 
 const Header = () => {
+  const { cartItems } = useStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartItems] = useState(3); // Sample cart item count
+
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Menu", path: "/menu" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
+    { name: "Home", path: "/dashboard" },
+    { name: "Favorites", path: "/favourites" },
+    { name: "cart", path: "/cart" },
+    { name: "Settings", path: "/settings" },
   ];
 
   return (
@@ -52,26 +54,29 @@ const Header = () => {
 
           {/* Right side icons */}
           <div className="flex items-center space-x-4">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="relative p-2 text-gray-700 hover:text-orange-500"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {cartItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartItems}
-                </span>
-              )}
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="hidden md:block p-2 text-gray-700 hover:text-orange-500"
-            >
-              <User className="w-5 h-5" />
-            </motion.button>
+            <Link to="/cart">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="relative p-2 text-gray-700 hover:text-orange-500"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {cartItems && cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartItems.length}
+                  </span>
+                )}
+              </motion.button>
+            </Link>
+            <Link to = "/settings">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="hidden md:block p-2 text-gray-700 hover:text-orange-500"
+              >
+                <User className="w-5 h-5" />
+              </motion.button>
+            </Link>
 
             {/* Mobile menu button */}
             <motion.button

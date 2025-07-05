@@ -15,6 +15,7 @@ import type {
   StoreContextType,
   Product,
 } from "../types/types";
+import { get } from "react-hook-form";
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
@@ -58,8 +59,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-
-  
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -187,9 +186,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-
   // settings functions
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -244,6 +244,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     if (token) {
       getCartItems();
       getFavorites();
+      getOrders();
     }
   }, [token]);
 
@@ -316,8 +317,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const getOrders = async () => {
     setIsLoading(true);
     try {
-      const { data } = await api.get("/orders/me");
+      const { data } = await api.get("/orders/get");
       setOrders(data.data);
+      // console.log("Orders fetched:", data.data); // ✅ LOG ORDERS
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to fetch orders");
       throw error;
@@ -329,11 +331,13 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const createOrder = async (orderData: Partial<Order>) => {
     setIsLoading(true);
     try {
-      const { data } = await api.post("/orders", orderData);
+      const { data } = await api.post("/orders/add", orderData);
       setOrders((prev) => [...prev, data.data]);
-      await clearCart();
+      // await clearCart();
     } catch (error: any) {
-      setError(error.response?.data?.message || "Failed to create order");
+      console.log(error);
+
+      setError(error.response?.data?.error || "Failed to create order");
       throw error;
     } finally {
       setIsLoading(false);
@@ -520,7 +524,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         categoryProducts,
         setCategoryProducts,
 
-
         userData,
         formData,
         isEditing,
@@ -530,7 +533,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         updateUserProfile,
         setUserData,
 
-        fetchUserData
+        fetchUserData,
       }}
     >
       {children}

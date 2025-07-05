@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ReactStars from "react-rating-stars-component";
+import StarRatings from "react-star-ratings";
 import { useStore } from "../context/store";
 
 interface Props {
-  productId: string;
+  productId: string | undefined;
 }
 
 const ReviewPage: React.FC<Props> = ({ productId }) => {
@@ -39,7 +39,11 @@ const ReviewPage: React.FC<Props> = ({ productId }) => {
     setComment("");
   };
 
-  const handleEdit = (id: string, existingRating: number, existingComment: string) => {
+  const handleEdit = (
+    id: string,
+    existingRating: number,
+    existingComment: string
+  ) => {
     setEditingReviewId(id);
     setRating(existingRating);
     setComment(existingComment);
@@ -52,23 +56,30 @@ const ReviewPage: React.FC<Props> = ({ productId }) => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-12 px-4">
+    <div className="max-w-7xl mx-auto py-12 px-4">
       <div className="bg-white shadow-lg rounded-xl p-6">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Join the Conversation</h2>
+        <h2 className="text-xl font-bold text-gray-800 mb-4">
+          Join the Conversation
+        </h2>
 
         {/* Review Form */}
         {user && (
           <div>
-            <h3 className="text-md font-semibold text-gray-700 mb-2">Leave a comment</h3>
+            <h3 className="text-md font-semibold text-gray-700 mb-2">
+              Leave a comment
+            </h3>
 
-            <ReactStars
-              count={5}
-              size={24}
-              value={rating}
-              onChange={setRating}
-              activeColor="#FFA500"
-              color="#e5e7eb"
-            />
+            <div className="">
+              <StarRatings
+                rating={rating}
+                starRatedColor="gold"
+                starHoverColor="orange"
+                changeRating={setRating}
+                numberOfStars={5}
+                starDimension="30px"
+                starSpacing="5px"
+              />
+            </div>
 
             <textarea
               className="w-full mt-2 border-2 border-orange-300 focus:border-orange-500 focus:ring-orange-400 rounded-md p-3 outline-none text-gray-700"
@@ -103,9 +114,7 @@ const ReviewPage: React.FC<Props> = ({ productId }) => {
               className="bg-white mt-4 p-4 rounded-md shadow-md"
             >
               <div className="flex items-center justify-between">
-                <p className="font-semibold text-gray-800">
-                  {rev.user?.name}
-                </p>
+                <p className="font-semibold text-gray-800">{rev.user?.name}</p>
                 <ReactStars
                   count={5}
                   size={20}

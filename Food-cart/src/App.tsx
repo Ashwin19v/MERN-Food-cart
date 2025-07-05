@@ -28,18 +28,15 @@ function App() {
           <Route path="/register" element={<Register />} />
 
           {/* Protected Routes with Layout */}
-          <Route path="/dashboard" element={<ProtectedRoute />}>
+          <Route path="/" element={<ProtectedRoute />}>
             <Route element={<Layout />}>
-              <Route index element={<Home />} />
+              <Route path="/dashboard" index element={<Home />} />
               <Route path="products/:productId" element={<ProductPage />} />
               <Route path="category/:categoryName" element={<CategoryPage />} />
               <Route path="settings" element={<Settings />} />
               <Route path="cart" element={<Cart />} />
               <Route path="favourites" element={<Favourite />} />
               <Route path="checkout" element={<CheckoutPage />} />
-              {/* <Route path="review" element={<ReviewPage />} /> */}
-
-              {/* <Route path="products/:productId/review" element={<ReviewPage />} /> */}
             </Route>
           </Route>
 

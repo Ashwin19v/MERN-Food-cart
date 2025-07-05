@@ -9,7 +9,7 @@ const auth = require("../middleware/auth");
 router.use(auth);
 
 // User routes
-router.post("/orders", createOrder);
-router.get("/orders/me", getUserOrders);
+router.post("/add", createOrder);
+router.get("/get", getUserOrders);
 
 module.exports = router;

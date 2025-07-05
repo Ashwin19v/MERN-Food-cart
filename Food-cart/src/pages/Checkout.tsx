@@ -2,22 +2,71 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FiCreditCard, FiLock, FiTruck, FiCheckCircle } from "react-icons/fi";
 import { FaPaypal, FaApplePay, FaGooglePay } from "react-icons/fa";
+import { useStore } from "../context/store";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
+  const navigate = useNavigate();
+  const { cartItems, cartTotal, user, createOrder, isLoading } =
+    useStore();
+
   const [step, setStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [orderComplete, setOrderComplete] = useState(false);
+  const [orderId, setOrderId] = useState("");
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // In a real app, you would process payment here
-    setOrderComplete(true);
+  // Pre-fill form with user data
+  useEffect(() => {
+    if (user) {
+      setValue("firstName", user.name?.split(" ")[0] || "");
+      setValue("lastName", user.name?.split(" ")[1] || "");
+      setValue("address1", user.address || "");
+      setValue("phone", user.phone || "");
+    }
+  }, [user, setValue]);
+
+  // Redirect if cart is empty
+  // useEffect(() => {
+  //   if (cartItems.length === 0) {
+  //     navigate("/cart");
+  //   }
+  // }, [cartItems, orderComplete, navigate]);
+
+  const onSubmit = async (data) => {
+    try {
+      const shippingAddress = `${data.address1}, ${
+        data.address2 ? data.address2 + ", " : ""
+      }${data.city}, ${data.postalCode}, ${data.country}`;
+
+      const orderData = {
+        items: cartItems,
+        shippingAddress,
+        paymentMethod,
+        totalAmount: calculateTotal(),
+        customerInfo: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: data.phone,
+          email: user?.email,
+        },
+      };
+
+      const response = await createOrder(orderData);
+      // setOrderId(
+      //   response.orderId || `ORD-${Math.floor(Math.random() * 1000000)}`
+      // );
+      setOrderComplete(true);
+    } catch (error) {
+      console.error("Order creation failed:", error);
+    }
   };
 
   const countries = [
@@ -27,22 +76,25 @@ const CheckoutPage = () => {
     "Australia",
     "Germany",
     "France",
+    "India",
+    "Japan",
   ];
+
   const months = Array.from({ length: 12 }, (_, i) =>
     (i + 1).toString().padStart(2, "0")
   );
+
   const years = Array.from({ length: 10 }, (_, i) =>
     (new Date().getFullYear() + i).toString().slice(-2)
   );
 
-  useEffect(() => {
-    if (orderComplete) {
-      const timer = setTimeout(() => {
-        // Redirect or reset form after order completion
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [orderComplete]);
+  // Calculate totals
+  const subtotal = cartTotal;
+  const shipping = subtotal > 50 ? 0 : 10;
+  const tax = subtotal * 0.08; // 8% tax
+  const total = subtotal + shipping + tax;
+
+  const calculateTotal = () => total;
 
   if (orderComplete) {
     return (
@@ -60,10 +112,7 @@ const CheckoutPage = () => {
           </p>
           <div className="bg-gray-50 rounded-xl p-4 mb-6">
             <p className="font-medium">
-              Order #:{" "}
-              <span className="text-blue-600">
-                ORD-{Math.floor(Math.random() * 1000000)}
-              </span>
+              Order #: <span className="text-blue-600">{orderId}</span>
             </p>
             <p className="text-sm text-gray-500 mt-1">
               Estimated delivery:{" "}
@@ -72,12 +121,20 @@ const CheckoutPage = () => {
               ).toLocaleDateString()}
             </p>
           </div>
-          <button
-            onClick={() => setOrderComplete(false)}
-            className="w-full bg-blue-600 text-white rounded-xl py-3 font-medium hover:bg-blue-700 transition-colors"
-          >
-            Continue Shopping
-          </button>
+          <div className="space-y-2">
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="w-full bg-blue-600 text-white rounded-xl py-3 font-medium hover:bg-blue-700 transition-colors"
+            >
+              Continue Shopping
+            </button>
+            <button
+              onClick={() => navigate("/orders")}
+              className="w-full bg-gray-100 text-gray-700 rounded-xl py-3 font-medium hover:bg-gray-200 transition-colors"
+            >
+              View Orders
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -130,7 +187,10 @@ const CheckoutPage = () => {
             </h2>
 
             {step === 1 ? (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={handleSubmit(() => setStep(2))}
+                className="space-y-6"
+              >
                 <div className="space-y-6">
                   <h3 className="text-lg md:text-xl font-semibold text-gray-700 flex items-center">
                     <FiTruck className="mr-2" /> Shipping Address
@@ -271,10 +331,8 @@ const CheckoutPage = () => {
                 </div>
                 <div className="flex justify-end">
                   <button
-                    type="button"
-                    onClick={() => setStep(2)}
+                    type="submit"
                     className="bg-blue-600 text-white rounded-xl px-6 py-3 font-medium hover:bg-blue-700 transition-colors"
-                    disabled={Object.keys(errors).length > 0}
                   >
                     Continue to Payment
                   </button>
@@ -415,8 +473,7 @@ const CheckoutPage = () => {
                           </div>
                           {(errors.expiryMonth || errors.expiryYear) && (
                             <p className="text-red-500 text-sm mt-1">
-                              {errors.expiryMonth?.message ||
-                                errors.expiryYear?.message}
+                              Expiry date is required
                             </p>
                           )}
                         </div>
@@ -478,82 +535,73 @@ const CheckoutPage = () => {
                   </button>
                   <button
                     type="submit"
-                    className="bg-blue-600 text-white rounded-xl px-6 py-3 font-medium hover:bg-blue-700 transition-colors flex items-center"
-                    disabled={Object.keys(errors).length > 0}
+                    disabled={isLoading}
+                    className="bg-blue-600 text-white rounded-xl px-6 py-3 font-medium hover:bg-blue-700 transition-colors flex items-center disabled:opacity-50"
                   >
-                    <FiLock className="mr-2" /> Confirm & Pay
+                    <FiLock className="mr-2" />
+                    {isLoading ? "Processing..." : "Confirm & Pay"}
                   </button>
                 </div>
               </form>
             )}
           </div>
 
-          {/* Right Column: Summary */}
+          {/* Right Column: Dynamic Order Summary */}
           <div className="bg-white rounded-3xl shadow-lg p-6 md:p-8 space-y-6 border border-gray-100 h-fit sticky top-8">
             <h3 className="text-lg md:text-xl font-semibold text-gray-700">
               Order Summary
             </h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                <span className="text-gray-600">Subtotal (3 items)</span>
-                <span className="font-medium">$120.00</span>
+                <span className="text-gray-600">
+                  Subtotal ({cartItems.length} items)
+                </span>
+                <span className="font-medium">${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                <span className="text-gray-600">Shipping</span>
-                <span className="font-medium">$10.00</span>
+                <span className="text-gray-600">
+                  Shipping{" "}
+                  {subtotal > 50 && (
+                    <span className="text-green-600">(Free)</span>
+                  )}
+                </span>
+                <span className="font-medium">${shipping.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-gray-100">
                 <span className="text-gray-600">Tax</span>
-                <span className="font-medium">$9.60</span>
+                <span className="font-medium">${tax.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center py-3">
                 <span className="text-lg font-semibold">Total</span>
-                <span className="text-lg font-bold">$139.60</span>
+                <span className="text-lg font-bold text-blue-600">
+                  ${total.toFixed(2)}
+                </span>
               </div>
             </div>
 
-            {/* Cart Items Preview */}
+            {/* Dynamic Cart Items Preview */}
             <div className="border-t border-gray-100 pt-4">
               <h4 className="text-sm font-medium text-gray-500 mb-3">
                 Your Items
               </h4>
-              <div className="space-y-3">
-                {[
-                  {
-                    name: "Wireless Headphones",
-                    price: 59.99,
-                    quantity: 1,
-                    image: "https://via.placeholder.com/60",
-                  },
-                  {
-                    name: "Smart Watch",
-                    price: 39.99,
-                    quantity: 1,
-                    image: "https://via.placeholder.com/60",
-                  },
-                  {
-                    name: "USB-C Cable",
-                    price: 10.02,
-                    quantity: 2,
-                    image: "https://via.placeholder.com/60",
-                  },
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center">
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {cartItems.map((item) => (
+                  <div key={item._id} className="flex items-center">
                     <div className="w-12 h-12 bg-gray-100 rounded-lg mr-3 overflow-hidden">
                       <img
-                        src={item.image}
-                        alt={item.name}
+                        src={item.product.image}
+                        alt={item.product.name}
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{item.name}</p>
+                      <p className="text-sm font-medium">{item.product.name}</p>
                       <p className="text-xs text-gray-500">
                         Qty: {item.quantity}
                       </p>
                     </div>
                     <div className="text-sm font-medium">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ${item.product.price* item.quantity}
                     </div>
                   </div>
                 ))}

@@ -118,7 +118,7 @@ const FavoritesPage = () => {
                         ${favorite.product.price.toFixed(2)}
                       </p>
                       <Link
-                        to={`/dashboard/products/${favorite.product._id}`}
+                        to={`/products/${favorite.product._id}`}
                         className="mt-3 inline-block text-sm text-orange-500 hover:text-orange-600"
                       >
                         View Details

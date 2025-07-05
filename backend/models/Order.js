@@ -8,9 +8,9 @@ const OrderSchema = new mongoose.Schema({
   },
   items: [
     {
-      food: {
+      product: {
         type: mongoose.Schema.ObjectId,
-        ref: "Food",
+        ref: "Product",
         required: true,
       },
       quantity: {
@@ -20,23 +20,23 @@ const OrderSchema = new mongoose.Schema({
       },
     },
   ],
-  totalPrice: {
+  totalAmount: {
     type: Number,
     required: true,
     default: 0,
   },
-  deliveryAddress: {
+  ShippingAddress: {
     type: String,
     required: [true, "Please add a delivery address"],
   },
-  status: {
+  orderStatus: {
     type: String,
     enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
     default: "pending",
   },
   paymentMethod: {
     type: String,
-    enum: ["cash", "card", "upi"],
+
     required: true,
   },
   isPaid: {
