@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useStore } from "../context/store";
 import Product from "../components/Product";
 import { ChevronLeft } from "lucide-react";
 import { motion } from "framer-motion";
+import type { Product as ProductType } from "../types/types";
 
 const CategoryPage = () => {
   const { categoryName } = useParams();
   const navigate = useNavigate();
   const { fetchProductsByCategory } = useStore();
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleProductIdPage = (product) => {
-    console.log("hii");
+  const handleProductIdPage = (product:string) => {
+
     navigate(`/products/${product}`);
   };
 

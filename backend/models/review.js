@@ -24,11 +24,15 @@ const reviewSchema = new mongoose.Schema(
       trim: true,
       maxlength: [500, "Review cannot be more than 500 characters"],
     },
-    orderItem: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Order",
-      required: [true, "Review must be associated with an order"],
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
+    // orderItem: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Order",
+    //   required: [true, "Review must be associated with an order"],
+    // },
   },
   {
     timestamps: true,

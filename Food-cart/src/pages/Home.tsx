@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Product from "../components/Product";
@@ -11,7 +11,7 @@ import {
   Bike,
   ShieldCheck,
 } from "lucide-react";
-import axios from "axios";
+
 
 const foodCategories = [
   {
@@ -60,12 +60,11 @@ const staticPopularDishes = [
   },
 ];
 
-
 const HomePage = () => {
   const {
-    fetchPopularProducts,
+  
     fetchProductsByCategory,
-    popularProducts,
+ 
     activeCategory,
     setActiveCategory,
   } = useStore();
@@ -79,7 +78,7 @@ const HomePage = () => {
 
   // Function to handle navigation to product details page
 
-  const handleProductIdPage = (product) => {
+  const handleProductIdPage = (product:string) => {
     navigate(`/products/${product}`);
   };
 
@@ -150,21 +149,23 @@ const HomePage = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          {[{
-            icon: <Clock className="w-6 h-6" />,
-            title: "Fast Delivery",
-            description: "Get your food delivered in under 30 minutes",
-          },
-          {
-            icon: <ShieldCheck className="w-6 h-6" />,
-            title: "Food Safety",
-            description: "All restaurants follow strict safety protocols",
-          },
-          {
-            icon: <Bike className="w-6 h-6" />,
-            title: "Live Tracking",
-            description: "Track your order in real-time",
-          }].map((feature, index) => (
+          {[
+            {
+              icon: <Clock className="w-6 h-6" />,
+              title: "Fast Delivery",
+              description: "Get your food delivered in under 30 minutes",
+            },
+            {
+              icon: <ShieldCheck className="w-6 h-6" />,
+              title: "Food Safety",
+              description: "All restaurants follow strict safety protocols",
+            },
+            {
+              icon: <Bike className="w-6 h-6" />,
+              title: "Live Tracking",
+              description: "Track your order in real-time",
+            },
+          ].map((feature, index) => (
             <motion.div
               key={index}
               whileHover={{ y: -5 }}
@@ -213,25 +214,28 @@ const HomePage = () => {
             Explore Categories
           </h2>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            {["All", ...foodCategories.map((cat) => cat.name)].map((category) => (
-              <motion.button
-                key={category}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setActiveCategory(category)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category
-                  ? "bg-orange-500 text-white shadow-md"
-                  : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
+          <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
+            {["All", ...foodCategories.map((cat) => cat.name)].map(
+              (category) => (
+                <motion.button
+                  key={category}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                    activeCategory === category
+                      ? "bg-orange-500 text-white shadow-md"
+                      : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
                   }`}
-              >
-                {category}
-              </motion.button>
-            ))}
+                >
+                  {category}
+                </motion.button>
+              )
+            )}
           </div>
 
           {activeCategory === "All" ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 place-items-center">
               {foodCategories.map((item, index) => (
                 <motion.div
                   key={index}
@@ -257,7 +261,7 @@ const HomePage = () => {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 ">
               {categoryProducts
                 .filter((product) =>
                   product.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -286,25 +290,25 @@ const HomePage = () => {
               {categoryProducts.filter((product) =>
                 product.name.toLowerCase().includes(searchQuery.toLowerCase())
               ).length > 5 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    whileHover={{ scale: 1.05 }}
-                    className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden cursor-pointer transition-all flex items-center justify-center"
-                    onClick={handleSeeMoreClick}
-                  >
-                    <div className="p-6 text-center">
-                      <div className="text-orange-500 text-4xl font-bold mb-2">
-                        +{categoryProducts.length - 5}
-                      </div>
-                      <h3 className="text-lg font-semibold text-gray-800">
-                        Show More {activeCategory}
-                      </h3>
-                      <ChevronRight className="w-8 h-8 mx-auto mt-2 text-orange-500" />
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden cursor-pointer transition-all flex items-center justify-center"
+                  onClick={handleSeeMoreClick}
+                >
+                  <div className="p-6 text-center">
+                    <div className="text-orange-500 text-4xl font-bold mb-2">
+                      +{categoryProducts.length - 5}
                     </div>
-                  </motion.div>
-                )}
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      Show More {activeCategory}
+                    </h3>
+                    <ChevronRight className="w-8 h-8 mx-auto mt-2 text-orange-500" />
+                  </div>
+                </motion.div>
+              )}
             </div>
           )}
         </motion.section>

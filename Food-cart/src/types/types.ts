@@ -2,13 +2,35 @@ export interface User {
   _id: string;
   name: string;
   email: string;
-  role: "user" | "admin";
+ 
+  phone?: string;
+  address?:string;
 }
+export interface UserData {
+  _id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  address?: string;
+}
+export interface FormData {
+  name: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  currentPassword?: string;
+  newPassword?:string;
+}
+
 export interface Product {
   _id: string;
   name: string;
   price: number;
   image: string;
+  description?: string;
+  category?: string;
+  reviews?: number;
+  rating?: number;
 }
 export interface CartItem {
   _id: string;
@@ -32,14 +54,17 @@ export interface Review {
 export interface Order {
   _id: string;
   items: CartItem[];
-  status: "pending" | "confirmed" | "delivered" | "cancelled";
+  orderStatus: "pending" | "confirmed" | "delivered" | "cancelled";
   totalAmount: number;
   shippingAddress: string;
   createdAt: string;
+  isPaid: boolean;
+  paymentMethod:string;
 }
 
 export interface Review {
   _id: string;
+  length: number;
   rating: number;
   comment: string;
   user: {
@@ -76,6 +101,8 @@ export interface StoreContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
+  userData: User | null;
+  formData: FormData | null;
 
   // Cart
   cartItems: CartItem[];
@@ -100,6 +127,7 @@ export interface StoreContextType {
 
   // Reviews
   reviews: Review[];
+  setReviews: React.Dispatch<React.SetStateAction<Review[] | []>>;
   getProductReviews: (productId: string) => Promise<void>;
   addReview: (
     productId: string,
@@ -112,10 +140,14 @@ export interface StoreContextType {
     comment: string
   ) => Promise<void>;
   deleteReview: (reviewId: string) => Promise<void>;
+  handleReviewDelete: (reviewId: string) => Promise<void>;
 
   // UI State
   isLoading: boolean;
   error: string | null;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 
   fetchPopularProducts: () => Promise<void>;
   // handleSeeMoreClick: () => void;
@@ -128,4 +160,8 @@ export interface StoreContextType {
   setCategoryProducts: React.Dispatch<React.SetStateAction<any[]>>;
 
   fetchProductById: (productId: string) => Promise<Product | null>;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  updateUserProfile: () => Promise<void>;
 }

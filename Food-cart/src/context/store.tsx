@@ -11,12 +11,11 @@ import type {
   User,
   CartItem,
   Order,
-  Review,
   FavoriteItem,
   StoreContextType,
   Product,
 } from "../types/types";
-import { get } from "react-hook-form";
+
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
@@ -35,20 +34,21 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
-  const [reviews, setReviews] = useState<Review[]>([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [categoryProducts, setCategoryProducts] = useState<any[]>([]);
   const [popularProducts, setPopularProducts] = useState<any[]>([]);
 
   const [userData, setUserData] = useState<User>({
+    _id: user?._id || "",
     name: user?.name || "",
     email: user?.email || "",
     phone: user?.phone || "",
     address: user?.address || "",
+
   });
 
   const [formData, setFormData] = useState({
@@ -60,12 +60,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-
-  const [rating, setRating] = useState<number>(0);
-  const [comment, setComment] = useState<string>("");
-  const [editingReviewId, setEditingReviewId] = useState<string | null>(null);
-  const [isReviewLoading, setIsReviewLoading] = useState(false);
-
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -113,18 +107,19 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // fetch product by ID
-  const fetchProductById = async (
-    productId: string
-  ): Promise<Product | null> => {
-    try {
-      if (!token) return null;
-      const response = await api.get(`/products/${productId}`);
-      return response.data.data || null;
-    } catch (error) {
-      console.error("Error fetching product by ID:", error);
-      return null;
-    }
-  };
+  const fetchProductById = useCallback(
+    async (productId: string): Promise<Product | null> => {
+      try {
+        if (!token) return null;
+        const response = await api.get(`/products/${productId}`);
+        return response.data.data || null;
+      } catch (error) {
+        console.error("Error fetching product by ID:", error);
+        return null;
+      }
+    },
+    [token]
+  );
 
   // cleanup auth function
 
@@ -136,7 +131,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
 
   // get current user data
   // This function fetches the current user data from the server
-  
+
   const getCurrentUser = async () => {
     try {
       const { data } = await api.get("/auth/user");
@@ -444,19 +439,19 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Review functions
+  // Fetch reviews for a product when productId changes
   const getProductReviews = useCallback(async (productId: string) => {
-    setIsLoading(true);
     try {
       const { data } = await api.get(`/reviews/${productId}`);
-      setReviews(data.data);
+      return data.data || [];
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to fetch reviews");
-    } finally {
-      setIsLoading(false);
+      return [];
     }
   }, []);
+  
 
-//  Add review function
+  //  Add review function
 
   const addReview = async (
     productId: string,
@@ -470,7 +465,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         rating,
         comment,
       });
-      setReviews((prev) => [...prev, data.data]);
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to add review");
       throw error;
@@ -492,9 +486,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         rating,
         comment,
       });
-      setReviews((prev) =>
-        prev.map((review) => (review._id === reviewId ? data.data : review))
-      );
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to update review");
       throw error;
@@ -503,13 +494,11 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-
   // Delete review function
   const deleteReview = async (reviewId: string) => {
     setIsLoading(true);
     try {
       await api.delete(`/reviews/${reviewId}`);
-      // kjkisjc
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to delete review");
       throw error;
@@ -518,39 +507,13 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Handle review submission
-  const handleReviewSubmit = async (productId: string) => {
-    if (!rating || !comment.trim()) return;
-
-    if (editingReviewId) {
-      await updateReview(editingReviewId, rating, comment);
-      setEditingReviewId(null);
-    } else {
-      await addReview(productId, rating, comment);
-    }
-
-    setRating(0);
-    setComment("");
-  };
-
   // Handle review edit and delete
-
-  const handleReviewEdit = (
-    id: string,
-    existingRating: number,
-    existingComment: string
-  ) => {
-    setEditingReviewId(id);
-    setRating(existingRating);
-    setComment(existingComment);
-  };
 
   const handleReviewDelete = async (reviewId: string) => {
     if (window.confirm("Are you sure you want to delete this review?")) {
       await deleteReview(reviewId);
     }
   };
-
 
   // Calculate cart total
 
@@ -581,7 +544,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         getFavorites,
         addToFavorites,
         removeFromFavorites,
-        reviews,
+
         getProductReviews,
         addReview,
         updateReview,
@@ -613,16 +576,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
 
         fetchUserData,
 
-        rating,
-        setRating,
-        comment,
-        setComment,
-        editingReviewId,
-        setEditingReviewId,
-        handleReviewSubmit,
-        handleReviewEdit,
         handleReviewDelete,
-        isReviewLoading,
       }}
     >
       {children}

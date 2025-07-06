@@ -1,45 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { FiMinus, FiPlus, FiHeart, FiClock, FiStar } from "react-icons/fi";
-import { GiChiliPepper, GiWeightScale } from "react-icons/gi";
+import { useEffect, useState } from "react";
+import { FiMinus, FiPlus, FiHeart, FiStar } from "react-icons/fi";
+
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../context/store";
 import ReviewPage from "./Review";
+import type { Product } from "../types/types";
 
 const ProductPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   // console.log(productId)
-  const {
-    fetchProductById,
-    addToCart,
-    addToFavorites,
-    addReview,
-    deleteReview,
-    updateReview,
-    reviews,
-  } = useStore();
+  const { fetchProductById, addToCart, addToFavorites } = useStore();
 
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   // const [selectedImage, setSelectedImage] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  if (!productId) return;
+  const fetchData = async () => {
+    console.log("Fetching product for ID:", productId);
+    // setLoading(true);
+    const data = await fetchProductById(productId);
+    if (!data) {
+      setError("Product not found.");
+    } else {
+      setProduct(data);
+    }
+    setLoading(false);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const data = await fetchProductById(productId);
-      if (!data) {
-        setError("Product not found.");
-      } else {
-        setProduct(data);
-      }
-      setLoading(false);
-    };
-
     fetchData();
-  }, [productId, fetchProductById]);
+  }, [productId]);
 
   const handleOnClick = async () => {
     try {
@@ -76,13 +70,13 @@ const ProductPage = () => {
                 Home
               </a>
             </li>
-            {/* <li>/</li> */}
+
             <li>/</li>
             <li className="text-gray-900">{product.name}</li>
           </ol>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 place-items-center">
           {/* Left Column - Images */}
           <div className="space-y-4">
             <div className="aspect-w-16 aspect-h-12 rounded-3xl overflow-hidden bg-white p-4 shadow-lg">
@@ -115,16 +109,6 @@ const ProductPage = () => {
               <span className="text-3xl font-bold text-gray-900">
                 ${product.price}
               </span>
-              {product.originalPrice && (
-                <>
-                  <span className="text-xl text-gray-500 line-through">
-                    ${product.originalPrice}
-                  </span>
-                  <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                    Save ${(product.originalPrice - product.price).toFixed(2)}
-                  </span>
-                </>
-              )}
             </div>
 
             {/* Description */}
@@ -132,41 +116,6 @@ const ProductPage = () => {
               <p className="text-gray-600 text-lg leading-relaxed">
                 {product.description}
               </p>
-
-              {/* Features */}
-              <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="flex items-center space-x-3 bg-white p-4 rounded-xl shadow-sm">
-                  <FiClock className="text-gray-400 w-5 h-5" />
-                  <div>
-                    <p className="text-sm text-gray-500">Prep Time</p>
-                    <p className="font-medium">{product.prepTime}</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 bg-white p-4 rounded-xl shadow-sm">
-                  <GiWeightScale className="text-gray-400 w-5 h-5" />
-                  <div>
-                    <p className="text-sm text-gray-500">Serving Size</p>
-                    <p className="font-medium">{product.servingSize}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Spice Level */}
-              <div className="bg-white p-4 rounded-xl shadow-sm">
-                <h4 className="text-sm text-gray-500 mb-2">Spice Level</h4>
-                <div className="flex space-x-1">
-                  {[...Array(5)].map((_, idx) => (
-                    <GiChiliPepper
-                      key={idx}
-                      className={`w-5 h-5 ${
-                        idx < product.spicyLevel
-                          ? "text-red-500"
-                          : "text-gray-200"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
             </div>
 
             {/* Quantity and Actions */}

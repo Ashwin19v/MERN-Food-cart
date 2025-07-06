@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useStore } from "../context/store";
 
 const ProtectedRoutes = () => {
-  const { user, token, isLoading } = useStore();
+  const { token, isLoading } = useStore();
   const location = useLocation();
 
   // Show loading state while checking authentication

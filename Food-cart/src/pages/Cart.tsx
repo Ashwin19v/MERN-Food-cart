@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+
 import { useStore } from "../context/store";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trash2, ShoppingCart, ChevronLeft } from "lucide-react";

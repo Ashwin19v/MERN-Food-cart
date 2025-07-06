@@ -4,30 +4,14 @@ const Order = require("../models/Order");
 // Create review
 exports.createReview = async (req, res) => {
   try {
-    const { productId, rating, comment, orderId } = req.body;
-
-    // Check if user has purchased the product
-    const order = await Order.findOne({
-      _id: orderId,
-      user: req.user._id,
-      "items.product": productId,
-      orderStatus: "delivered",
-    });
-
-    if (!order) {
-      return res.status(400).json({
-        success: false,
-        message: "You can only review products you have purchased and received",
-      });
-    }
+    const { productId, rating, comment } = req.body;
 
     // Create review
     const review = await Review.create({
-      user: req.user._id,
+      user: req.user,
       product: productId,
       rating,
       comment,
-      orderItem: orderId,
     });
 
     await review.populate("user", "name");
@@ -58,7 +42,7 @@ exports.getProductReviews = async (req, res) => {
     const reviews = await Review.find({ product: req.params.productId })
       .populate("user", "name")
       .sort("-createdAt");
-
+    console.log(reviews);
     res.status(200).json({
       success: true,
       count: reviews.length,
@@ -79,7 +63,7 @@ exports.updateReview = async (req, res) => {
     const { rating, comment } = req.body;
 
     const review = await Review.findOneAndUpdate(
-      { _id: req.params.id, user: req.user._id },
+      { _id: req.params.id, user: req.user },
       { rating, comment },
       { new: true, runValidators: true }
     );
@@ -110,7 +94,7 @@ exports.deleteReview = async (req, res) => {
   try {
     const review = await Review.findOneAndDelete({
       _id: req.params.id,
-      user: req.user._id,
+      user: req.user,
     });
 
     if (!review) {
@@ -132,5 +116,3 @@ exports.deleteReview = async (req, res) => {
     });
   }
 };
-
-

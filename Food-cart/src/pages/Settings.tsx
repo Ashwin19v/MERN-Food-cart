@@ -10,6 +10,7 @@ import {
 import { useStore } from "../context/store";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import type { Product } from "../types/types";
 
 const ProfilePage = () => {
   const {
@@ -19,7 +20,6 @@ const ProfilePage = () => {
     formData,
     isEditing,
     setIsEditing,
-    setFormData,
     handleInputChange,
     favorites,
     updateUserProfile,
@@ -28,7 +28,7 @@ const ProfilePage = () => {
   } = useStore();
 
   const [activeTab, setActiveTab] = useState("profile");
-  const [orderProducts, setOrderProducts] = useState({});
+  const [orderProducts, setOrderProducts] = useState<Product | {} | string>({});
   const navigate = useNavigate();
 
   // Redirect if not logged in
@@ -45,7 +45,7 @@ const ProfilePage = () => {
 
       for (const order of orders) {
         for (const item of order.items) {
-          if (!productMap[item.product]) {
+          if (!productMap[item.product ]) {
             const product = await fetchProductById(item.product);
             productMap[item.product] = product;
           }
@@ -104,19 +104,19 @@ const ProfilePage = () => {
                 <input
                   type="text"
                   name="name"
-                  value={formData.name}
+                  value={formData?.name || ""}
                   onChange={handleInputChange}
                   className="flex-1 border-b border-gray-300 focus:border-orange-500 outline-none py-1"
                 />
               ) : (
-                <div className="flex-1 font-medium">{userData.name}</div>
+                <div className="flex-1 font-medium">{userData?.name}</div>
               )}
             </div>
 
             <div className="flex items-center">
               <div className="w-24 text-gray-500">Email</div>
               <div className="flex-1 font-medium text-gray-600">
-                {userData.email}
+                {userData?.email}
               </div>
             </div>
 
@@ -126,12 +126,12 @@ const ProfilePage = () => {
                 <input
                   type="tel"
                   name="phone"
-                  value={formData.phone}
+                  value={formData?.phone}
                   onChange={handleInputChange}
                   className="flex-1 border-b border-gray-300 focus:border-orange-500 outline-none py-1"
                 />
               ) : (
-                <div className="flex-1 font-medium">{userData.phone}</div>
+                <div className="flex-1 font-medium">{userData?.phone}</div>
               )}
             </div>
 
@@ -140,13 +140,13 @@ const ProfilePage = () => {
               {isEditing ? (
                 <textarea
                   name="address"
-                  value={formData.address}
+                  value={formData?.address}
                   onChange={handleInputChange}
                   className="flex-1 border-b border-gray-300 focus:border-orange-500 outline-none py-1 resize-none"
                   rows={2}
                 />
               ) : (
-                <div className="flex-1 font-medium">{userData.address}</div>
+                <div className="flex-1 font-medium">{userData?.address}</div>
               )}
             </div>
           </div>
@@ -163,7 +163,7 @@ const ProfilePage = () => {
                   <input
                     type="password"
                     name="currentPassword"
-                    value={formData.currentPassword}
+                    value={formData?.currentPassword}
                     onChange={handleInputChange}
                     className="flex-1 border-b border-gray-300 focus:border-orange-500 outline-none py-1"
                   />
@@ -174,7 +174,7 @@ const ProfilePage = () => {
                   <input
                     type="password"
                     name="newPassword"
-                    value={formData.newPassword}
+                    value={formData?.newPassword}
                     onChange={handleInputChange}
                     className="flex-1 border-b border-gray-300 focus:border-orange-500 outline-none py-1"
                   />
@@ -205,7 +205,7 @@ const ProfilePage = () => {
               </p>
               <p className="text-sm text-gray-600 mb-1">
                 Shipping Address:{" "}
-                <span className="font-medium">{order.ShippingAddress}</span>
+                <span className="font-medium">{order.shippingAddress}</span>
               </p>
               <p className="text-sm text-gray-600 mb-2">
                 Paid:{" "}
