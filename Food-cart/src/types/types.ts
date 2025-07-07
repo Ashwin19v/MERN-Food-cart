@@ -34,12 +34,20 @@ export interface Product {
 }
 export interface CartItem {
   _id: string;
-  product: Product;
+  product: Product ;
   name: string;
   price: number;
   quantity: number;
   image: string;
 }
+export interface Dish {
+  name: string;
+  price: number;
+  rating: number;
+  time: string;
+  img: string;
+}
+
 export interface Review {
   _id: string;
   rating: number;

@@ -10,12 +10,12 @@ import type { Product } from "../types/types";
 const ProductPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
-  // console.log(productId)
+
   const { fetchProductById, addToCart, addToFavorites } = useStore();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
-  // const [selectedImage, setSelectedImage] = useState(0);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -97,10 +97,10 @@ const ProductPage = () => {
               <div className="flex items-center space-x-4">
                 <div className="flex items-center">
                   <FiStar className="text-yellow-400 w-5 h-5" />
-                  <span className="ml-2 text-gray-600">{product.rating}</span>
+                  <span className="ml-2 text-gray-600">4.5</span>
                 </div>
                 <span className="text-gray-400">|</span>
-                <span className="text-gray-600">{product.reviews} reviews</span>
+                <span className="text-gray-600"> reviews</span>
               </div>
             </div>
 

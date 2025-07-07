@@ -9,16 +9,15 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const { cartItems, cartTotal, user, createOrder, isLoading } =
     useStore();
-
   const [step, setStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [orderComplete, setOrderComplete] = useState(false);
-  const [orderId, setOrderId] = useState("");
+
 
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
     setValue,
   } = useForm();
@@ -33,12 +32,7 @@ const CheckoutPage = () => {
     }
   }, [user, setValue]);
 
-  // Redirect if cart is empty
-  // useEffect(() => {
-  //   if (cartItems.length === 0) {
-  //     navigate("/cart");
-  //   }
-  // }, [cartItems, orderComplete, navigate]);
+ 
 
   const onSubmit = async (data) => {
     try {

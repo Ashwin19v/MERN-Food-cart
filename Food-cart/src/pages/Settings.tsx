@@ -28,26 +28,28 @@ const ProfilePage = () => {
   } = useStore();
 
   const [activeTab, setActiveTab] = useState("profile");
-  const [orderProducts, setOrderProducts] = useState<Product | {} | string>({});
+  const [orderProducts, setOrderProducts] = useState<Record<string, Product>>(
+    {}
+  );
   const navigate = useNavigate();
 
-  // Redirect if not logged in
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
-
-  // Fetch product data for orders
   useEffect(() => {
     const fetchAllProducts = async () => {
-      const productMap = {};
+      const productMap: Record<string, Product> = {};
 
       for (const order of orders) {
         for (const item of order.items) {
-          if (!productMap[item.product ]) {
-            const product = await fetchProductById(item.product);
-            productMap[item.product] = product;
+          let id: string;
+          if (typeof item.product === "string") {
+            id = item.product;
+          } else {
+            id = item.product._id;
+          }
+          if (!productMap[id]) {
+            const product = await fetchProductById(id);
+            if (product) {
+              productMap[id] = product;
+            }
           }
         }
       }
@@ -55,7 +57,7 @@ const ProfilePage = () => {
       setOrderProducts(productMap);
     };
 
-    if (orders.length) fetchAllProducts();
+    fetchAllProducts();
   }, [orders]);
 
   const renderTabContent = () => {
@@ -189,70 +191,88 @@ const ProfilePage = () => {
     if (activeTab === "orders") {
       return (
         <motion.div className="bg-white p-6 rounded-xl shadow-sm">
-          {orders.map((order) => (
-            <div key={order._id} className="mb-6 border-b pb-4">
-              <h4 className="font-semibold text-lg text-gray-800 mb-1">
-                Order ID: {order._id}
-              </h4>
-              <p className="text-sm text-gray-500 mb-1">
-                Date: {new Date(order.createdAt).toLocaleString()}
-              </p>
-              <p className="text-sm text-gray-600 mb-1">
-                Payment Method:{" "}
-                <span className="font-medium capitalize">
-                  {order.paymentMethod}
-                </span>
-              </p>
-              <p className="text-sm text-gray-600 mb-1">
-                Shipping Address:{" "}
-                <span className="font-medium">{order.shippingAddress}</span>
-              </p>
-              <p className="text-sm text-gray-600 mb-2">
-                Paid:{" "}
-                <span
-                  className={`font-medium ${
-                    order.isPaid ? "text-green-500" : "text-red-500"
-                  }`}
-                >
-                  {order.isPaid ? "Yes" : "No"}
-                </span>
-              </p>
-
-              <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 w-full">
-                {order.items.map((item, index) => {
-                  const product = orderProducts[item.product];
-                  return (
-                    <div
-                      key={index}
-                      className="border p-3 rounded-lg shadow-sm flex flex-col items-center"
-                    >
-                      {product ? (
-                        <>
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-20 h-20 object-cover rounded mb-2"
-                          />
-                          <p className="font-semibold text-gray-800">
-                            {product.name}
-                          </p>
-                        </>
-                      ) : (
-                        <p className="text-gray-400">Loading product...</p>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              <p className="mt-2 font-bold text-orange-500">
-                Total: ${order.totalAmount.toFixed(2)}
-              </p>
-              <p className="mt-1 text-sm text-gray-600">
-                Status: <span className="font-medium">{order.orderStatus}</span>
+          {orders.length === 0 ? (
+            <div className="flex flex-col items-center justify-center text-gray-500 py-10">
+              <Heart size={50} className="text-gray-300 mb-4" />
+              <p className="text-lg font-medium">No Orders yet.</p>
+              <p className="text-sm text-gray-400 mt-1">
+                Buy items to view them here.
               </p>
             </div>
-          ))}
+          ) : (
+            orders.map((order) => (
+              <div key={order._id} className="mb-6 border-b pb-4">
+                <h4 className="font-semibold text-lg text-gray-800 mb-1">
+                  Order ID: {order._id}
+                </h4>
+                <p className="text-sm text-gray-500 mb-1">
+                  Date: {new Date(order.createdAt).toLocaleString()}
+                </p>
+                <p className="text-sm text-gray-600 mb-1">
+                  Payment Method:{" "}
+                  <span className="font-medium capitalize">
+                    {order.paymentMethod}
+                  </span>
+                </p>
+                <p className="text-sm text-gray-600 mb-1">
+                  Shipping Address:{" "}
+                  <span className="font-medium">{order.shippingAddress}</span>
+                </p>
+                <p className="text-sm text-gray-600 mb-2">
+                  Paid:{" "}
+                  <span
+                    className={`font-medium ${
+                      order.isPaid ? "text-green-500" : "text-red-500"
+                    }`}
+                  >
+                    {order.isPaid ? "Yes" : "No"}
+                  </span>
+                </p>
+
+                <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 w-full">
+                  {order.items.map((item, index) => {
+                    let id: string;
+                    if (typeof item.product === "string") {
+                      id = item.product;
+                    } else {
+                      id = item.product._id;
+                    }
+                    const product = orderProducts[id];
+
+                    return (
+                      <div
+                        key={index}
+                        className="border p-3 rounded-lg shadow-sm flex flex-col items-center"
+                      >
+                        {product ? (
+                          <>
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-20 h-20 object-cover rounded mb-2"
+                            />
+                            <p className="font-semibold text-gray-800">
+                              {product.name}
+                            </p>
+                          </>
+                        ) : (
+                          <p className="text-gray-400">Loading product...</p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <p className="mt-2 font-bold text-orange-500">
+                  Total: ${order.totalAmount.toFixed(2)}
+                </p>
+                <p className="mt-1 text-sm text-gray-600">
+                  Status:{" "}
+                  <span className="font-medium">{order.orderStatus}</span>
+                </p>
+              </div>
+            ))
+          )}
         </motion.div>
       );
     }
