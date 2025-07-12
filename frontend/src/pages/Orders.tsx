@@ -1,77 +1,6 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import OrderDetails from  "../components/layout/OrderDetails";
-const orders = [
-  {
-    id: "#ORD-001",
-    customer: "John Doe",
-    items: [
-      { name: "Cheeseburger", quantity: 2, price: 8.99 },
-      { name: "French Fries", quantity: 1, price: 3.99 },
-      { name: "Soda", quantity: 2, price: 2.49 },
-    ],
-    total: 26.45,
-    status: "Preparing",
-    date: "2023-05-15 10:30",
-    address: "123 Main St, City, Country",
-    phone: "+1 234 567 8901",
-  },
-  {
-    id: "#ORD-002",
-    customer: "Jane Smith",
-    items: [
-      { name: "Pepperoni Pizza", quantity: 1, price: 12.99 },
-      { name: "Garlic Bread", quantity: 1, price: 4.99 },
-    ],
-    total: 17.98,
-    status: "Pending",
-    date: "2023-05-15 11:15",
-    address: "456 Oak Ave, City, Country",
-    phone: "+1 345 678 9012",
-  },
-  {
-    id: "#ORD-003",
-    customer: "Robert Johnson",
-    items: [
-      { name: "Chicken Sandwich", quantity: 1, price: 7.99 },
-      { name: "Onion Rings", quantity: 1, price: 4.49 },
-      { name: "Iced Tea", quantity: 1, price: 2.99 },
-    ],
-    total: 15.47,
-    status: "Ready",
-    date: "2023-05-15 12:45",
-    address: "789 Pine Rd, City, Country",
-    phone: "+1 456 789 0123",
-  },
-  {
-    id: "#ORD-004",
-    customer: "Emily Davis",
-    items: [
-      { name: "Veggie Burger", quantity: 1, price: 9.99 },
-      { name: "Sweet Potato Fries", quantity: 1, price: 4.99 },
-      { name: "Smoothie", quantity: 1, price: 5.99 },
-    ],
-    total: 20.97,
-    status: "Completed",
-    date: "2023-05-14 18:30",
-    address: "321 Elm St, City, Country",
-    phone: "+1 567 890 1234",
-  },
-  {
-    id: "#ORD-005",
-    customer: "Michael Wilson",
-    items: [
-      { name: "BBQ Ribs", quantity: 1, price: 15.99 },
-      { name: "Coleslaw", quantity: 1, price: 3.99 },
-      { name: "Beer", quantity: 2, price: 5.99 },
-    ],
-    total: 31.96,
-    status: "Cancelled",
-    date: "2023-05-14 19:45",
-    address: "654 Maple Dr, City, Country",
-    phone: "+1 678 901 2345",
-  },
-];
+import OrderDetails from "../components/layout/OrderDetails";
 
 const statusColors = {
   Pending: "bg-yellow-100 text-yellow-800",
@@ -90,9 +19,17 @@ const statusOptions = [
 ];
 
 const OrderList = () => {
+  const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:5000/orders")
+      .then((res) => res.json())
+      .then((data) => setOrders(data))
+      .catch((error) => console.error("Error fetching orders:", error));
+  }, []);
 
   const filteredOrders = orders.filter((order) => {
     const matchesStatus =

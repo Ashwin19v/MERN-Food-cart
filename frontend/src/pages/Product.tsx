@@ -1,58 +1,16 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductForm from "../components/layout/ProductForm";
-
-const products = [
-  {
-    id: 1,
-    name: "Cheeseburger",
-    category: "Burgers",
-    price: 8.99,
-    stock: 45,
-    status: "active",
-    image: "burger.jpg",
-  },
-  {
-    id: 2,
-    name: "Pepperoni Pizza",
-    category: "Pizzas",
-    price: 12.99,
-    stock: 23,
-    status: "active",
-    image: "pizza.jpg",
-  },
-  {
-    id: 3,
-    name: "Soda",
-    category: "Drinks",
-    price: 2.49,
-    stock: 0,
-    status: "inactive",
-    image: "soda.jpg",
-  },
-  {
-    id: 4,
-    name: "French Fries",
-    category: "Snacks",
-    price: 3.99,
-    stock: 67,
-    status: "active",
-    image: "fries.jpg",
-  },
-  {
-    id: 5,
-    name: "Chocolate Cake",
-    category: "Desserts",
-    price: 5.99,
-    stock: 12,
-    status: "active",
-    image: "cake.jpg",
-  },
-];
+import { useApp } from "../store/Context";
 
 const ProductList = () => {
+  const { fetchProducts, products } = useApp();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const handleEdit = (product) => {
     setSelectedProduct(product);
@@ -119,7 +77,7 @@ const ProductList = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {products.map((product, index) => (
                 <motion.tr
-                  key={product.id}
+                  key={product._id || product.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
@@ -152,12 +110,12 @@ const ProductList = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        product.status === "active"
+                        product.stock > 0
                           ? "bg-green-100 text-green-800"
                           : "bg-red-100 text-red-800"
                       }`}
                     >
-                      {product.status}
+                      {product.stock > 0 ? "active" : "inactive"}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

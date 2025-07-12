@@ -1,12 +1,27 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useApp } from "../../store/Context";
+// import { useApp } from "../store/Context";
 
 const OrderDetails = ({ order, onClose }) => {
+  const { updateOrderStatus } = useApp();
   const [status, setStatus] = useState(order.status);
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleStatusChange = (e) => {
     setStatus(e.target.value);
-    // In a real app, you would update the order status in your backend here
+  };
+
+  const handleSave = async () => {
+    try {
+      setIsSaving(true);
+      await updateOrderStatus(order._id, status, order.isPaid);
+      onClose();
+    } catch (err) {
+      console.error("Failed to update order status", err);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -117,86 +132,26 @@ const OrderDetails = ({ order, onClose }) => {
                 </div>
 
                 <div className="space-y-2">
-                  <div className="flex items-center">
-                    <div
-                      className={`h-2 w-2 rounded-full mr-2 ${
-                        status === "Pending" ? "bg-yellow-500" : "bg-gray-300"
-                      }`}
-                    ></div>
-                    <span
-                      className={`text-sm ${
-                        status === "Pending"
-                          ? "font-medium text-gray-900"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      Pending
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <div
-                      className={`h-2 w-2 rounded-full mr-2 ${
-                        status === "Preparing" ? "bg-blue-500" : "bg-gray-300"
-                      }`}
-                    ></div>
-                    <span
-                      className={`text-sm ${
-                        status === "Preparing"
-                          ? "font-medium text-gray-900"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      Preparing
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <div
-                      className={`h-2 w-2 rounded-full mr-2 ${
-                        status === "Ready" ? "bg-green-500" : "bg-gray-300"
-                      }`}
-                    ></div>
-                    <span
-                      className={`text-sm ${
-                        status === "Ready"
-                          ? "font-medium text-gray-900"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      Ready
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <div
-                      className={`h-2 w-2 rounded-full mr-2 ${
-                        status === "Completed" ? "bg-gray-500" : "bg-gray-300"
-                      }`}
-                    ></div>
-                    <span
-                      className={`text-sm ${
-                        status === "Completed"
-                          ? "font-medium text-gray-900"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      Completed
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <div
-                      className={`h-2 w-2 rounded-full mr-2 ${
-                        status === "Cancelled" ? "bg-red-500" : "bg-gray-300"
-                      }`}
-                    ></div>
-                    <span
-                      className={`text-sm ${
-                        status === "Cancelled"
-                          ? "font-medium text-gray-900"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      Cancelled
-                    </span>
-                  </div>
+                  {["Pending", "Preparing", "Ready", "Completed", "Cancelled"].map(
+                    (step) => (
+                      <div key={step} className="flex items-center">
+                        <div
+                          className={`h-2 w-2 rounded-full mr-2 ${
+                            status === step ? getStatusColor(step) : "bg-gray-300"
+                          }`}
+                        ></div>
+                        <span
+                          className={`text-sm ${
+                            status === step
+                              ? "font-medium text-gray-900"
+                              : "text-gray-500"
+                          }`}
+                        >
+                          {step}
+                        </span>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
 
@@ -243,15 +198,34 @@ const OrderDetails = ({ order, onClose }) => {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               type="button"
+              disabled={isSaving}
+              onClick={handleSave}
               className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Save Changes
+              {isSaving ? "Saving..." : "Save Changes"}
             </motion.button>
           </div>
         </div>
       </motion.div>
     </motion.div>
   );
+};
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "Pending":
+      return "bg-yellow-500";
+    case "Preparing":
+      return "bg-blue-500";
+    case "Ready":
+      return "bg-green-500";
+    case "Completed":
+      return "bg-gray-500";
+    case "Cancelled":
+      return "bg-red-500";
+    default:
+      return "bg-gray-300";
+  }
 };
 
 export default OrderDetails;

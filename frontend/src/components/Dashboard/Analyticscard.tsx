@@ -1,18 +1,43 @@
 import { motion } from "framer-motion";
-
-const stats = [
-  { title: "Total Orders Today", value: "142", change: "+12%", trend: "up" },
-  { title: "Total Revenue Today", value: "$2,845", change: "+8%", trend: "up" },
-  {
-    title: "Most Popular Item",
-    value: "Burger Meal",
-    change: "25 orders",
-    trend: "up",
-  },
-  { title: "Active Orders", value: "18", change: "-3%", trend: "down" },
-];
+import { useApp } from "../../store/Context";
+import { useEffect } from "react";
 
 const AnalyticsCards = () => {
+  const { dashboardStats, fetchDashboardStats } = useApp();
+
+  useEffect(() => {
+    fetchDashboardStats();
+  }, []);
+
+  const stats = dashboardStats
+    ? [
+        {
+          title: "Total Orders Today",
+          value: dashboardStats.totalOrdersToday,
+          change: "+12%", // optionally calculate from backend
+          trend: "up",
+        },
+        {
+          title: "Total Revenue Today",
+          value: `₹${dashboardStats.totalRevenueToday}`,
+          change: "+8%",
+          trend: "up",
+        },
+        {
+          title: "Most Popular Item",
+          value: dashboardStats.mostPopularItem,
+          change: "25 orders", // optional
+          trend: "up",
+        },
+        {
+          title: "Active Orders",
+          value: dashboardStats.activeOrders,
+          change: "-3%", // optional
+          trend: "down",
+        },
+      ]
+    : [];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat, index) => (

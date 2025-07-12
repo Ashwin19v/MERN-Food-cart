@@ -114,7 +114,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchDashboardStats = async () => {
     try {
-      const { data } = await api.get("/dashboard/stats");
+      const { data } = await api.get("/dashboard");
       setDashboardStats(data);
       toast.success("Dashboard stats loaded!");
     } catch (error: any) {

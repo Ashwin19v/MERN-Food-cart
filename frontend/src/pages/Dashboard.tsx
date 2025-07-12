@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import AnalyticsCards from "../components/Dashboard/Analyticscard"
-import  Charts  from "../components/Dashboard/Charts";
+import AnalyticsCards from "../components/Dashboard/Analyticscard";
+import Charts from "../components/Dashboard/Charts";
 import LiveOrders from "../components/Dashboard/LiveOrders";
-
 
 const Dashboard = () => {
   return (

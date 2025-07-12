@@ -17,82 +17,82 @@ function App() {
 
   return (
     <AppProvider>
-    <Router>
-      <div className="flex h-screen bg-gray-100 ">
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Topbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4">
-            <AnimatePresence mode="wait">
-              <Routes>
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route
-                  path="/dashboard"
-                  element={
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <Dashboard />
-                    </motion.div>
-                  }
-                />
-                <Route
-                  path="/products"
-                  element={
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <ProductList />
-                    </motion.div>
-                  }
-                />
-                <Route
-                  path="/orders"
-                  element={
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <OrderList />
-                    </motion.div>
-                  }
-                />
-                <Route
-                  path="/settings"
-                  element={
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <Settings />
-                    </motion.div>
-                  }
-                />
-                <Route
-                  path="/users"
-                  element={
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <User />
-                    </motion.div>
-                  }
-                />
-              </Routes>
-            </AnimatePresence>
-          </main>
+      <Router>
+        <div className="flex h-screen bg-gray-100 ">
+          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <Topbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4">
+              <AnimatePresence mode="wait">
+                <Routes>
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <Dashboard />
+                      </motion.div>
+                    }
+                  />
+                  <Route
+                    path="/products"
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <ProductList />
+                      </motion.div>
+                    }
+                  />
+                  <Route
+                    path="/orders"
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <OrderList />
+                      </motion.div>
+                    }
+                  />
+                  <Route
+                    path="/settings"
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <Settings />
+                      </motion.div>
+                    }
+                  />
+                  <Route
+                    path="/users"
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <User />
+                      </motion.div>
+                    }
+                  />
+                </Routes>
+              </AnimatePresence>
+            </main>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
     </AppProvider>
   );
 }
