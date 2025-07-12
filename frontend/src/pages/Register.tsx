@@ -12,12 +12,15 @@ const Signup = () => {
     const form = e.target as HTMLFormElement;
     const name = (form.elements.namedItem("name") as HTMLInputElement).value;
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-    const password = (form.elements.namedItem("password") as HTMLInputElement).value;
+    const password = (form.elements.namedItem("password") as HTMLInputElement)
+      .value;
 
     try {
-      await register(name, email, password); // ✅ toast handled inside context
+      await register(name, email, password);
     } catch (error) {
-      // error toast already handled inside context register()
+      console.error("Registration failed:", error);
+
+      alert("Registration failed. Please try again.");
     }
   };
 

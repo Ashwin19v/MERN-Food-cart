@@ -1,14 +1,26 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useApp } from "../store/Context";
 
 const Login = () => {
-  const [success, setSuccess] = useState(false);
+  const { login, isLoading, error } = useApp(); // Use context
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccess(true); // Trigger success animation
-    // Add your actual login logic here
+    try {
+      await login(formData.email, formData.password); 
+      navigate("/dashboard"); 
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
   };
 
   return (
@@ -29,7 +41,10 @@ const Login = () => {
             </label>
             <input
               id="email"
+              name="email"
               type="email"
+              value={formData.email}
+              onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
               placeholder="admin@example.com"
               required
@@ -41,7 +56,10 @@ const Login = () => {
             </label>
             <input
               id="password"
+              name="password"
               type="password"
+              value={formData.password}
+              onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
               placeholder="••••••••"
               required
@@ -51,21 +69,22 @@ const Login = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            className="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition duration-300"
+            disabled={isLoading}
+            className="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition duration-300 disabled:opacity-50"
           >
-            Login
+            {isLoading ? "Logging in..." : "Login"}
           </motion.button>
         </form>
 
-        {/* ✅ Login success message with framer-motion */}
-        {success && (
+        {/* Error message */}
+        {error && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="mt-4 text-green-600 text-center font-semibold"
+            className="mt-4 text-red-600 text-center font-semibold"
           >
-            ✅ Login Successful!
+            ❌ {error}
           </motion.div>
         )}
 

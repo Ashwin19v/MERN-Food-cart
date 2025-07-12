@@ -10,11 +10,13 @@ import Settings from "./pages/Settings";
 import User from "./pages/User";
 import Sidebar from "./components/UI/SideBar";
 import Topbar from "./components/UI/Navbar";
+import { AppProvider } from "./store/Context";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
+    <AppProvider>
     <Router>
       <div className="flex h-screen bg-gray-100 ">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -91,6 +93,7 @@ function App() {
         </div>
       </div>
     </Router>
+    </AppProvider>
   );
 }
 
