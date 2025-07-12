@@ -42,7 +42,7 @@ exports.getProductReviews = async (req, res) => {
     const reviews = await Review.find({ product: req.params.productId })
       .populate("user", "name")
       .sort("-createdAt");
-    console.log(reviews);
+
     res.status(200).json({
       success: true,
       count: reviews.length,

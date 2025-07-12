@@ -23,7 +23,7 @@ exports.getCart = async (req, res) => {
 
     if (!cart) {
       cart = await Cart.create({
-        user: req.user._id,
+        user: req.user,
         items: [],
         totalAmount: 0,
       });

@@ -7,12 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
-  const { cartItems, cartTotal, user, createOrder, isLoading } =
-    useStore();
+  const { cartItems, cartTotal, user, createOrder, isLoading } = useStore();
   const [step, setStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [orderComplete, setOrderComplete] = useState(false);
-
 
   const {
     register,
@@ -31,8 +29,6 @@ const CheckoutPage = () => {
       setValue("phone", user.phone || "");
     }
   }, [user, setValue]);
-
- 
 
   const onSubmit = async (data) => {
     try {
@@ -595,7 +591,7 @@ const CheckoutPage = () => {
                       </p>
                     </div>
                     <div className="text-sm font-medium">
-                      ${item.product.price* item.quantity}
+                      ${item.product.price * item.quantity}
                     </div>
                   </div>
                 ))}

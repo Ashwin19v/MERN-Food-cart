@@ -2,9 +2,9 @@ export interface User {
   _id: string;
   name: string;
   email: string;
- 
+
   phone?: string;
-  address?:string;
+  address?: string;
 }
 export interface UserData {
   _id: string;
@@ -13,14 +13,13 @@ export interface UserData {
   phone?: string;
   address?: string;
 }
-export interface FormData {
+export type FormData = {
   name: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  currentPassword?: string;
-  newPassword?:string;
-}
+  phone: string;
+  address: string;
+  currentPassword: string;
+  newPassword: string;
+};
 
 export interface Product {
   _id: string;
@@ -34,7 +33,7 @@ export interface Product {
 }
 export interface CartItem {
   _id: string;
-  product: Product ;
+  product: Product;
   name: string;
   price: number;
   quantity: number;
@@ -67,7 +66,7 @@ export interface Order {
   shippingAddress: string;
   createdAt: string;
   isPaid: boolean;
-  paymentMethod:string;
+  paymentMethod: string;
 }
 
 export interface Review {
@@ -111,6 +110,7 @@ export interface StoreContextType {
   logout: () => void;
   userData: User | null;
   formData: FormData | null;
+  setUserData: React.Dispatch<React.SetStateAction<User>>;
 
   // Cart
   cartItems: CartItem[];
@@ -134,8 +134,8 @@ export interface StoreContextType {
   removeFromFavorites: (productId: string) => Promise<void>;
 
   // Reviews
-  reviews: Review[];
-  setReviews: React.Dispatch<React.SetStateAction<Review[] | []>>;
+  // reviews: Review[];
+  // setReviews: React.Dispatch<React.SetStateAction<Review[] | []>>;
   getProductReviews: (productId: string) => Promise<void>;
   addReview: (
     productId: string,
@@ -172,4 +172,5 @@ export interface StoreContextType {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   updateUserProfile: () => Promise<void>;
+  fetchUserData: () => Promise<void>;
 }

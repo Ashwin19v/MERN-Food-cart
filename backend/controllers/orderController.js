@@ -1,12 +1,13 @@
 const Order = require("../models/Order");
+const sendEmail = require("../middleware/sendEmail");
 
 // Create new order
 exports.createOrder = async (req, res) => {
   console.log(req.user);
   try {
     const { items, shippingAddress, paymentMethod, totalAmount } = req.body;
-
     console.log(shippingAddress);
+
     const order = await Order.create({
       user: req.user,
       items,
@@ -17,6 +18,12 @@ exports.createOrder = async (req, res) => {
     });
 
     await order.populate("items.product");
+
+    await sendEmail(
+      req.email,
+      "Order Confirmation  ",
+      `<h2>Order Confirmation</h2><p>Your order will reach you soon at:</p><p>${shippingAddress}</p>`
+    );
     res.status(201).json({
       success: true,
       message: "Order placed successfully",

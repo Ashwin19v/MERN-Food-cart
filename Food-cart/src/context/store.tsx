@@ -42,7 +42,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [categoryProducts, setCategoryProducts] = useState<any[]>([]);
   const [popularProducts, setPopularProducts] = useState<any[]>([]);
 
-  const [userData, setUserData] = useState<User>({
+  const [userData, setUserData] = useState<User >({
+    
     _id: user?._id || "",
     name: user?.name || "",
     email: user?.email || "",
