@@ -24,6 +24,7 @@ const favoriteRoutes = require("./routes/favRoutes");
 const adminUserRoutes = require("./routes/Admin/authRoute");
 const adminProductRoutes = require("./routes/Admin/productRoute");
 const adminOrderRoutes = require("./routes/Admin/orderRoute");
+const adminDashboardRoutes = require("./routes/Admin/dashboardRoute");
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -41,6 +42,7 @@ app.use("/api/favorites", favoriteRoutes);
 app.use("/api/admin/users", adminUserRoutes);
 app.use("/api/admin/products", adminProductRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
+app.use("/api/admin/dashboard", adminDashboardRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);

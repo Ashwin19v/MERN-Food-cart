@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useApp } from "../../store/Context";
-// import { useApp } from "../store/Context";
 
 const OrderDetails = ({ order, onClose }) => {
   const { updateOrderStatus } = useApp();
@@ -39,7 +38,7 @@ const OrderDetails = ({ order, onClose }) => {
         <div className="p-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-medium text-gray-900">
-              Order Details - {order.id}
+              Order Details - {order._id}
             </h3>
             <button
               onClick={onClose}
@@ -68,13 +67,14 @@ const OrderDetails = ({ order, onClose }) => {
               </h4>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-700">
-                  <span className="font-medium">Name:</span> {order.customer}
+                  <span className="font-medium">Name:</span> {order.user.name}
                 </p>
                 <p className="text-sm text-gray-700 mt-1">
-                  <span className="font-medium">Phone:</span> {order.phone}
+                  <span className="font-medium">Phone:</span> {order.user.phone}
                 </p>
                 <p className="text-sm text-gray-700 mt-1">
-                  <span className="font-medium">Address:</span> {order.address}
+                  <span className="font-medium">Address:</span>{" "}
+                  {order.ShippingAddress}
                 </p>
               </div>
 
@@ -92,10 +92,10 @@ const OrderDetails = ({ order, onClose }) => {
                       className="flex justify-between"
                     >
                       <span className="text-sm text-gray-700">
-                        {item.quantity}x {item.name}
+                        {item.quantity}x {item.product}
                       </span>
                       <span className="text-sm text-gray-700">
-                        ${(item.quantity * item.price).toFixed(2)}
+                        ${item.quantity * item.price}
                       </span>
                     </motion.div>
                   ))}
@@ -103,7 +103,7 @@ const OrderDetails = ({ order, onClose }) => {
                 <div className="border-t border-gray-200 mt-3 pt-3 flex justify-between">
                   <span className="font-medium text-gray-900">Total</span>
                   <span className="font-medium text-gray-900">
-                    ${order.total.toFixed(2)}
+                    {order.totalAmount.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -132,26 +132,30 @@ const OrderDetails = ({ order, onClose }) => {
                 </div>
 
                 <div className="space-y-2">
-                  {["Pending", "Preparing", "Ready", "Completed", "Cancelled"].map(
-                    (step) => (
-                      <div key={step} className="flex items-center">
-                        <div
-                          className={`h-2 w-2 rounded-full mr-2 ${
-                            status === step ? getStatusColor(step) : "bg-gray-300"
-                          }`}
-                        ></div>
-                        <span
-                          className={`text-sm ${
-                            status === step
-                              ? "font-medium text-gray-900"
-                              : "text-gray-500"
-                          }`}
-                        >
-                          {step}
-                        </span>
-                      </div>
-                    )
-                  )}
+                  {[
+                    "Pending",
+                    "Preparing",
+                    "Ready",
+                    "Completed",
+                    "Cancelled",
+                  ].map((step) => (
+                    <div key={step} className="flex items-center">
+                      <div
+                        className={`h-2 w-2 rounded-full mr-2 ${
+                          status === step ? getStatusColor(step) : "bg-gray-300"
+                        }`}
+                      ></div>
+                      <span
+                        className={`text-sm ${
+                          status === step
+                            ? "font-medium text-gray-900"
+                            : "text-gray-500"
+                        }`}
+                      >
+                        {step}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
 

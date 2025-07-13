@@ -33,6 +33,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
+  const [customers, setCustomers] = useState<User[]>([]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -40,6 +41,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(
     null
   );
+  console.log(dashboardStats);
+  
 
   const [userOrders, setUserOrders] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -57,6 +60,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     initializeAuth();
   }, [token]);
 
+  useEffect(() => {
+    getMyOrders();
+    getCustomers();
+    fetchDashboardStats();
+  }, [token]);
+
   const getCurrentUser = async () => {
     try {
       const { data } = await api.get("users/me");
@@ -68,7 +77,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         setError(msg);
         toast.error(msg);
         setUser(null);
-        setToken(null);
+        // setToken(null);
         // localStorage.removeItem("token");
       } else {
         const msg = error.response?.data?.message || "Failed to get user data";
@@ -112,6 +121,44 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateUserProfile = async (
+    name: string,
+    currentPassword: string,
+    password?: string
+  ) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const { data } = await api.put("/users/update", {
+        name,
+        currentPassword,
+        password,
+      });
+      setUser(data.data);
+      toast.success("Profile updated successfully!");
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message || "Failed to update profile";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getCustomers = async () => {
+    try {
+      const { data } = await api.get("/users/customers");
+      setCustomers(data.data);
+      toast.success("Customers loaded!");
+    } catch (error: any) {
+      const msg = "Failed to fetch your customers";
+      setError(msg);
+      toast.error(msg);
+    }
+  };
+
   const fetchDashboardStats = async () => {
     try {
       const { data } = await api.get("/dashboard");
@@ -126,7 +173,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const getMyOrders = async () => {
     try {
-      const { data } = await api.get("/orders/myorders");
+      const { data } = await api.get("/orders");
       setUserOrders(data);
       toast.success("Orders loaded!");
     } catch (error: any) {
@@ -234,6 +281,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         createProduct,
         updateProduct,
         deleteProduct,
+        updateUserProfile,
+        customers,
       }}
     >
       {children}

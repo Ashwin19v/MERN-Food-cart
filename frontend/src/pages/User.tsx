@@ -1,66 +1,23 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useApp } from "../store/Context";
 
-const users = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "+1 234 567 8901",
-    role: "Customer",
-    status: "active",
-    orders: 5,
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane@example.com",
-    phone: "+1 345 678 9012",
-    role: "Customer",
-    status: "active",
-    orders: 12,
-  },
-  {
-    id: 3,
-    name: "Robert Johnson",
-    email: "robert@example.com",
-    phone: "+1 456 789 0123",
-    role: "Customer",
-    status: "blocked",
-    orders: 3,
-  },
-  {
-    id: 4,
-    name: "Emily Davis",
-    email: "emily@example.com",
-    phone: "+1 567 890 1234",
-    role: "Customer",
-    status: "active",
-    orders: 8,
-  },
-  {
-    id: 5,
-    name: "Michael Wilson",
-    email: "michael@example.com",
-    phone: "+1 678 901 2345",
-    role: "Customer",
-    status: "active",
-    orders: 15,
-  },
-];
+
 
 const UserManagement = () => {
+  const {customers} = useApp();
+  console.log(customers);
+  
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredUsers = users.filter(
+  const filteredUsers = customers.filter(
     (user) =>
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const toggleUserStatus = (userId) => {
-    // In a real app, you would update the user status in your backend here
-    console.log(`Toggling status for user ${userId}`);
+  const toggleUserStatus = () => {
+ 
   };
 
   return (
@@ -112,9 +69,7 @@ const UserManagement = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Phone
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Role
-                </th>
+               
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Orders
                 </th>
@@ -129,7 +84,7 @@ const UserManagement = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredUsers.map((user, index) => (
                 <motion.tr
-                  key={user.id}
+                  key={user._id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
@@ -154,9 +109,7 @@ const UserManagement = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {user.phone}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {user.role}
-                  </td>
+               
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {user.orders}
                   </td>
@@ -175,7 +128,7 @@ const UserManagement = () => {
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      onClick={() => toggleUserStatus(user.id)}
+                      // onClick={() => toggleUserStatus(user._id)}
                       className={`mr-3 ${
                         user.status === "active"
                           ? "text-red-600 hover:text-red-900"

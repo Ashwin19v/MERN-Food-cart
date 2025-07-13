@@ -1,4 +1,5 @@
 const User = require("../../models/adminUser");
+const customers = require("../../models/User")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -79,9 +80,9 @@ exports.getUser = async (req, res) => {
 // Update user profile
 exports.updateUserProfile = async (req, res) => {
   try {
-    const { name, phone, address, currentPassword, password } = req.body;
+    const { name, currentPassword, password } = req.body;
 
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.user);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // If password change is requested
@@ -96,12 +97,22 @@ exports.updateUserProfile = async (req, res) => {
     }
 
     user.name = name || user.name;
-    user.phone = phone || user.phone;
-    user.address = address || user.address;
 
     await user.save();
     res.status(200).json({ message: "Profile updated", data: user });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ message: "Error updating profile" });
   }
 };
+
+exports.getCustomers = async(req,res)=>{
+  try {
+    const customersList = await customers.find();
+    res.status(200).json({ data: customersList });
+  } catch (error) {
+    console.error("❌ Error fetching customers:", error);
+    res.status(500).json({ message: "Server error while fetching customers" });
+  }
+}

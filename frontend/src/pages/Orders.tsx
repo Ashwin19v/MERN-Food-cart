@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import OrderDetails from "../components/layout/OrderDetails";
+import { useApp } from "../store/Context";
 
 const statusColors = {
   Pending: "bg-yellow-100 text-yellow-800",
@@ -19,24 +20,18 @@ const statusOptions = [
 ];
 
 const OrderList = () => {
-  const [orders, setOrders] = useState([]);
+  const { userOrders } = useApp();
+
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    fetch("http://localhost:5000/orders")
-      .then((res) => res.json())
-      .then((data) => setOrders(data))
-      .catch((error) => console.error("Error fetching orders:", error));
-  }, []);
-
-  const filteredOrders = orders.filter((order) => {
+  const filteredOrders = userOrders.filter((order) => {
     const matchesStatus =
-      filterStatus === "all" || order.status === filterStatus;
+      filterStatus === "all" || order.orderStatus === filterStatus;
     const matchesSearch =
-      order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.customer.toLowerCase().includes(searchQuery.toLowerCase());
+      order._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.user.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesStatus && matchesSearch;
   });
 
@@ -125,16 +120,16 @@ const OrderList = () => {
                   transition={{ delay: index * 0.05 }}
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {order.id}
+                    {order._id}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {order.customer}
+                    {order.user.name}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {order.date}
+                    {order.createdAt}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${order.total.toFixed(2)}
+                    ${order.totalAmount.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span

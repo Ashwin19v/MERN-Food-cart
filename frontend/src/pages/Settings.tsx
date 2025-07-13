@@ -1,24 +1,38 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useApp } from "../store/Context";
 
 const ProfileSettings = () => {
+  const { user, updateUserProfile } = useApp();
+
   const [formData, setFormData] = useState({
-    name: "Admin User",
-    email: "admin@foodcart.com",
-    phone: "+1 234 567 8900",
+    name: user?.name || "",
+    email: user?.email || "",
+
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
+    try {
+      const { name, currentPassword, newPassword, confirmPassword } = formData;
+
+      if (newPassword !== confirmPassword) {
+        alert("New password and confirm password do not match.");
+        return;
+      }
+
+      await updateUserProfile(name, currentPassword, newPassword); // Update user profile
+    } catch (err) {
+      console.error("Failed to update profile:", err);
+    }
   };
 
   return (
@@ -64,18 +78,7 @@ const ProfileSettings = () => {
                       className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                    />
-                  </div>
+                  <div></div>
                 </div>
               </div>
 

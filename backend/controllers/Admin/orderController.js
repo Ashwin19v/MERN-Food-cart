@@ -2,7 +2,7 @@ const Order = require("../../models/Order");
 
 const getMyOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id }).sort("-createdAt");
+    const orders = await Order.find({ user: req.user }).sort("-createdAt");
     res.json(orders);
   } catch (err) {
     res
@@ -58,7 +58,7 @@ const getOrderById = async (req, res) => {
 const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({})
-      .populate("user", "name email")
+      .populate("user", "name email phone")
       .sort("-createdAt");
     res.json(orders);
   } catch (err) {
@@ -66,10 +66,7 @@ const getAllOrders = async (req, res) => {
   }
 };
 
-
-
 module.exports = {
-
   getMyOrders,
   getAllOrders,
   updateOrderStatus,

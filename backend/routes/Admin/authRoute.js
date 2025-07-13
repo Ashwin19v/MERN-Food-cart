@@ -5,6 +5,7 @@ const {
   loginUser,
   getUser,
   updateUserProfile,
+  getCustomers,
 } = require("../../controllers/Admin/authController");
 const auth = require("../../middleware/Admin/auth");
 
@@ -13,6 +14,6 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 router.get("/me", auth, getUser);
-router.put("/user/update", auth, updateUserProfile);
-
+router.put("/update", auth, updateUserProfile);
+router.get("/customers", auth,  getCustomers)
 module.exports = router;
