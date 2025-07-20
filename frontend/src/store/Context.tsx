@@ -42,7 +42,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     null
   );
   console.log(dashboardStats);
-  
 
   const [userOrders, setUserOrders] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -76,7 +75,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         const msg = "Session expired. Please login again.";
         setError(msg);
         toast.error(msg);
-        setUser(null);
+        // setUser(null);
         // setToken(null);
         // localStorage.removeItem("token");
       } else {

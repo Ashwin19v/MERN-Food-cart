@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useApp } from "../../store/Context";
 
 const ProductForm = ({ product, onClose }) => {
+  const { updateProduct, createProduct, isLoading } = useApp();
   const [formData, setFormData] = useState(
     product || {
       name: "",
@@ -10,7 +12,7 @@ const ProductForm = ({ product, onClose }) => {
       stock: "",
       status: "active",
       description: "",
-      image: null,
+      image: "", // Changed from null to empty string for URL
     }
   );
 
@@ -19,14 +21,28 @@ const ProductForm = ({ product, onClose }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
-    setFormData((prev) => ({ ...prev, image: e.target.files[0] }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    onClose();
+    try {
+      // Prepare form data for submission
+      const productData = {
+        ...formData,
+        price: parseFloat(formData.price),
+        stock: parseInt(formData.stock),
+      };
+
+      if (product) {
+        // Update existing product
+        await updateProduct(product._id, productData);
+      } else {
+        // Create new product
+        await createProduct(productData);
+      }
+
+      onClose();
+    } catch (error) {
+      console.error("Error saving product:", error);
+    }
   };
 
   return (
@@ -34,12 +50,12 @@ const ProductForm = ({ product, onClose }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed -inset-10  bg-black bg-opacity-50 flex items-center justify-center z-50 "
     >
       <motion.div
         initial={{ scale: 0.9 }}
         animate={{ scale: 1 }}
-        className="bg-white rounded-lg shadow-xl w-full max-w-md"
+        className="bg-white rounded-lg shadow-xl w-[80%] sm:max-w-md max-h-screen overflow-y-auto"
       >
         <div className="p-6">
           <div className="flex justify-between items-center mb-4">
@@ -70,7 +86,7 @@ const ProductForm = ({ product, onClose }) => {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Product Name
+                  Product Name *
                 </label>
                 <input
                   type="text"
@@ -84,7 +100,7 @@ const ProductForm = ({ product, onClose }) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Category
+                  Category *
                 </label>
                 <select
                   name="category"
@@ -99,13 +115,15 @@ const ProductForm = ({ product, onClose }) => {
                   <option value="Drinks">Drinks</option>
                   <option value="Snacks">Snacks</option>
                   <option value="Desserts">Desserts</option>
+                  <option value="Sandwiches">Sandwiches</option>
+                  <option value="Salads">Salads</option>
                 </select>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Price ($)
+                    Price ($) *
                   </label>
                   <input
                     type="number"
@@ -120,7 +138,7 @@ const ProductForm = ({ product, onClose }) => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Stock
+                    Stock *
                   </label>
                   <input
                     type="number"
@@ -174,35 +192,43 @@ const ProductForm = ({ product, onClose }) => {
                   onChange={handleChange}
                   rows={3}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="Enter product description..."
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Product Image
+                  Product Image URL
                 </label>
-                <div className="mt-1 flex items-center">
+                <div className="flex items-center space-x-2 justify-between">
+                  <input
+                    type="url"
+                    name="image"
+                    value={formData.image}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="https://example.com/image.jpg"
+                  />
                   {formData.image && (
-                    <div className="mr-4 flex-shrink-0">
+                    <div className="mt-2">
                       <img
-                        className="h-16 w-16 rounded-md object-cover"
-                        src={
-                          typeof formData.image === "string"
-                            ? formData.image
-                            : URL.createObjectURL(formData.image)
-                        }
-                        alt="Product"
+                        className="h-20 w-20 rounded-md object-cover border"
+                        src={formData.image}
+                        alt="Product preview"
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                        }}
+                        onLoad={(e) => {
+                          e.target.style.display = "block";
+                        }}
                       />
                     </div>
                   )}
-                  <div>
-                    <input
-                      type="file"
-                      onChange={handleImageChange}
-                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-                    />
-                  </div>
                 </div>
+
+                <p className="text-xs text-gray-500 mt-1">
+                  Enter a valid image URL (e.g., https://example.com/image.jpg)
+                </p>
               </div>
             </div>
 
@@ -213,6 +239,7 @@ const ProductForm = ({ product, onClose }) => {
                 type="button"
                 onClick={onClose}
                 className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                disabled={isLoading}
               >
                 Cancel
               </motion.button>
@@ -220,9 +247,14 @@ const ProductForm = ({ product, onClose }) => {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 type="submit"
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                disabled={isLoading}
+                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
               >
-                {product ? "Update Product" : "Add Product"}
+                {isLoading
+                  ? "Saving..."
+                  : product
+                  ? "Update Product"
+                  : "Add Product"}
               </motion.button>
             </div>
           </form>
