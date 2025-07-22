@@ -1,20 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const {
-
   getMyOrders,
   getAllOrders,
   updateOrderStatus,
   getOrderById,
 } = require("../../controllers/Admin/orderController");
 
-const  auth  = require("../../middleware/Admin/auth");
+const auth = require("../../middleware/Admin/auth");
 router.use(auth);
 
-
-
 // ✅ Get orders of logged-in user
-router.get("/myorders", getMyOrders);
+router.get("/myorders/:id", getMyOrders);
 
 // ✅ Admin: Get all orders
 router.get("/", getAllOrders);

@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import ProductForm from "../components/layout/ProductForm";
 import { useApp } from "../store/Context";
 import { FiSearch, FiX } from "react-icons/fi";
+import type { Product } from "../lib/type/type";
 
 const ProductList = () => {
   const { fetchProducts, products, deleteProduct } = useApp();
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     fetchProducts();
@@ -22,13 +23,13 @@ const ProductList = () => {
       const filtered = products.filter(
         (product) =>
           product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.category.toLowerCase().includes(searchTerm.toLowerCase())
+          product.category?.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredProducts(filtered);
     }
   }, [products, searchTerm]);
 
-  const handleEdit = (product) => {
+  const handleEdit = (product: Product) => {
     setSelectedProduct(product);
     setIsFormOpen(true);
   };

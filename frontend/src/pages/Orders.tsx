@@ -12,11 +12,11 @@ const statusColors = {
 };
 
 const statusOptions = [
-  "Pending",
-  "Preparing",
-  "Ready",
-  "Completed",
-  "Cancelled",
+  "pending",
+  "preparing",
+  "ready",
+  "delivered",
+  "cancelled",
 ];
 
 const OrderList = () => {
@@ -114,7 +114,7 @@ const OrderList = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredOrders.map((order, index) => (
                 <motion.tr
-                  key={order.id}
+                  key={order._id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
@@ -137,7 +137,7 @@ const OrderList = () => {
                         statusColors[order.status]
                       }`}
                     >
-                      {order.status}
+                      {order.orderStatus}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

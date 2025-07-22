@@ -4,10 +4,10 @@ import { useApp } from "../../store/Context";
 
 const OrderDetails = ({ order, onClose }) => {
   const { updateOrderStatus } = useApp();
-  const [status, setStatus] = useState(order.status);
+  const [status, setStatus] = useState(order.orderStatus);
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleStatusChange = (e) => {
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
   };
 
@@ -69,8 +69,12 @@ const OrderDetails = ({ order, onClose }) => {
                 <p className="text-sm text-gray-700">
                   <span className="font-medium">Name:</span> {order.user.name}
                 </p>
+                <p className="text-sm text-gray-700">
+                  <span className="font-medium">Email:</span> {order.user.email}
+                </p>
                 <p className="text-sm text-gray-700 mt-1">
-                  <span className="font-medium">Phone:</span> {order.user.phone}
+                  <span className="font-medium">Phone:</span>{" "}
+                  {order.user.phone || "N/A"}
                 </p>
                 <p className="text-sm text-gray-700 mt-1">
                   <span className="font-medium">Address:</span>{" "}
@@ -89,19 +93,46 @@ const OrderDetails = ({ order, onClose }) => {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex justify-between"
+                      className="flex justify-between items-center"
                     >
-                      <span className="text-sm text-gray-700">
-                        {item.quantity}x {item.product}
-                      </span>
-                      <span className="text-sm text-gray-700">
-                        ${item.quantity * item.price}
+                      <div className="flex items-center">
+                        {item.product?.image && (
+                          <img
+                            src={item.product.image}
+                            alt={item.product?.name || "Product"}
+                            className="w-8 h-8 rounded object-cover mr-2"
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                            }}
+                          />
+                        )}
+                        <div>
+                          <span className="text-sm text-gray-700">
+                            {item.quantity}x{" "}
+                            {item.product?.name || "Product not found"}
+                          </span>
+                          {item.product?.price && (
+                            <div className="text-xs text-gray-500">
+                              ${item.product.price} each
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">
+                        {item.product?.price
+                          ? `$${(item.quantity * item.product.price).toFixed(
+                              2
+                            )}`
+                          : "Price unavailable"}
                       </span>
                     </motion.div>
                   ))}
                 </div>
-                <div className="border-t border-gray-200 mt-3 pt-3 flex justify-between">
+                <div className="border-t border-gray-200 mt-3 pt-3 flex justify-between items-center">
                   <span className="font-medium text-gray-900">Total</span>
+                  <span className="text-xs text-gray-400">
+                    inclusive of all taxes
+                  </span>
                   <span className="font-medium text-gray-900">
                     {order.totalAmount.toFixed(2)}
                   </span>
@@ -123,21 +154,21 @@ const OrderDetails = ({ order, onClose }) => {
                     onChange={handleStatusChange}
                     className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                   >
-                    <option value="Pending">Pending</option>
-                    <option value="Preparing">Preparing</option>
-                    <option value="Ready">Ready</option>
-                    <option value="Completed">Completed</option>
-                    <option value="Cancelled">Cancelled</option>
+                    <option value="pending">pending</option>
+                    <option value="preparing">preparing</option>
+                    <option value="ready">ready</option>
+                    <option value="delivered">delivered</option>
+                    <option value="cancelled">cancelled</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
                   {[
-                    "Pending",
-                    "Preparing",
-                    "Ready",
-                    "Completed",
-                    "Cancelled",
+                    "pending",
+                    "preparing",
+                    "ready",
+                    "delivered",
+                    "cancelled",
                   ].map((step) => (
                     <div key={step} className="flex items-center">
                       <div

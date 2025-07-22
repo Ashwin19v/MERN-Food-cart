@@ -41,12 +41,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(
     null
   );
-  console.log(dashboardStats);
 
   const [userOrders, setUserOrders] = useState<Order[]>([]);
+
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const [products, setProducts] = useState<Product[]>([]);
+
+  // console.log(api.defaults.headers.common["Authorization"]);
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -174,6 +176,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.get("/orders");
       setUserOrders(data);
+
       toast.success("Orders loaded!");
     } catch (error: any) {
       const msg = "Failed to fetch your orders";
@@ -185,8 +188,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const getOrderById = async (id: string) => {
     try {
       const { data } = await api.get(`/orders/${id}`);
-      setSelectedOrder(data);
-      toast.success("Order details loaded!");
+      return data.data;
     } catch (error: any) {
       const msg = "Failed to fetch order details";
       setError(msg);
@@ -257,6 +259,25 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       toast.error(msg);
     }
   };
+  const getUserCart = async (userId: string) => {
+    try {
+      const { data } = await api.get(`/cart/${userId}`);
+      return data;
+    } catch (error) {
+      console.error("Failed to fetch user cart:", error);
+      return [];
+    }
+  };
+
+  const getUserFavorites = async (userId: string) => {
+    try {
+      const { data } = await api.get(`/favorites/${userId}`);
+      return data;
+    } catch (error) {
+      console.error("Failed to fetch user favorites:", error);
+      return [];
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -282,10 +303,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         deleteProduct,
         updateUserProfile,
         customers,
+        getUserCart,
+        getUserFavorites,
       }}
     >
       {children}
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="bottom-right" autoClose={3000} theme="light" />
     </AppContext.Provider>
   );
 };

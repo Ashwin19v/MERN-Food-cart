@@ -3,7 +3,7 @@ const sendEmail = require("../middleware/sendEmail");
 
 // Create new order
 exports.createOrder = async (req, res) => {
-  console.log(req.user);
+  
   try {
     const { items, shippingAddress, paymentMethod, totalAmount } = req.body;
     console.log(shippingAddress);

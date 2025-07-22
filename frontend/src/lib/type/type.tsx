@@ -49,7 +49,7 @@ export interface AppContextType {
   userOrders: Order[];
   getMyOrders: () => Promise<void>;
   selectedOrder: Order | null;
-  getOrderById: (id: string) => Promise<void>;
+  getOrderById: (id: string) => Promise<Order | null>;
   updateOrderStatus: (
     id: string,
     status: string,
@@ -66,6 +66,8 @@ export interface AppContextType {
     currentPassword: string,
     password: string
   ) => Promise<void>;
+  getUserCart: (userId: string) => Promise<CartItem[]>;
+  getUserFavorites: (userId: string) => Promise<Product[]>;
 }
 
 export interface Order {
