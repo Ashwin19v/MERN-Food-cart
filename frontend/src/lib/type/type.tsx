@@ -6,6 +6,7 @@ export interface User {
   email: string;
   phone?: string;
   address?: string;
+  createdAt?: string;
 }
 
 export interface Product {
@@ -13,11 +14,15 @@ export interface Product {
   name: string;
   price: number;
   image: string;
+  product: Product;
+  createdAt?: string;
 }
 
 export interface CartItem {
   _id: string;
   product: Product;
+  items: CartItem[];
+  createdAt?: string;
   name: string;
   price: number;
   quantity: number;
@@ -68,19 +73,24 @@ export interface AppContextType {
   ) => Promise<void>;
   getUserCart: (userId: string) => Promise<CartItem[]>;
   getUserFavorites: (userId: string) => Promise<Product[]>;
+  deleteOrderById: (id: string) => Promise<void>;
+  getCustomers: () => Promise<void>;
+  deleteUser: (userId: string) => Promise<void>;
 }
 
 export interface Order {
+  status: any;
   _id: string;
   items: CartItem[]; // assuming you already have CartItem defined
   user: {
     _id: string;
     name: string;
     email: string;
+    phone: string;
   };
   totalAmount: number;
-  shippingAddress: string;
-  orderStatus: "Pending" | "Preparing" | "Ready" | "Delivered" | "Cancelled";
+  ShippingAddress: string;
+  orderStatus: "Pending" | "Preparing" | "Ready" | "Delivered" | "Cancelled" | "pending" | "delivered";
   isPaid: boolean;
   createdAt: string;
 }

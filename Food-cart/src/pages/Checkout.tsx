@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FiCreditCard, FiLock, FiTruck, FiCheckCircle } from "react-icons/fi";
-import { FaPaypal, FaApplePay, FaGooglePay } from "react-icons/fa";
+import { FaGooglePay, FaMoneyBillWave } from "react-icons/fa";
 import { useStore } from "../context/store";
 import { useNavigate } from "react-router-dom";
+import type { CheckoutFormData } from "../types/types";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const { cartItems, cartTotal, user, createOrder, isLoading } = useStore();
   const [step, setStep] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState("credit-card");
+  const [paymentMethod, setPaymentMethod] = useState("google-pay");
   const [orderComplete, setOrderComplete] = useState(false);
 
   const {
@@ -18,7 +19,7 @@ const CheckoutPage = () => {
 
     formState: { errors },
     setValue,
-  } = useForm();
+  } = useForm<CheckoutFormData>();
 
   // Pre-fill form with user data
   useEffect(() => {
@@ -30,7 +31,7 @@ const CheckoutPage = () => {
     }
   }, [user, setValue]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: CheckoutFormData) => {
     try {
       const shippingAddress = `${data.address1}, ${
         data.address2 ? data.address2 + ", " : ""
@@ -49,34 +50,26 @@ const CheckoutPage = () => {
         },
       };
 
-      const response = await createOrder(orderData);
-      // setOrderId(
-      //   response.orderId || `ORD-${Math.floor(Math.random() * 1000000)}`
-      // );
+      await createOrder(orderData);
+
       setOrderComplete(true);
     } catch (error) {
       console.error("Order creation failed:", error);
     }
   };
 
-  const countries = [
-    "United States",
-    "Canada",
-    "United Kingdom",
-    "Australia",
-    "Germany",
-    "France",
-    "India",
-    "Japan",
+  const states = [
+    "Tamil Nadu",
+    "Karnataka",
+    "Maharashtra",
+    "Gujarat",
+    "Rajasthan",
+    "Uttar Pradesh",
+    "West Bengal",
+    "Andhra Pradesh",
+    "Telangana",
+    "Kerala",
   ];
-
-  const months = Array.from({ length: 12 }, (_, i) =>
-    (i + 1).toString().padStart(2, "0")
-  );
-
-  const years = Array.from({ length: 10 }, (_, i) =>
-    (new Date().getFullYear() + i).toString().slice(-2)
-  );
 
   // Calculate totals
   const subtotal = cartTotal;
@@ -101,9 +94,6 @@ const CheckoutPage = () => {
             email with your order details.
           </p>
           <div className="bg-gray-50 rounded-xl p-4 mb-6">
-            <p className="font-medium">
-              Order #: <span className="text-blue-600">{orderId}</span>
-            </p>
             <p className="text-sm text-gray-500 mt-1">
               Estimated delivery:{" "}
               {new Date(
@@ -285,7 +275,7 @@ const CheckoutPage = () => {
                         } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none`}
                       >
                         <option value="">Select Country</option>
-                        {countries.map((country) => (
+                        {states.map((country) => (
                           <option key={country} value={country}>
                             {country}
                           </option>
@@ -337,39 +327,6 @@ const CheckoutPage = () => {
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                     <div
                       className={`p-3 border rounded-xl cursor-pointer transition-all flex flex-col items-center ${
-                        paymentMethod === "credit-card"
-                          ? "border-blue-500 bg-blue-50"
-                          : "border-gray-200 hover:border-blue-300"
-                      }`}
-                      onClick={() => setPaymentMethod("credit-card")}
-                    >
-                      <FiCreditCard className="text-2xl mb-1" />
-                      <span className="text-sm">Card</span>
-                    </div>
-                    <div
-                      className={`p-3 border rounded-xl cursor-pointer transition-all flex flex-col items-center ${
-                        paymentMethod === "paypal"
-                          ? "border-blue-500 bg-blue-50"
-                          : "border-gray-200 hover:border-blue-300"
-                      }`}
-                      onClick={() => setPaymentMethod("paypal")}
-                    >
-                      <FaPaypal className="text-2xl mb-1 text-blue-700" />
-                      <span className="text-sm">PayPal</span>
-                    </div>
-                    <div
-                      className={`p-3 border rounded-xl cursor-pointer transition-all flex flex-col items-center ${
-                        paymentMethod === "apple-pay"
-                          ? "border-blue-500 bg-blue-50"
-                          : "border-gray-200 hover:border-blue-300"
-                      }`}
-                      onClick={() => setPaymentMethod("apple-pay")}
-                    >
-                      <FaApplePay className="text-2xl mb-1" />
-                      <span className="text-sm">Apple Pay</span>
-                    </div>
-                    <div
-                      className={`p-3 border rounded-xl cursor-pointer transition-all flex flex-col items-center ${
                         paymentMethod === "google-pay"
                           ? "border-blue-500 bg-blue-50"
                           : "border-gray-200 hover:border-blue-300"
@@ -379,141 +336,18 @@ const CheckoutPage = () => {
                       <FaGooglePay className="text-2xl mb-1" />
                       <span className="text-sm">Google Pay</span>
                     </div>
+                    <div
+                      className={`p-3 border rounded-xl cursor-pointer transition-all flex flex-col items-center ${
+                        paymentMethod === "cash"
+                          ? "border-blue-500 bg-blue-50"
+                          : "border-gray-200 hover:border-blue-300"
+                      }`}
+                      onClick={() => setPaymentMethod("cash")}
+                    >
+                      <FaMoneyBillWave className="text-2xl mb-1" />
+                      <span className="text-sm">Cash on Delivery</span>
+                    </div>
                   </div>
-
-                  {paymentMethod === "credit-card" && (
-                    <>
-                      <div>
-                        <input
-                          {...register("cardName", {
-                            required: "Cardholder name is required",
-                          })}
-                          className={`w-full px-4 py-3 rounded-xl border ${
-                            errors.cardName
-                              ? "border-red-500"
-                              : "border-gray-200"
-                          } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none`}
-                          placeholder="Cardholder Name"
-                        />
-                        {errors.cardName && (
-                          <p className="text-red-500 text-sm mt-1">
-                            {errors.cardName.message}
-                          </p>
-                        )}
-                      </div>
-                      <div>
-                        <input
-                          {...register("cardNumber", {
-                            required: "Card number is required",
-                            pattern: {
-                              value: /^[0-9\s]{13,19}$/,
-                              message: "Invalid card number",
-                            },
-                          })}
-                          className={`w-full px-4 py-3 rounded-xl border ${
-                            errors.cardNumber
-                              ? "border-red-500"
-                              : "border-gray-200"
-                          } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none`}
-                          placeholder="Card Number"
-                        />
-                        {errors.cardNumber && (
-                          <p className="text-red-500 text-sm mt-1">
-                            {errors.cardNumber.message}
-                          </p>
-                        )}
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <div className="flex gap-2">
-                            <select
-                              {...register("expiryMonth", {
-                                required: "Month is required",
-                              })}
-                              className={`w-full px-4 py-3 rounded-xl border ${
-                                errors.expiryMonth
-                                  ? "border-red-500"
-                                  : "border-gray-200"
-                              } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none`}
-                            >
-                              <option value="">MM</option>
-                              {months.map((month) => (
-                                <option key={month} value={month}>
-                                  {month}
-                                </option>
-                              ))}
-                            </select>
-                            <select
-                              {...register("expiryYear", {
-                                required: "Year is required",
-                              })}
-                              className={`w-full px-4 py-3 rounded-xl border ${
-                                errors.expiryYear
-                                  ? "border-red-500"
-                                  : "border-gray-200"
-                              } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none`}
-                            >
-                              <option value="">YY</option>
-                              {years.map((year) => (
-                                <option key={year} value={year}>
-                                  {year}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          {(errors.expiryMonth || errors.expiryYear) && (
-                            <p className="text-red-500 text-sm mt-1">
-                              Expiry date is required
-                            </p>
-                          )}
-                        </div>
-                        <div>
-                          <input
-                            {...register("cvv", {
-                              required: "CVV is required",
-                              pattern: {
-                                value: /^[0-9]{3,4}$/,
-                                message: "Invalid CVV",
-                              },
-                            })}
-                            className={`w-full px-4 py-3 rounded-xl border ${
-                              errors.cvv ? "border-red-500" : "border-gray-200"
-                            } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none`}
-                            placeholder="CVV"
-                          />
-                          {errors.cvv && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {errors.cvv.message}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  {paymentMethod === "paypal" && (
-                    <div className="bg-blue-50 p-6 rounded-xl text-center">
-                      <FaPaypal className="text-4xl text-blue-700 mx-auto mb-4" />
-                      <p className="text-gray-700 mb-4">
-                        You'll be redirected to PayPal to complete your payment
-                        securely.
-                      </p>
-                    </div>
-                  )}
-
-                  {["apple-pay", "google-pay"].includes(paymentMethod) && (
-                    <div className="bg-blue-50 p-6 rounded-xl text-center">
-                      {paymentMethod === "apple-pay" ? (
-                        <FaApplePay className="text-4xl mx-auto mb-4" />
-                      ) : (
-                        <FaGooglePay className="text-4xl mx-auto mb-4" />
-                      )}
-                      <p className="text-gray-700 mb-4">
-                        You'll complete your payment using{" "}
-                        {paymentMethod.replace("-", " ")}.
-                      </p>
-                    </div>
-                  )}
                 </div>
                 <div className="flex justify-between">
                   <button

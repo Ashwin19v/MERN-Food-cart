@@ -61,12 +61,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     initializeAuth();
   }, [token]);
 
-  useEffect(() => {
-    getMyOrders();
-    getCustomers();
-    fetchDashboardStats();
-  }, [token]);
-
   const getCurrentUser = async () => {
     try {
       const { data } = await api.get("users/me");
@@ -185,6 +179,18 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const deleteOrderById = async (id: string) => {
+    try {
+      await api.delete(`/orders/${id}`);
+      toast.success("Order deleted successfully!");
+      getMyOrders();
+    } catch (error: any) {
+      const msg = "Failed to delete order";
+      setError(msg);
+      toast.error(msg);
+    }
+  };
+
   const getOrderById = async (id: string) => {
     try {
       const { data } = await api.get(`/orders/${id}`);
@@ -260,10 +266,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
   const getUserCart = async (userId: string) => {
+    console.log(userId);
+
     try {
       const { data } = await api.get(`/cart/${userId}`);
       return data;
     } catch (error) {
+      console.log(error);
+
       console.error("Failed to fetch user cart:", error);
       return [];
     }
@@ -276,6 +286,19 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error("Failed to fetch user favorites:", error);
       return [];
+    }
+  };
+
+  const deleteUser = async (userId: string) => {
+    try {
+      await api.delete(`users/customers/${userId}`);
+      getCustomers();
+      toast.success("User deleted successfully!");
+    } catch (error: any) {
+      toast.error("Failed to delete user");
+      const msg = "Failed to delete user";
+      setError(msg);
+      toast.error(msg);
     }
   };
 
@@ -296,6 +319,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         selectedOrder,
         getOrderById,
         updateOrderStatus,
+        getCustomers,
         products,
         fetchProducts,
         createProduct,
@@ -305,6 +329,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         customers,
         getUserCart,
         getUserFavorites,
+        deleteOrderById,
+        deleteUser,
       }}
     >
       {children}

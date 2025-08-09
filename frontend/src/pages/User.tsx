@@ -1,18 +1,27 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApp } from "../store/Context";
 import OrderDetails from "../components/layout/OrderDetails";
-import type { Order } from "../lib/type/type";
+import type { CartItem, Order, Product, User } from "../lib/type/type";
 
 const UserManagement = () => {
-  const { customers, getOrderById } = useApp();
+  const {
+    customers,
+    getOrderById,
+    getUserCart,
+    getUserFavorites,
+    getCustomers,
+    deleteUser,
+  } = useApp();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [userOrders, setUserOrders] = useState<Order[] | []>([]);
+  const [userCart, setUserCart] = useState<CartItem[]>([]);
+  const [userFavorites, setUserFavorites] = useState<Product[]>([]);
 
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [showOrderDetails, setShowOrderDetails] = useState(false);
-  const [activeTab, setActiveTab] = useState("orders"); // orders, cart, favorites
+  const [activeTab, setActiveTab] = useState("orders");
   const [showUserModal, setShowUserModal] = useState(false);
 
   const filteredUsers = customers.filter(
@@ -21,7 +30,11 @@ const UserManagement = () => {
       user.email?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleViewUserDetails = async (user) => {
+  useEffect(() => {
+    getCustomers();
+  }, []);
+
+  const handleViewUserDetails = async (user: User) => {
     setSelectedUser(user);
     setShowUserModal(true);
     setActiveTab("orders");
@@ -29,13 +42,28 @@ const UserManagement = () => {
     try {
       // Fetch user orders
       const orders = await getOrderById(user._id);
+      const cartItems = await getUserCart(user._id);
+      const favorites = await getUserFavorites(user._id);
+      setUserCart(
+        Array.isArray(cartItems) ? cartItems : cartItems ? [cartItems] : []
+      );
+      setUserFavorites(
+        Array.isArray(favorites) ? favorites : favorites ? [favorites] : []
+      );
+
       setUserOrders(Array.isArray(orders) ? orders : orders ? [orders] : []);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
   };
 
-  const handleViewOrder = (order) => {
+  const handleDeleteUser = async (userId: string) => {
+    if (confirm("Are you sure you want to delete this user?")) {
+      await deleteUser(userId);
+    }
+  };
+
+  const handleViewOrder = (order: Order) => {
     setSelectedOrder(order);
     setShowOrderDetails(true);
   };
@@ -109,7 +137,7 @@ const UserManagement = () => {
                   Join Date
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
+                  Delete
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
@@ -151,13 +179,10 @@ const UserManagement = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        user.isActive !== false
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
+                      onClick={() => handleDeleteUser(user._id)}
+                      className={`px-2 inline-flex text-sm text-white leading-5 font-semibold rounded-full bg-red-500`}
                     >
-                      {user.isActive !== false ? "Active" : "Inactive"}
+                      Delete
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -235,6 +260,26 @@ const UserManagement = () => {
                   >
                     Orders ({userOrders.length})
                   </button>
+                  <button
+                    onClick={() => setActiveTab("cart")}
+                    className={`pb-2 px-1 text-sm font-medium ${
+                      activeTab === "cart"
+                        ? "text-indigo-600 border-b-2 border-indigo-600"
+                        : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  >
+                    Cart
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("favorites")}
+                    className={`pb-2 px-1 text-sm font-medium ${
+                      activeTab === "favorites"
+                        ? "text-indigo-600 border-b-2 border-indigo-600"
+                        : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  >
+                    Favourites
+                  </button>
                 </div>
 
                 {/* Tab Content */}
@@ -270,10 +315,10 @@ const UserManagement = () => {
                                 <span
                                   className={`px-2 py-1 text-xs rounded-full ${
                                     order.orderStatus === "delivered"
-                                      ? "bg-green-100 text-green-800"
+                                      ? "bg-green-200 text-green-800"
                                       : order.orderStatus === "pending"
                                       ? "bg-yellow-100 text-yellow-800"
-                                      : "bg-blue-100 text-blue-800"
+                                      : "bg-blue-300 text-blue-800"
                                   }`}
                                 >
                                   {order.orderStatus}
@@ -285,6 +330,125 @@ const UserManagement = () => {
                       ) : (
                         <p className="text-center text-gray-500 py-8">
                           No orders found
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  {activeTab === "cart" && (
+                    <div className="space-y-4">
+                      {userCart.length > 0 ? (
+                        userCart.map((cart) =>
+                          cart.items.map((item) => (
+                            <div
+                              key={item._id}
+                              className="border rounded-lg p-4 hover:bg-gray-50"
+                            >
+                              <div className="flex justify-between items-start">
+                                <div className="flex items-center space-x-4">
+                                  {item.product?.image && (
+                                    <img
+                                      src={item.product.image}
+                                      alt={item.product.name}
+                                      className="w-16 h-16 rounded-lg object-cover"
+                                    />
+                                  )}
+                                  <div>
+                                    <p className="font-medium">
+                                      {item.product?.name}
+                                    </p>
+                                    <p className="text-sm text-gray-600">
+                                      Quantity: {item.quantity}
+                                    </p>
+                                    <p className="text-sm text-gray-600">
+                                      Price: $
+                                      {item.product?.price?.toFixed(2) ||
+                                        "0.00"}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="text-right">
+                                  <p className="font-medium">
+                                    $
+                                    {(
+                                      item.quantity * (item.product?.price || 0)
+                                    ).toFixed(2)}
+                                  </p>
+                                  <p className="text-sm text-gray-500">
+                                    Added:{" "}
+                                    {new Date(
+                                      cart.createdAt ?? ""
+                                    ).toLocaleDateString()}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          ))
+                        )
+                      ) : (
+                        <p className="text-center text-gray-500 py-8">
+                          No items in cart
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {activeTab === "favorites" && (
+                    <div className="space-y-4">
+                      {userFavorites.length > 0 ? (
+                        userFavorites.map((fav) => (
+                          <div
+                            key={fav._id}
+                            className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer"
+                          >
+                            <div className="flex justify-between items-start">
+                              <div className="flex items-center space-x-4">
+                                {fav.product?.image && (
+                                  <img
+                                    src={fav.product.image}
+                                    alt={fav.product.name}
+                                    className="w-16 h-16 rounded-lg object-cover"
+                                  />
+                                )}
+                                <div>
+                                  <p className="font-medium">
+                                    {fav.product?.name || "Product"}
+                                  </p>
+                                  <p className="text-sm text-gray-600">
+                                    Category: {fav.product?.category || "N/A"}
+                                  </p>
+                                  <p className="text-sm text-gray-600">
+                                    Price: $
+                                    {fav.product?.price?.toFixed(2) || "0.00"}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="flex items-center text-red-500">
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </div>
+                                <p className="text-sm text-gray-500">
+                                  Added:{" "}
+                                  {new Date(
+                                    fav.createdAt ?? ""
+                                  ).toLocaleDateString()}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-center text-gray-500 py-8">
+                          No favorite items found
                         </p>
                       )}
                     </div>

@@ -5,6 +5,7 @@ const {
   getAllOrders,
   updateOrderStatus,
   getOrderById,
+  deleteOrder,
 } = require("../../controllers/Admin/orderController");
 
 const auth = require("../../middleware/Admin/auth");
@@ -21,5 +22,8 @@ router.put("/:id/status", updateOrderStatus);
 
 // ✅ Get single order by ID (for user or admin)
 router.get("/:id", getOrderById);
+
+// ✅ Admin: Delete an order
+router.delete("/:id", deleteOrder);
 
 module.exports = router;

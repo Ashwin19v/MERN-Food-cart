@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import OrderDetails from "../components/layout/OrderDetails";
 import { useApp } from "../store/Context";
+import type { Order } from "../lib/type/type";
 
 const statusColors = {
   Pending: "bg-yellow-100 text-yellow-800",
@@ -20,9 +21,12 @@ const statusOptions = [
 ];
 
 const OrderList = () => {
-  const { userOrders } = useApp();
+  const { userOrders, getMyOrders } = useApp();
+  useEffect(() => {
+    getMyOrders();
+  }, []);
 
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -123,7 +127,7 @@ const OrderList = () => {
                     {order._id}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {order.user.name}
+                    {order.user?.name || "Unknown User"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {order.createdAt}
@@ -134,7 +138,9 @@ const OrderList = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        statusColors[order.status]
+                        statusColors[
+                          order.orderStatus as keyof typeof statusColors
+                        ]
                       }`}
                     >
                       {order.orderStatus}

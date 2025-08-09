@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
+const sendEmail = require("../middleware/sendEmail");
 
 exports.register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -36,6 +37,30 @@ exports.login = async (req, res) => {
     if (!match) return res.status(400).json({ error: "Invalid credentials" });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    // Send login notification email (optional, can be styled with HTML/CSS)
+    sendEmail(
+      user.email,
+      "Login Successful",
+      `
+      <div style="font-family: Arial, sans-serif; background: #f9f9f9; padding: 24px;">
+        <div style="max-width: 480px; margin: auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 32px;">
+        <h2 style="color: #4CAF50; margin-bottom: 16px;">Login Successful</h2>
+        <p style="color: #333; font-size: 16px;">
+          Hello <strong>${user.name || user.email}</strong>,
+        </p>
+        <p style="color: #333; font-size: 16px;">
+          You have successfully logged in to your Food Cart account.
+        </p>
+        <p style="color: #888; font-size: 14px; margin-top: 32px;">
+          If this wasn't you, please reset your password immediately.
+        </p>
+        <div style="margin-top: 24px; text-align: center;">
+          <a href="https://your-app-url.com" style="background: #4CAF50; color: #fff; padding: 12px 24px; border-radius: 4px; text-decoration: none; font-weight: bold;">Go to Food Cart</a>
+        </div>
+        </div>
+      </div>
+      `
+    );
 
     res.json({
       token,
@@ -79,24 +104,25 @@ exports.getUser = async (req, res) => {
   }
 };
 
-
-
-
 exports.updateCredentials = async (req, res) => {
   try {
     const { name, password, currentPassword, phone, address } = req.body;
     const userId = req.user;
 
-    const user = await User.findById(userId).select("+password");;
+    const user = await User.findById(userId).select("+password");
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     // If user wants to update password, check currentPassword
     if (password) {
       const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {
-        return res.status(400).json({ success: false, message: "Current password is incorrect" });
+        return res
+          .status(400)
+          .json({ success: false, message: "Current password is incorrect" });
       }
     }
 

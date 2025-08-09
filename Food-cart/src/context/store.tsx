@@ -15,7 +15,8 @@ import type {
   StoreContextType,
   Product,
 } from "../types/types";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
@@ -42,14 +43,12 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [categoryProducts, setCategoryProducts] = useState<any[]>([]);
   const [popularProducts, setPopularProducts] = useState<any[]>([]);
 
-  const [userData, setUserData] = useState<User >({
-    
+  const [userData, setUserData] = useState<User>({
     _id: user?._id || "",
     name: user?.name || "",
     email: user?.email || "",
     phone: user?.phone || "",
     address: user?.address || "",
-
   });
 
   const [formData, setFormData] = useState({
@@ -78,7 +77,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   }, [token]);
 
   const fetchPopularProducts = async () => {
-    if (!token) return; // ✅ don't fetch if no token
+    if (!token) return;
 
     setIsLoading(true);
     try {
@@ -137,8 +136,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.get("/auth/user");
       setUser(data.data);
-      // console.log("Current user data:", data.data); // ✅ LOG USER DATA
+      toast.success("Welcome back, " + data.data.name);
     } catch (error: any) {
+      toast.error("Failed to fetch user data");
       if (error.response?.status === 401) {
         // cleanupAuth();
         setError("Session expired. Please login again.");
@@ -155,8 +155,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.post("/auth/login", { email, password });
       setToken(data.token);
-      // console.log("Login successful, token:", data.token); // ✅ LOG TOKEN
+      toast.success("Login successful!");
     } catch (error: any) {
+      toast.error("Login failed");
       const errorMessage = error.response?.data?.message || "Login failed";
       setError(errorMessage);
       throw new Error(errorMessage);
@@ -172,7 +173,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
     try {
       await api.post("/auth/register", { name, email, password });
+      toast.success("Registration successful!");
     } catch (error: any) {
+      toast.error("Registration failed");
       const errorMessage =
         error.response?.data?.message || "Registration failed";
       setError(errorMessage);
@@ -194,8 +197,11 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         phone: data.data.phone || "",
         address: data.data.address || "",
       }));
+
+      toast.success("User data fetched successfully!");
     } catch (err) {
       console.error("Failed to fetch user data:", err);
+      toast.error("Failed to fetch user data");
     }
   };
 
@@ -222,19 +228,20 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       if (response.data && response.data.data) {
         setUserData(response.data.data);
         setIsEditing(false);
-        alert("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
       } else {
-        alert("Unexpected response");
+        toast.error("Failed to update profile");
       }
     } catch (error: any) {
       console.error("Error updating profile:", error);
-      alert(error.response?.data?.message || "Update failed");
+      toast.error(error.response?.data?.message || "Update failed");
     }
   };
 
   // Logout function
 
   const logout = () => {
+    toast.success("Logout successful!");
     cleanupAuth();
     setToken(null);
     setUser(null);
@@ -249,7 +256,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.get("/cart");
       setCartItems(data.data.items);
+      toast.success("Cart items fetched successfully!");
     } catch (error: any) {
+      toast.error("Failed to fetch cart items");
       setError(error.response?.data?.message || "Failed to fetch cart items");
       throw error;
     } finally {
@@ -283,7 +292,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
 
       // console.log("Cart Response:", data); // ✅ LOG RESPONSE
       setCartItems(data.data.items);
+      toast.success("Item added to cart!");
     } catch (error: any) {
+      toast.error("Failed to add to cart");
       console.error(
         "Failed to add to cart:",
         error.response?.data || error.message
@@ -299,7 +310,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       await api.delete(`/cart/items/${id}`);
       getCartItems();
+      toast.success("Item removed from cart!");
     } catch (error: any) {
+      toast.error("Failed to remove item");
       setError(error.response?.data?.message || "Failed to remove item");
       throw error;
     } finally {
@@ -317,8 +330,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         quantity,
       });
       setCartItems(data.data.items);
+      toast.success("Cart quantity updated successfully!");
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to update quantity");
+      toast.error("Failed to update quantity");
       throw error;
     } finally {
       setIsLoading(false);
@@ -332,8 +347,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       await api.delete("/cart/clear");
       setCartItems([]);
+      toast.success("Cart cleared successfully!");
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to clear cart");
+      toast.error("Failed to clear cart");
       throw error;
     } finally {
       setIsLoading(false);
@@ -346,9 +363,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.get("/orders/get");
       setOrders(data.data);
-      // console.log("Orders fetched:", data.data); // ✅ LOG ORDERS
+      toast.success("Orders fetched successfully!");
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to fetch orders");
+      toast.error("Failed to fetch orders");
       throw error;
     } finally {
       setIsLoading(false);
@@ -362,11 +380,13 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.post("/orders/add", orderData);
       setOrders((prev) => [...prev, data.data]);
-      // await clearCart();
+      await clearCart();
+      toast.success("Order created successfully!");
     } catch (error: any) {
       console.log(error);
 
       setError(error.response?.data?.error || "Failed to create order");
+      toast.error("Failed to create order");
       throw error;
     } finally {
       setIsLoading(false);
@@ -398,8 +418,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.get("/favorites/get");
       setFavorites(data.data);
-      // setIsLoading(false);
+      toast.success("Favorites fetched successfully!");
     } catch (error: any) {
+      toast.error("Failed to fetch favorites");
       setError(error.response?.data?.message || "Failed to fetch favorites");
       throw error;
     } finally {
@@ -414,8 +435,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await api.post("/favorites/add", { productId });
       setFavorites((prev) => [...prev, data.data]);
+      toast.success("Item added to favorites!");
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to add to favorites");
+      toast.error("Failed to add to favorites");
       throw error;
     } finally {
       setIsLoading(false);
@@ -429,10 +452,12 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     try {
       await api.delete(`/favorites/${productId}`);
       getFavorites();
+      toast.success("Item removed from favorites!");
     } catch (error: any) {
       setError(
         error.response?.data?.message || "Failed to remove from favorites"
       );
+      toast.error("Failed to remove from favorites");
       throw error;
     } finally {
       setIsLoading(false);
@@ -450,7 +475,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       return [];
     }
   }, []);
-  
 
   //  Add review function
 
@@ -466,8 +490,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         rating,
         comment,
       });
+      toast.success("Review added successfully!");
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to add review");
+      toast.error("Failed to add review");
       throw error;
     } finally {
       setIsLoading(false);
@@ -487,8 +513,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         rating,
         comment,
       });
+      toast.success("Review updated successfully!");
     } catch (error: any) {
       setError(error.response?.data?.message || "Failed to update review");
+      toast.error("Failed to update review");
       throw error;
     } finally {
       setIsLoading(false);
@@ -500,7 +528,9 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       await api.delete(`/reviews/${reviewId}`);
+      toast.success("Review deleted successfully!");
     } catch (error: any) {
+      toast.error("Failed to delete review");
       setError(error.response?.data?.message || "Failed to delete review");
       throw error;
     } finally {
@@ -581,6 +611,17 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </StoreContext.Provider>
   );
 };

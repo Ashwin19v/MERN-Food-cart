@@ -1,14 +1,23 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useApp } from "../../store/Context";
+import type { Order } from "../../lib/type/type";
+import { IoMdClose } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
 
-const OrderDetails = ({ order, onClose }) => {
-  const { updateOrderStatus } = useApp();
-  const [status, setStatus] = useState(order.orderStatus);
+const OrderDetails = ({
+  order,
+  onClose,
+}: {
+  order: Order;
+  onClose: () => void;
+}) => {
+  const { updateOrderStatus, deleteOrderById } = useApp();
+  const [status, setStatus] = useState<Order["orderStatus"]>(order.orderStatus);
   const [isSaving, setIsSaving] = useState(false);
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setStatus(e.target.value);
+    setStatus(e.target.value as Order["orderStatus"]);
   };
 
   const handleSave = async () => {
@@ -44,19 +53,7 @@ const OrderDetails = ({ order, onClose }) => {
               onClick={onClose}
               className="text-gray-500 hover:text-gray-700"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <IoMdClose />
             </button>
           </div>
 
@@ -67,14 +64,14 @@ const OrderDetails = ({ order, onClose }) => {
               </h4>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-700">
-                  <span className="font-medium">Name:</span> {order.user.name}
+                  <span className="font-medium">Name:</span> {order.user?.name || "Unknown User"}
                 </p>
                 <p className="text-sm text-gray-700">
-                  <span className="font-medium">Email:</span> {order.user.email}
+                  <span className="font-medium">Email:</span> {order.user?.email || "Unknown Email"}
                 </p>
                 <p className="text-sm text-gray-700 mt-1">
                   <span className="font-medium">Phone:</span>{" "}
-                  {order.user.phone || "N/A"}
+                  {order.user?.phone || "N/A"}
                 </p>
                 <p className="text-sm text-gray-700 mt-1">
                   <span className="font-medium">Address:</span>{" "}
@@ -101,9 +98,6 @@ const OrderDetails = ({ order, onClose }) => {
                             src={item.product.image}
                             alt={item.product?.name || "Product"}
                             className="w-8 h-8 rounded object-cover mr-2"
-                            onError={(e) => {
-                              e.target.style.display = "none";
-                            }}
                           />
                         )}
                         <div>
@@ -137,6 +131,28 @@ const OrderDetails = ({ order, onClose }) => {
                     {order.totalAmount.toFixed(2)}
                   </span>
                 </div>
+              </div>
+              <div className="mt-6 flex items-center justify-between bg-red-50 p-3 rounded-lg border border-red-200">
+                <div className="flex items-center space-x-2">
+                  <MdDelete className="text-red-500 text-xl" />
+                  <span className="text-red-700 font-medium">Delete Order</span>
+                </div>
+                <button
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        "Are you sure you want to delete this order?"
+                      )
+                    ) {
+                      deleteOrderById(order._id);
+                      onClose();
+                    }
+                  }}
+                  className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm font-semibold transition"
+                  title="Delete this order"
+                >
+                  Delete
+                </button>
               </div>
             </div>
 

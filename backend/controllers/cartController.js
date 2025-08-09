@@ -239,12 +239,10 @@ exports.clearCart = async (req, res) => {
     cart.totalAmount = 0;
 
     await cart.save();
-    await cart.populate("items.product", "name price image");
 
     res.status(200).json({
       success: true,
       message: "Cart cleared successfully",
-      data: cart,
     });
   } catch (error) {
     res.status(500).json({

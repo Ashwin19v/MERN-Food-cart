@@ -9,6 +9,7 @@ const auth = async (req, res, next) => {
     const user = await User.findById(decoded.id).select("-password");
     req.user = decoded.id;
     req.email = user.email;
+    req.name = user.name;
     next();
   } catch (err) {
     res.status(401).json({ message: "Token Invalid" });

@@ -110,9 +110,13 @@ const CartPage = () => {
                   </span>
                 </div>
               </div>
-              <button className="w-full py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg font-bold shadow-md hover:shadow-lg transition-all">
+              <Link
+                to="/checkout"
+                className="block text-center text-md text-white bg-orange-500 hover:bg-orange-600 rounded-lg py-4 mt-4"
+              >
                 Proceed to Checkout
-              </button>
+              </Link>
+             
               <p className="text-center text-sm text-gray-500 mt-4">
                 Free delivery for orders over $20
               </p>

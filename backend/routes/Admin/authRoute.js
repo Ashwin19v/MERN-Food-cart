@@ -6,6 +6,7 @@ const {
   getUser,
   updateUserProfile,
   getCustomers,
+  deleteUser,
 } = require("../../controllers/Admin/authController");
 const auth = require("../../middleware/Admin/auth");
 
@@ -15,5 +16,7 @@ router.post("/login", loginUser);
 
 router.get("/me", auth, getUser);
 router.put("/update", auth, updateUserProfile);
-router.get("/customers", auth,  getCustomers)
+router.get("/customers", auth, getCustomers);
+router.delete("/customers/:userId", auth, deleteUser);
+
 module.exports = router;
