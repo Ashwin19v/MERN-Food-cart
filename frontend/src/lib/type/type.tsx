@@ -58,7 +58,9 @@ export interface AppContextType {
   updateOrderStatus: (
     id: string,
     status: string,
-    isPaid: boolean
+    isPaid: boolean,
+    deliveryPerson: string,
+    estimatedDeliveryTime: string
   ) => Promise<void>;
 
   products: Product[];
@@ -90,9 +92,18 @@ export interface Order {
   };
   totalAmount: number;
   ShippingAddress: string;
-  orderStatus: "Pending" | "Preparing" | "Ready" | "Delivered" | "Cancelled" | "pending" | "delivered";
+  orderStatus:
+    | "Pending"
+    | "Preparing"
+    | "Ready"
+    | "Delivered"
+    | "Cancelled"
+    | "pending"
+    | "delivered";
   isPaid: boolean;
   createdAt: string;
+  deliveryPerson: string;
+  estimatedDeliveryTime: string;
 }
 
 export interface Product {

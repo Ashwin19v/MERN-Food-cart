@@ -3,22 +3,7 @@ import { motion } from "framer-motion";
 import OrderDetails from "../components/layout/OrderDetails";
 import { useApp } from "../store/Context";
 import type { Order } from "../lib/type/type";
-
-const statusColors = {
-  Pending: "bg-yellow-100 text-yellow-800",
-  Preparing: "bg-blue-100 text-blue-800",
-  Ready: "bg-green-100 text-green-800",
-  Completed: "bg-gray-100 text-gray-800",
-  Cancelled: "bg-red-100 text-red-800",
-};
-
-const statusOptions = [
-  "pending",
-  "preparing",
-  "ready",
-  "delivered",
-  "cancelled",
-];
+import { statusColors, statusOptions } from "../lib/comp/utils";
 
 const OrderList = () => {
   const { userOrders, getMyOrders } = useApp();

@@ -14,7 +14,7 @@ const getMyOrders = async (req, res) => {
 
 const updateOrderStatus = async (req, res) => {
   try {
-    const { status, isPaid } = req.body;
+    const { status, isPaid, deliveryPerson, estimatedDeliveryTime } = req.body;
 
     const order = await Order.findById(req.params.id)
       .populate("user", "email name")
@@ -59,7 +59,10 @@ const updateOrderStatus = async (req, res) => {
         <p style="font-weight: bold; color: #FF9800; font-size: 18px;">${
           order.orderStatus
         }</p>
-
+        <p>Delivery Person: ${deliveryPerson || "Not Assigned"}</p>
+        <p>Estimated Delivery Time: ${
+          estimatedDeliveryTime || "Not Specified"
+        }</p>
         <h3>Order Summary:</h3>
         <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
           <thead>
@@ -78,11 +81,7 @@ const updateOrderStatus = async (req, res) => {
           <strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}
         </p>
 
-        <p style="margin-top: 10px;">
-          <strong>Payment Status:</strong> ${
-            order.isPaid ? "Paid ✅" : "Pending ❌"
-          }
-        </p>
+       
 
         <p style="margin-top: 20px; font-size: 14px; color: #777;">
           Order ID: ${order._id}

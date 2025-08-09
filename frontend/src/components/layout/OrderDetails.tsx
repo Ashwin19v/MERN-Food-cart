@@ -4,6 +4,7 @@ import { useApp } from "../../store/Context";
 import type { Order } from "../../lib/type/type";
 import { IoMdClose } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import { getStatusColor } from "../../lib/comp/utils";
 
 const OrderDetails = ({
   order,
@@ -15,6 +16,12 @@ const OrderDetails = ({
   const { updateOrderStatus, deleteOrderById } = useApp();
   const [status, setStatus] = useState<Order["orderStatus"]>(order.orderStatus);
   const [isSaving, setIsSaving] = useState(false);
+  const [deliveryPerson, setDeliveryPerson] = useState(
+    order.deliveryPerson || ""
+  );
+  const [estimatedDeliveryTime, setEstimatedDeliveryTime] = useState(
+    order.estimatedDeliveryTime || ""
+  );
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value as Order["orderStatus"]);
@@ -23,7 +30,13 @@ const OrderDetails = ({
   const handleSave = async () => {
     try {
       setIsSaving(true);
-      await updateOrderStatus(order._id, status, order.isPaid);
+      await updateOrderStatus(
+        order._id,
+        status,
+        order.isPaid,
+        deliveryPerson,
+        estimatedDeliveryTime
+      );
       onClose();
     } catch (err) {
       console.error("Failed to update order status", err);
@@ -64,10 +77,12 @@ const OrderDetails = ({
               </h4>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-700">
-                  <span className="font-medium">Name:</span> {order.user?.name || "Unknown User"}
+                  <span className="font-medium">Name:</span>{" "}
+                  {order.user?.name || "Unknown User"}
                 </p>
                 <p className="text-sm text-gray-700">
-                  <span className="font-medium">Email:</span> {order.user?.email || "Unknown Email"}
+                  <span className="font-medium">Email:</span>{" "}
+                  {order.user?.email || "Unknown Email"}
                 </p>
                 <p className="text-sm text-gray-700 mt-1">
                   <span className="font-medium">Phone:</span>{" "}
@@ -214,11 +229,19 @@ const OrderDetails = ({
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Delivery Person
                   </label>
-                  <select className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                    <option>Select delivery person</option>
-                    <option>John Smith (Available)</option>
-                    <option>Sarah Johnson (On delivery)</option>
-                    <option>Michael Brown (Available)</option>
+                  <select
+                    value={deliveryPerson}
+                    onChange={(e) => setDeliveryPerson(e.target.value)}
+                    className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  >
+                    <option value="">Select delivery person</option>
+                    <option value="John Smith">John Smith (Available)</option>
+                    <option value="Sarah Johnson">
+                      Sarah Johnson (On delivery)
+                    </option>
+                    <option value="Michael Brown">
+                      Michael Brown (Available)
+                    </option>
                   </select>
                 </div>
                 <div>
@@ -227,6 +250,8 @@ const OrderDetails = ({
                   </label>
                   <input
                     type="text"
+                    value={estimatedDeliveryTime}
+                    onChange={(e) => setEstimatedDeliveryTime(e.target.value)}
                     className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     placeholder="30-45 minutes"
                   />
@@ -262,21 +287,6 @@ const OrderDetails = ({
   );
 };
 
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case "Pending":
-      return "bg-yellow-500";
-    case "Preparing":
-      return "bg-blue-500";
-    case "Ready":
-      return "bg-green-500";
-    case "Completed":
-      return "bg-gray-500";
-    case "Cancelled":
-      return "bg-red-500";
-    default:
-      return "bg-gray-300";
-  }
-};
+
 
 export default OrderDetails;

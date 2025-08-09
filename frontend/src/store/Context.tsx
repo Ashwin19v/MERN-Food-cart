@@ -205,10 +205,17 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const updateOrderStatus = async (
     id: string,
     status: string,
-    isPaid: boolean
+    isPaid: boolean,
+    deliveryPerson: string,
+    estimatedDeliveryTime: string
   ) => {
     try {
-      await api.put(`/orders/${id}/status`, { status, isPaid });
+      await api.put(`/orders/${id}/status`, {
+        status,
+        isPaid,
+        deliveryPerson,
+        estimatedDeliveryTime,
+      });
       await getMyOrders();
       toast.success("Order status updated!");
     } catch (error: any) {

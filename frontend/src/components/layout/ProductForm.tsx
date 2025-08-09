@@ -1,8 +1,15 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useApp } from "../../store/Context";
+import type { Product } from "../../lib/type/type";
 
-const ProductForm = ({ product, onClose }) => {
+const ProductForm = ({
+  product,
+  onClose,
+}: {
+  product?: Product;
+  onClose: () => void;
+}) => {
   const { updateProduct, createProduct, isLoading } = useApp();
   const [formData, setFormData] = useState(
     product || {
@@ -12,16 +19,22 @@ const ProductForm = ({ product, onClose }) => {
       stock: "",
       status: "active",
       description: "",
-      image: "", // Changed from null to empty string for URL
+      image: "", 
     }
   );
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     try {
       // Prepare form data for submission
@@ -215,9 +228,7 @@ const ProductForm = ({ product, onClose }) => {
                         className="h-20 w-20 rounded-md object-cover border"
                         src={formData.image}
                         alt="Product preview"
-                        onError={(e) => {
-                          e.target.style.display = "none";
-                        }}
+                       
                         onLoad={(e) => {
                           e.target.style.display = "block";
                         }}
