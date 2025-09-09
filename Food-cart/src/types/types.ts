@@ -173,6 +173,7 @@ export interface StoreContextType {
   ) => void;
   updateUserProfile: () => Promise<void>;
   fetchUserData: () => Promise<void>;
+  fetchAdminList: () => Promise<any[]>;
 }
 export type CheckoutFormData = {
   firstName: string;

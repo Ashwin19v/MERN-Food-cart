@@ -553,6 +553,16 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     0
   );
 
+  const fetchAdminList = async () => {
+    try {
+      const { data } = await api.get("/chat/fetchAdmin");
+      return data.data || [];
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Failed to fetch admin list");
+      return [];
+    }
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -608,6 +618,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         fetchUserData,
 
         handleReviewDelete,
+        fetchAdminList,
       }}
     >
       {children}

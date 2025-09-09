@@ -11,6 +11,7 @@ import User from "./pages/User";
 import Sidebar from "./components/UI/SideBar";
 import Topbar from "./components/UI/Navbar";
 import { AppProvider } from "./store/Context";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -84,6 +85,18 @@ function App() {
                         exit={{ opacity: 0 }}
                       >
                         <User />
+                      </motion.div>
+                    }
+                  />
+                  <Route
+                    path="/chat"
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <ChatPage />
                       </motion.div>
                     }
                   />

@@ -15,6 +15,7 @@ import CheckoutPage from "./pages/Checkout";
 import Layout from "./components/Layout";
 import PageNotFound from "./pages/PageNotFound";
 import CategoryPage from "./pages/CategoryPage";
+import ChatPage from "./pages/ChatPage";
 // import ReviewPage from "./pages/Review";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
               <Route path="cart" element={<Cart />} />
               <Route path="favourites" element={<Favourite />} />
               <Route path="checkout" element={<CheckoutPage />} />
+              <Route path="chat" element={<ChatPage />} />
             </Route>
           </Route>
 
