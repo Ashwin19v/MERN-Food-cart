@@ -92,6 +92,15 @@ export interface FavoriteItem {
   };
 }
 
+export interface Message {
+  from: string;
+  fromModel?: "User" | "Admin";
+  to?: string;
+  toModel?: "User" | "Admin";
+  message: string;
+  timestamp?: string;
+}
+
 export interface Product {
   _id: string;
   name: string;
@@ -152,6 +161,7 @@ export interface StoreContextType {
 
   // UI State
   isLoading: boolean;
+  // loading:boolean;
   error: string | null;
   isEditing: boolean;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;

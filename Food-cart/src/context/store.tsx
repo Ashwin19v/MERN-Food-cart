@@ -18,6 +18,7 @@ import type {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 const api = axios.create({
@@ -37,6 +38,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [activeCategory, setActiveCategory] = useState("All");
@@ -250,6 +252,13 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     setFavorites([]);
   };
 
+ 
+  useEffect(() => {
+    // getFavorites();
+    getCartItems();
+    getOrders();
+  }, []);
+
   // Cart functions remain the same
   const getCartItems = async () => {
     setIsLoading(true);
@@ -265,16 +274,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
     }
   };
-
-  // Fetch cart items when token is available
-
-  useEffect(() => {
-    if (token) {
-      getCartItems();
-      getFavorites();
-      getOrders();
-    }
-  }, [token]);
 
   // Add to cart function
 
@@ -414,7 +413,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
 
   // Favorite functions
   const getFavorites = async () => {
-    setIsLoading(true);
+    setLoading(true);
     try {
       const { data } = await api.get("/favorites/get");
       setFavorites(data.data);
@@ -422,9 +421,8 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     } catch (error: any) {
       toast.error("Failed to fetch favorites");
       setError(error.response?.data?.message || "Failed to fetch favorites");
-      throw error;
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -566,6 +564,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   return (
     <StoreContext.Provider
       value={{
+        loading,
         user,
         token,
         login,

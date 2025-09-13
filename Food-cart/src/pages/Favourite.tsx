@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, ChevronRight } from "lucide-react";
 
@@ -5,7 +6,18 @@ import { Link } from "react-router-dom";
 import { useStore } from "../context/store";
 
 const FavoritesPage = () => {
-  const { favorites, removeFromFavorites, isLoading, error } = useStore();
+  const {
+    favorites,
+    removeFromFavorites,
+    loading,
+    error,
+    getFavorites,
+    token,
+  } = useStore();
+
+  useEffect(() => {
+    getFavorites();
+  }, []);
 
   const handleRemoveFromFavorites = async (productId: string) => {
     try {
@@ -15,7 +27,7 @@ const FavoritesPage = () => {
     }
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>

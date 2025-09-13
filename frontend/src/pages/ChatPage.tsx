@@ -1,14 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import { useApp } from "../store/Context";
+import type { Message, User } from "../lib/type/type";
 
 const ChatPage = () => {
   const socket = io("http://localhost:5000");
 
   const { user, getCustomers, customers } = useApp();
 
-  const [selectedCustomer, setSelectedCustomer] = useState(customers[0]);
-  const [messages, setMessages] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<User | null>(
+    customers[0]
+  );
+  const [messages, setMessages] = useState<Message[]>([]);
+
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +24,7 @@ const ChatPage = () => {
     if (user) {
       socket.emit("join", { userId: user._id, role: "Admin" });
     }
-    socket.on("chatMessage", (msg) => {
+    socket.on("chatMessage", (msg: Message) => {
       setMessages((prev) => [...prev, msg]);
     });
     return () => {
@@ -87,12 +91,12 @@ const ChatPage = () => {
             <div
               key={idx}
               className={`flex mb-2 ${
-                msg.from === user._id ? "justify-end" : "justify-start"
+                msg.from === user?._id ? "justify-end" : "justify-start"
               }`}
             >
               <div
                 className={`max-w-xs px-4 py-2 rounded-lg shadow text-sm ${
-                  msg.from === user._id
+                  msg.from === user?._id
                     ? "bg-orange-500 text-white"
                     : "bg-white border text-gray-800"
                 }`}

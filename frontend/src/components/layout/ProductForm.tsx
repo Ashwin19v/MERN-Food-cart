@@ -1,25 +1,25 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useApp } from "../../store/Context";
-import type { Product } from "../../lib/type/type";
+import type { Product, FormData } from "../../lib/type/type";
 
 const ProductForm = ({
   product,
   onClose,
 }: {
-  product?: Product;
+  product?: Product | null;
   onClose: () => void;
 }) => {
   const { updateProduct, createProduct, isLoading } = useApp();
-  const [formData, setFormData] = useState(
+  const [formData, setFormData] = useState<Product | FormData>(
     product || {
       name: "",
       category: "",
-      price: "",
-      stock: "",
+      price: 0,
+      stock: 0,
       status: "active",
       description: "",
-      image: "", 
+      image: "",
     }
   );
 
@@ -32,16 +32,14 @@ const ProductForm = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       // Prepare form data for submission
       const productData = {
         ...formData,
-        price: parseFloat(formData.price),
-        stock: parseInt(formData.stock),
+        price: parseFloat(formData.price.toString()),
+        stock: parseInt((formData.stock ?? 0).toString()),
       };
 
       if (product) {
@@ -228,9 +226,8 @@ const ProductForm = ({
                         className="h-20 w-20 rounded-md object-cover border"
                         src={formData.image}
                         alt="Product preview"
-                       
-                        onLoad={(e) => {
-                          e.target.style.display = "block";
+                        onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                          e.currentTarget.style.display = "block";
                         }}
                       />
                     </div>

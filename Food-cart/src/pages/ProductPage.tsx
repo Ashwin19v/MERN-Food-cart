@@ -21,8 +21,7 @@ const ProductPage = () => {
 
   if (!productId) return;
   const fetchData = async () => {
-    console.log("Fetching product for ID:", productId);
-    // setLoading(true);
+   
     const data = await fetchProductById(productId);
     if (!data) {
       setError("Product not found.");

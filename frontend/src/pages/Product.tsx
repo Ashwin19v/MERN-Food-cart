@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ChangeEvent } from "react";
 import ProductForm from "../components/layout/ProductForm";
 import { useApp } from "../store/Context";
 import { FiSearch, FiX } from "react-icons/fi";
@@ -7,8 +7,8 @@ import type { Product } from "../lib/type/type";
 
 const ProductList = () => {
   const { fetchProducts, products, deleteProduct } = useApp();
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState<Boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null  >(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
@@ -39,7 +39,7 @@ const ProductList = () => {
     setIsFormOpen(true);
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>): void => {
     setSearchTerm(e.target.value);
   };
 
@@ -167,12 +167,12 @@ const ProductList = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                         className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          product.stock > 0
+                          (product?.stock ?? 0) > 0
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
                         }`}
                       >
-                        {product.stock > 0 ? "active" : "inactive"}
+                        {(product?.stock ?? 0) > 0 ? "active" : "inactive"}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

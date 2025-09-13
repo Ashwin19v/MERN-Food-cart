@@ -15,11 +15,11 @@ const OrderDetails = ({
 }) => {
   const { updateOrderStatus, deleteOrderById } = useApp();
   const [status, setStatus] = useState<Order["orderStatus"]>(order.orderStatus);
-  const [isSaving, setIsSaving] = useState(false);
-  const [deliveryPerson, setDeliveryPerson] = useState(
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [deliveryPerson, setDeliveryPerson] = useState<string>(
     order.deliveryPerson || ""
   );
-  const [estimatedDeliveryTime, setEstimatedDeliveryTime] = useState(
+  const [estimatedDeliveryTime, setEstimatedDeliveryTime] = useState<string>(
     order.estimatedDeliveryTime || ""
   );
 

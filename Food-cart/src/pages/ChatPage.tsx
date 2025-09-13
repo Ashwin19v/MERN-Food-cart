@@ -1,14 +1,14 @@
-import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import { useStore } from "../context/store";
+import type { User, Message } from "../types/types";
 
 const ChatPage = () => {
   const socket = io("http://localhost:5000");
 
   const { user, fetchAdminList } = useStore();
 
-  const [adminList, setAdminList] = useState([]);
+  const [adminList, setAdminList] = useState<User[]>([]);
 
   useEffect(() => {
     const getAdminList = async () => {
@@ -18,16 +18,16 @@ const ChatPage = () => {
     getAdminList();
   }, [fetchAdminList]);
 
-  const [selectedAdmin, setSelectedAdmin] = useState(adminList[0]);
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
-  const messagesEndRef = useRef(null);
+  const [selectedAdmin, setSelectedAdmin] = useState<User | null>(adminList[0]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState<string>("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (user) {
       socket.emit("join", { userId: user._id, role: "customer" });
     }
-    socket.on("chatMessage", (msg) => {
+    socket.on("chatMessage", (msg: Message) => {
       setMessages((prev) => [...prev, msg]);
     });
     return () => {
@@ -94,12 +94,12 @@ const ChatPage = () => {
             <div
               key={idx}
               className={`flex mb-2 ${
-                msg.from === user._id ? "justify-end" : "justify-start"
+                msg.from === user?._id ? "justify-end" : "justify-start"
               }`}
             >
               <div
                 className={`max-w-xs px-4 py-2 rounded-lg shadow text-sm ${
-                  msg.from === user._id
+                  msg.from === user?._id
                     ? "bg-orange-500 text-white"
                     : "bg-white border text-gray-800"
                 }`}

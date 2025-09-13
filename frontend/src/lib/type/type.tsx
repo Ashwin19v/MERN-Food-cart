@@ -9,6 +9,23 @@ export interface User {
   createdAt?: string;
 }
 
+export interface FormData {
+  product?: Product;
+  name: string;
+  price: number;
+  status:string;
+  image: string;
+  category: string;
+  createdAt?: string;
+  description: string;
+  stock?: number;
+}
+
+export interface Message {
+  from: string;
+  message: string;
+}
+
 export interface Product {
   _id: string;
   name: string;
@@ -16,6 +33,7 @@ export interface Product {
   image: string;
   product: Product;
   createdAt?: string;
+  status?:string
 }
 
 export interface CartItem {
