@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
 import { useState } from "react";
-import { useStore } from "../context/store";
+import { useAuth } from "../context/authStore";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const navigate = useNavigate();
-  const { register, isLoading, error } = useStore();
+  const { register, loading } = useAuth();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -56,12 +57,6 @@ export default function Register() {
           <h2 className="text-3xl font-bold text-center text-orange-600 mb-6">
             Create Account 🍔
           </h2>
-
-          {error && (
-            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
-              {error}
-            </div>
-          )}
 
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
@@ -124,10 +119,10 @@ export default function Register() {
 
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={loading}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Creating Account..." : "Register"}
+              {loading ? "Creating Account..." : "Register"}
             </button>
           </form>
 

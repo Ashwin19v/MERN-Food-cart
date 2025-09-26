@@ -195,3 +195,78 @@ export type CheckoutFormData = {
   country: string;
   phone: string;
 };
+
+export interface FavoriteContextType {
+  loading: boolean;
+  favorites: FavoriteItem[];
+  getFavorites: () => Promise<void>;
+  addToFavorites: (productId: string) => Promise<void>;
+  removeFromFavorites: (productId: string) => Promise<void>;
+}
+
+export interface OrderContextType {
+  orders: Order[];
+  loading: boolean;
+  getOrders: () => Promise<void>;
+  createOrder: (orderData: Partial<Order>) => Promise<void>;
+  cancelOrder: (orderId: string) => Promise<void>;
+}
+
+export interface AuthContextType {
+  isEditing: boolean;
+  loading: boolean;
+  user: User | null;
+  token: string | null;
+  login: (email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string) => Promise<void>;
+  logout: () => void;
+  userData: User | null;
+  formData: FormData | null;
+  // setUserData: React.Dispatch<React.SetStateAction<User>>;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  updateUserProfile: () => Promise<void>;
+  fetchUserData: () => Promise<void>;
+  fetchAdminList: () => Promise<User[]>;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface CartContextType {
+  loading: boolean;
+  cartItems: CartItem[];
+  addToCart: (productId: string, quantity?: number) => Promise<void>;
+  removeFromCart: (id: string) => Promise<void>;
+  updateCartQuantity: (id: string, quantity: number) => Promise<void>;
+  clearCart: () => Promise<void>;
+  cartTotal: number;
+  getCartItems: () => Promise<void>;
+}
+
+export interface ProductContextType {
+  loading: boolean;
+  activeCategory: string;
+  popularProducts: Product[];
+  categoryProducts: Product[];
+  fetchProductsByCategory: (categoryName: string) => Promise<Product[]>;
+  fetchProductById: (productId: string) => Promise<Product | null>;
+  setActiveCategory: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface ReviewContextType {
+  loading: boolean;
+  // reviews: Review
+  getProductReviews: (productId: string) => Promise<void>;
+  addReview: (
+    productId: string,
+    rating: number,
+    comment: string
+  ) => Promise<void>;
+  updateReview: (
+    reviewId: string,
+    rating: number,
+    comment: string
+  ) => Promise<void>;
+  deleteReview: (reviewId: string) => Promise<void>;
+  handleReviewDelete: (reviewId: string) => Promise<void>;
+}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Product from "../components/Product";
-import { useStore } from "../context/store";
+
 import {
   foodCategories,
   staticPopularDishes,
@@ -10,10 +10,11 @@ import {
 import { ChevronRight, Search, } from "lucide-react";
 import FeatureSection from "../components/HomePageComp/Feature";
 import TestimonialsSection from "../components/HomePageComp/Testimonal";
+import { useProduct } from "../context/productStore";
 
 const HomePage = () => {
   const { fetchProductsByCategory, activeCategory, setActiveCategory } =
-    useStore();
+    useProduct();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryProducts, setCategoryProducts] = useState<any[]>([]);

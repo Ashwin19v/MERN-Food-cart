@@ -3,15 +3,19 @@ import { FiMinus, FiPlus, FiHeart, FiStar } from "react-icons/fi";
 
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useStore } from "../context/store";
 import ReviewPage from "./Review";
 import type { Product } from "../types/types";
+import { useProduct } from "../context/productStore";
+import { useCart } from "../context/cartStore";
+import { useFavourite } from "../context/favouriteStore";
 
 const ProductPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
 
-  const { fetchProductById, addToCart, addToFavorites } = useStore();
+  const { fetchProductById } = useProduct();
+  const { addToCart } = useCart();
+  const { addToFavorites } = useFavourite();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -21,7 +25,6 @@ const ProductPage = () => {
 
   if (!productId) return;
   const fetchData = async () => {
-   
     const data = await fetchProductById(productId);
     if (!data) {
       setError("Product not found.");

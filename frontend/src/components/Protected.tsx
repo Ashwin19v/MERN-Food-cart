@@ -1,8 +1,9 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useApp } from "../store/Context";
+
+import { useAdmin } from "../store/adminStore";
 
 const ProtectedRoutes = () => {
-  const { token, isLoading } = useApp();
+  const { token, isLoading } = useAdmin();
   const location = useLocation();
 
   if (isLoading) {

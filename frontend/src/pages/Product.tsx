@@ -1,14 +1,15 @@
 import { motion } from "framer-motion";
 import { useState, useEffect, type ChangeEvent } from "react";
 import ProductForm from "../components/layout/ProductForm";
-import { useApp } from "../store/Context";
+
 import { FiSearch, FiX } from "react-icons/fi";
 import type { Product } from "../lib/type/type";
+import { useproduct } from "../store/productStore";
 
 const ProductList = () => {
-  const { fetchProducts, products, deleteProduct } = useApp();
+  const { fetchProducts, products, deleteProduct } = useproduct();
   const [isFormOpen, setIsFormOpen] = useState<Boolean>(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null  >(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 

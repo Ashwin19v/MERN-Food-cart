@@ -2,16 +2,15 @@ import { motion } from "framer-motion";
 import AnalyticsCards from "../components/Dashboard/Analyticscard";
 import Charts from "../components/Dashboard/Charts";
 import LiveOrders from "../components/Dashboard/LiveOrders";
-import { useApp } from "../store/Context";
+
 import { useEffect } from "react";
+import { useAdmin } from "../store/adminStore";
 
 const Dashboard = () => {
-  const { user, fetchDashboardStats } = useApp();
-  useEffect(() => {
-    if (user) {
-      fetchDashboardStats();
-    }
-  }, [user]);
+  const { fetchDashboardStats } = useAdmin();
+  // useEffect(() => {
+  //   fetchDashboardStats();
+  // }, []);
 
   return (
     <div className="space-y-6">

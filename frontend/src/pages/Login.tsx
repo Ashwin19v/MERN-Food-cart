@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useApp } from "../store/Context";
+
+import { useAdmin } from "../store/adminStore";
 
 const Login = () => {
-  const { login, isLoading, error } = useApp(); // Use context
+  const { login, isLoading } = useAdmin();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
@@ -16,8 +17,8 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(formData.email, formData.password); 
-      navigate("/dashboard"); 
+      await login(formData.email, formData.password);
+      navigate("/dashboard");
     } catch (err) {
       console.error("Login failed:", err);
     }
@@ -75,18 +76,6 @@ const Login = () => {
             {isLoading ? "Logging in..." : "Login"}
           </motion.button>
         </form>
-
-        {/* Error message */}
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="mt-4 text-red-600 text-center font-semibold"
-          >
-            ❌ {error}
-          </motion.div>
-        )}
 
         <div className="mt-4 text-center">
           <p className="text-gray-600">

@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useApp } from "../store/Context";
+import { useAdmin } from "../store/adminStore";
 
 const ProfileSettings = () => {
-  const { user, updateUserProfile } = useApp();
+  const { user, updateUserProfile } = useAdmin();
+  console.log(user);
 
   const [formData, setFormData] = useState({
     name: user?.name || "",

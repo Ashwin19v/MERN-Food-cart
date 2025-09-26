@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
-import { useStore } from "../context/store";
+
 import type { User, Message } from "../types/types";
+import { useAuth } from "../context/authStore";
 
 const ChatPage = () => {
   const socket = io("http://localhost:5000");
 
-  const { user, fetchAdminList } = useStore();
+  const { user, fetchAdminList } = useAuth();
 
   const [adminList, setAdminList] = useState<User[]>([]);
 

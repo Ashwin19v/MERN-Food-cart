@@ -1,19 +1,28 @@
-
-import { useStore } from "../context/store";
 import { motion, AnimatePresence } from "framer-motion";
-import {  ShoppingCart, ChevronLeft } from "lucide-react";
+import { ShoppingCart, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import CartProduct from "../components/cartProduct";
+import { useCart } from "../context/cartStore";
+import { useEffect } from "react";
 
 const CartPage = () => {
-  const { cartItems, updateCartQuantity, removeFromCart, isLoading,cartTotal } =
-    useStore();
+  const {
+    cartItems,
+    updateCartQuantity,
+    removeFromCart,
+    loading,
+    cartTotal,
+    getCartItems,
+  } = useCart();
 
- 
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
   const deliveryFee = 2.99;
   const total = cartTotal + deliveryFee;
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-orange-500"></div>
@@ -116,7 +125,7 @@ const CartPage = () => {
               >
                 Proceed to Checkout
               </Link>
-             
+
               <p className="text-center text-sm text-gray-500 mt-4">
                 Free delivery for orders over $20
               </p>

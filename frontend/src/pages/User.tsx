@@ -1,18 +1,21 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { useApp } from "../store/Context";
+
 import OrderDetails from "../components/layout/OrderDetails";
 import type { CartItem, Order, Product, User } from "../lib/type/type";
+import { useCustomer } from "../store/customerStore";
+import { useOrder } from "../store/orderStore";
 
 const UserManagement = () => {
   const {
     customers,
-    getOrderById,
+
     getUserCart,
     getUserFavorites,
     getCustomers,
     deleteUser,
-  } = useApp();
+  } = useCustomer();
+  const { getOrderById } = useOrder();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [userOrders, setUserOrders] = useState<Order[] | []>([]);

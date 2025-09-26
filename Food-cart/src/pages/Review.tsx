@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
-import { useStore } from "../context/store";
+
 import type { Review } from "../types/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEdit2, FiTrash2, FiSend, FiUser } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
+import { useReview } from "../context/reviewStore";
+import { useAuth } from "../context/authStore";
 
 interface Props {
   productId: string | undefined;
 }
 
 const ReviewPage: React.FC<Props> = ({ productId }) => {
-  const {
-    user,
-    addReview,
-    updateReview,
-    getProductReviews,
-    handleReviewDelete,
-  } = useStore();
+  const { addReview, updateReview, getProductReviews, handleReviewDelete } =
+    useReview();
+  const { user } = useAuth();
 
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>("");
@@ -119,7 +117,7 @@ const ReviewPage: React.FC<Props> = ({ productId }) => {
 
             <div className="flex flex-col space-y-4">
               <div className="flex items-center space-x-2">
-               <StarRatings
+                <StarRatings
                   rating={rating}
                   starRatedColor="amber"
                   starDimension="24px"

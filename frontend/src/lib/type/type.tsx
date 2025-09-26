@@ -13,7 +13,7 @@ export interface FormData {
   product?: Product;
   name: string;
   price: number;
-  status:string;
+  status: string;
   image: string;
   category: string;
   createdAt?: string;
@@ -33,7 +33,7 @@ export interface Product {
   image: string;
   product: Product;
   createdAt?: string;
-  status?:string
+  status?: string;
 }
 
 export interface CartItem {
@@ -56,22 +56,50 @@ export interface DashboardStats {
 }
 
 export interface AppContextType {
-  user: User | null;
-  token: string | null;
   cartItems: CartItem[];
-  customers: User[];
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
-
-  dashboardStats: DashboardStats | null;
-  fetchDashboardStats: () => Promise<void>;
 
   isLoading?: boolean;
   error?: string | null;
 
+  updateUserProfile: (
+    name: string,
+    currentPassword: string,
+    password: string
+  ) => Promise<void>;
+
+  getCustomers: () => Promise<void>;
+  deleteUser: (userId: string) => Promise<void>;
+}
+
+export interface AdminContextType {
+  dashboardStats: DashboardStats | null;
+  fetchDashboardStats: () => Promise<void>;
+  user: User | null;
+  token: string | null;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string) => Promise<void>;
+  updateUserProfile: (
+    name: string,
+    currentPassword: string,
+    password: string
+  ) => Promise<void>;
+}
+
+export interface CustomerContextType {
+  isLoading: boolean;
+  getCustomers: () => Promise<void>;
+  customers: User[];
+  deleteUser: (userId: string) => Promise<void>;
+  getUserCart: (userId: string) => Promise<CartItem[]>;
+  getUserFavorites: (userId: string) => Promise<Product[]>;
+}
+
+export interface OrderContextType {
+  isLoading: boolean;
   userOrders: Order[];
   getMyOrders: () => Promise<void>;
-  selectedOrder: Order | null;
+  // selectedOrder: Order | null;
   getOrderById: (id: string) => Promise<Order | null>;
   updateOrderStatus: (
     id: string,
@@ -80,22 +108,16 @@ export interface AppContextType {
     deliveryPerson: string,
     estimatedDeliveryTime: string
   ) => Promise<void>;
+  deleteOrderById: (id: string) => Promise<void>;
+}
 
+export interface ProductContextType {
+  isLoading: boolean;
   products: Product[];
   fetchProducts: () => Promise<void>;
   createProduct: (product: Partial<Product>) => Promise<void>;
   updateProduct: (id: string, product: Partial<Product>) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
-  updateUserProfile: (
-    name: string,
-    currentPassword: string,
-    password: string
-  ) => Promise<void>;
-  getUserCart: (userId: string) => Promise<CartItem[]>;
-  getUserFavorites: (userId: string) => Promise<Product[]>;
-  deleteOrderById: (id: string) => Promise<void>;
-  getCustomers: () => Promise<void>;
-  deleteUser: (userId: string) => Promise<void>;
 }
 
 export interface Order {

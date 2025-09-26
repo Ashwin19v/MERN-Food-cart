@@ -1,12 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
-import { useApp } from "../store/Context";
+
 import type { Message, User } from "../lib/type/type";
+import { useCustomer } from "../store/customerStore";
+import { useAdmin } from "../store/adminStore";
 
 const ChatPage = () => {
   const socket = io("http://localhost:5000");
 
-  const { user, getCustomers, customers } = useApp();
+  const { getCustomers, customers } = useCustomer();
+  const { user } = useAdmin();
 
   const [selectedCustomer, setSelectedCustomer] = useState<User | null>(
     customers[0]

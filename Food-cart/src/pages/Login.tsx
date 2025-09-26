@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
 import { useState } from "react";
-import { useStore } from "../context/store";
+import { useAuth } from "../context/authStore";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login, isLoading, error } = useStore();
+  const { login, loading } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -49,12 +49,6 @@ export default function Login() {
             Welcome Back 🍔
           </h2>
 
-          {error && (
-            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
-              {error}
-            </div>
-          )}
-
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
               <label className="block mb-1 text-sm text-gray-700">Email</label>
@@ -86,10 +80,10 @@ export default function Login() {
 
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={loading}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Logging in..." : "Login"}
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
 

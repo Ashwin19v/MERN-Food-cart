@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FiCreditCard, FiLock, FiTruck, FiCheckCircle } from "react-icons/fi";
+import { FiCreditCard, FiLock, FiTruck } from "react-icons/fi";
 import { FaGooglePay, FaMoneyBillWave } from "react-icons/fa";
-import { useStore } from "../context/store";
-import { useNavigate } from "react-router-dom";
+
 import type { CheckoutFormData } from "../types/types";
+import { useOrder } from "../context/orderStore";
+import { useCart } from "../context/cartStore";
+import { useAuth } from "../context/authStore";
+import OrderComplete from "../components/OrdersComp/OrderComplete";
 
 const CheckoutPage = () => {
-  const navigate = useNavigate();
-  const { cartItems, cartTotal, user, createOrder, isLoading } = useStore();
-  const [step, setStep] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState("google-pay");
-  const [orderComplete, setOrderComplete] = useState(false);
+  const { user } = useAuth();
+  const { createOrder, loading } = useOrder();
+  const { cartItems, cartTotal } = useCart();
+  const [step, setStep] = useState<number>(1);
+  const [paymentMethod, setPaymentMethod] = useState<string>("google-pay");
+  const [orderComplete, setOrderComplete] = useState<boolean>(false);
 
   const {
     register,
@@ -80,44 +84,7 @@ const CheckoutPage = () => {
   const calculateTotal = () => total;
 
   if (orderComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-6">
-        <div className="max-w-md bg-white rounded-3xl shadow-lg p-10 text-center">
-          <div className="flex justify-center mb-6">
-            <FiCheckCircle className="text-green-500 text-6xl" />
-          </div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            Order Confirmed!
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Your order has been placed successfully. We've sent a confirmation
-            email with your order details.
-          </p>
-          <div className="bg-gray-50 rounded-xl p-4 mb-6">
-            <p className="text-sm text-gray-500 mt-1">
-              Estimated delivery:{" "}
-              {new Date(
-                Date.now() + 5 * 24 * 60 * 60 * 1000
-              ).toLocaleDateString()}
-            </p>
-          </div>
-          <div className="space-y-2">
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="w-full bg-blue-600 text-white rounded-xl py-3 font-medium hover:bg-blue-700 transition-colors"
-            >
-              Continue Shopping
-            </button>
-            <button
-              onClick={() => navigate("/orders")}
-              className="w-full bg-gray-100 text-gray-700 rounded-xl py-3 font-medium hover:bg-gray-200 transition-colors"
-            >
-              View Orders
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+    return <OrderComplete />;
   }
 
   return (
@@ -359,11 +326,11 @@ const CheckoutPage = () => {
                   </button>
                   <button
                     type="submit"
-                    disabled={isLoading}
+                    disabled={loading}
                     className="bg-blue-600 text-white rounded-xl px-6 py-3 font-medium hover:bg-blue-700 transition-colors flex items-center disabled:opacity-50"
                   >
                     <FiLock className="mr-2" />
-                    {isLoading ? "Processing..." : "Confirm & Pay"}
+                    {loading ? "Processing..." : "Confirm & Pay"}
                   </button>
                 </div>
               </form>

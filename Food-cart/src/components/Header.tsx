@@ -2,12 +2,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, User, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useStore } from "../context/store";
+
+import { useCart } from "../context/cartStore";
 
 const Header = () => {
-  const { cartItems } = useStore();
+  const { cartItems } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
 
   const navLinks = [
     { name: "Home", path: "/dashboard" },
@@ -68,7 +68,7 @@ const Header = () => {
                 )}
               </motion.button>
             </Link>
-            <Link to = "/settings">
+            <Link to="/settings">
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}

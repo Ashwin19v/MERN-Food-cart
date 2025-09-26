@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useApp } from "../../store/Context";
+
 import type { Order } from "../../lib/type/type";
 import { IoMdClose } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import { getStatusColor } from "../../lib/comp/utils";
+import { useOrder } from "../../store/orderStore";
 
 const OrderDetails = ({
   order,
@@ -13,7 +14,7 @@ const OrderDetails = ({
   order: Order;
   onClose: () => void;
 }) => {
-  const { updateOrderStatus, deleteOrderById } = useApp();
+  const { updateOrderStatus, deleteOrderById } = useOrder();
   const [status, setStatus] = useState<Order["orderStatus"]>(order.orderStatus);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [deliveryPerson, setDeliveryPerson] = useState<string>(

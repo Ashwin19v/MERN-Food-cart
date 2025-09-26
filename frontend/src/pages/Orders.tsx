@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import OrderDetails from "../components/layout/OrderDetails";
-import { useApp } from "../store/Context";
+
 import type { Order } from "../lib/type/type";
 import { statusColors, statusOptions } from "../lib/comp/utils";
+import { useOrder } from "../store/orderStore";
 
 const OrderList = () => {
-  const { userOrders, getMyOrders } = useApp();
+  const { userOrders, getMyOrders } = useOrder();
   useEffect(() => {
     getMyOrders();
   }, []);
 
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const filteredOrders = userOrders.filter((order) => {
     const matchesStatus =

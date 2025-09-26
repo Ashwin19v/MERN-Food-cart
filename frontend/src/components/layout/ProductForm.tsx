@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useApp } from "../../store/Context";
+
 import type { Product, FormData } from "../../lib/type/type";
+import { useproduct } from "../../store/productStore";
 
 const ProductForm = ({
   product,
@@ -10,7 +11,7 @@ const ProductForm = ({
   product?: Product | null;
   onClose: () => void;
 }) => {
-  const { updateProduct, createProduct, isLoading } = useApp();
+  const { updateProduct, createProduct, isLoading } = useproduct();
   const [formData, setFormData] = useState<Product | FormData>(
     product || {
       name: "",

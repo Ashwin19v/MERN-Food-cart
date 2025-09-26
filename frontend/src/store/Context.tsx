@@ -38,9 +38,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(
-    null
-  );
+ 
 
   const [userOrders, setUserOrders] = useState<Order[]>([]);
 
@@ -154,18 +152,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const fetchDashboardStats = async () => {
-    try {
-      const { data } = await api.get("/dashboard");
-      setDashboardStats(data);
-      toast.success("Dashboard stats loaded!");
-    } catch (error: any) {
-      const msg = "Failed to fetch dashboard stats";
-      setError(msg);
-      toast.error(msg);
-    }
-  };
-
+ 
   const getMyOrders = async () => {
     try {
       const { data } = await api.get("/orders");

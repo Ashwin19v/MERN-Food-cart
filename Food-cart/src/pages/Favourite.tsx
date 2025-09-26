@@ -3,17 +3,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Heart, ChevronRight } from "lucide-react";
 
 import { Link } from "react-router-dom";
-import { useStore } from "../context/store";
+
+import { useFavourite } from "../context/favouriteStore";
 
 const FavoritesPage = () => {
   const {
     favorites,
     removeFromFavorites,
     loading,
-    error,
+
     getFavorites,
-    token,
-  } = useStore();
+  } = useFavourite();
+
+  useEffect(() => {
+    getFavorites();
+  }, []);
 
   useEffect(() => {
     getFavorites();
@@ -59,12 +63,6 @@ const FavoritesPage = () => {
               <ChevronRight className="ml-1" size={18} />
             </Link>
           </div>
-
-          {error && (
-            <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
-              {error}
-            </div>
-          )}
 
           <AnimatePresence>
             {favorites.length === 0 ? (

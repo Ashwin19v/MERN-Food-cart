@@ -1,20 +1,21 @@
 import { motion } from "framer-motion";
-import { useApp } from "../../store/Context";
+
 import { useEffect } from "react";
+import { useAdmin } from "../../store/adminStore";
 
 const AnalyticsCards = () => {
-  const { dashboardStats, fetchDashboardStats } = useApp();
+  const { dashboardStats, fetchDashboardStats } = useAdmin();
 
-  useEffect(() => {
-    fetchDashboardStats();
-  }, []);
+  // useEffect(() => {
+  //   fetchDashboardStats();
+  // }, []);
 
   const stats = dashboardStats
     ? [
         {
           title: "Total Orders Today",
           value: dashboardStats.totalOrdersToday,
-          change: "+12%", // optionally calculate from backend
+          change: "+12%",
           trend: "up",
         },
         {

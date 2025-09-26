@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useApp } from "../store/Context"; // ✅ adjust if path differs
+
 import React from "react";
+import { useAdmin } from "../store/adminStore";
 
 const Signup = () => {
-  const { register } = useApp(); // ✅ get register function from context
+  const { register } = useAdmin();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
