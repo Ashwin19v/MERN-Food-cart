@@ -29,7 +29,7 @@ const Header = () => {
           <motion.div whileHover={{ scale: 1.05 }} className="flex-shrink-0">
             <Link to="/" className="flex items-center">
               <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                FoodCart
+                QuickBites()
               </span>
             </Link>
           </motion.div>
