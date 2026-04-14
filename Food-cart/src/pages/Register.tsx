@@ -130,7 +130,7 @@ export default function Register() {
             Or continue with
           </div>
 
-          <div className="flex justify-center gap-4 mt-4">
+          {/* <div className="flex justify-center gap-4 mt-4">
             <button className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100">
               <FaGoogle className="text-red-500" />
               Google
@@ -139,7 +139,7 @@ export default function Register() {
               <FaFacebookF className="text-blue-600" />
               Facebook
             </button>
-          </div>
+          </div> */}
 
           <p className="text-center text-sm text-gray-600 mt-6">
             Already have an account?{" "}

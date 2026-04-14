@@ -12,7 +12,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: ["http://localhost:5173", "http://localhost:5174"],
   },
 });
 
@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
       if (targetSocketId) {
         io.to(targetSocketId).emit("chatMessage", { from, message });
       }
-    }
+    },
   );
 
   socket.on("disconnect", () => {
@@ -61,10 +61,10 @@ io.on("connection", (socket) => {
 
 app.use(
   cors({
-    origin: "*",
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-  })
+  }),
 );
 app.use(express.json());
 // Import routes

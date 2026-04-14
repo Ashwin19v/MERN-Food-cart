@@ -19,7 +19,7 @@ const ChatPage = () => {
     getAdminList();
   }, [fetchAdminList]);
 
-  const [selectedAdmin, setSelectedAdmin] = useState<User | null>(adminList[0]);
+  const [selectedAdmin, setSelectedAdmin] = useState<User >(adminList[0] || null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);

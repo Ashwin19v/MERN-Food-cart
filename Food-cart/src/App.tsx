@@ -23,6 +23,7 @@ import CategoryPage from "./pages/CategoryPage";
 import ChatPage from "./pages/ChatPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SettingsPage from "./pages/Settings";
 // import ReviewPage from "./pages/Review";
 
 function App() {
@@ -53,11 +54,11 @@ function App() {
                           path="category/:categoryName"
                           element={<CategoryPage />}
                         />
-                        <Route path="settings" element={<Settings />} />
+                        <Route path="settings" element={<SettingsPage />} />
                         <Route path="cart" element={<Cart />} />
                         <Route path="favourites" element={<Favourite />} />
                         <Route path="checkout" element={<CheckoutPage />} />
-                        <Route path="chat" element={<ChatPage />} />
+                        {/* <Route path="chat" element={<ChatPage />} /> */}
                       </Route>
                     </Route>
 

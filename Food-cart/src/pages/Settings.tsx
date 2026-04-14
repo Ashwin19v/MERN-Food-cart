@@ -1,13 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  User,
-  Edit,
-  Heart,
-  ShoppingCart,
-  LogOut,
-  ChevronRight,
-} from "lucide-react";
-import { useStore } from "../context/store";
+import { User, Heart, ShoppingCart, LogOut, MessageCircle } from "lucide-react";
+
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type { Product } from "../types/types";
@@ -18,8 +11,10 @@ import { useOrder } from "../context/orderStore";
 import ProfileComp from "../components/SettingsComp/ProfileComp";
 import OrdersComp from "../components/SettingsComp/OrdersComp";
 import FavComp from "../components/SettingsComp/FavComp";
+import ChatPage from "./ChatPage";
+import { ChatBubbleBottomCenterIcon } from "@heroicons/react/16/solid";
 
-const ProfilePage = () => {
+const SettingsPage = () => {
   const {
     user,
     loading,
@@ -96,9 +91,18 @@ const ProfilePage = () => {
         <FavComp visibleFavorites={visibleFavorites} favorites={favorites} />
       );
     }
-
-    return null;
+    if (activeTab === "chat") {
+      return <ChatPage />;
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
@@ -159,6 +163,18 @@ const ProfilePage = () => {
                 </motion.button>
 
                 <motion.button
+                  onClick={() => setActiveTab("chat")}
+                  className={`w-full text-left px-4 py-3 rounded-lg flex items-center ${
+                    activeTab === "chat"
+                      ? "bg-orange-100 text-orange-500 font-medium"
+                      : "text-gray-600 hover:bg-gray-100"
+                  }`}
+                >
+                  <MessageCircle className="mr-3" />
+                  Chat
+                </motion.button>
+
+                <motion.button
                   onClick={() => {
                     logout();
                     navigate("/login");
@@ -191,4 +207,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default SettingsPage;
