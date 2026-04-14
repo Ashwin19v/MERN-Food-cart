@@ -57,7 +57,7 @@ exports.login = async (req, res) => {
           If this wasn't you, please reset your password immediately.
         </p>
         <div style="margin-top: 24px; text-align: center;">
-          <a href="https://your-app-url.com" style="background: #4CAF50; color: #fff; padding: 12px 24px; border-radius: 4px; text-decoration: none; font-weight: bold;">Go to Food Cart</a>
+          <a href="https://mern-food-cart.vercel.app/" style="background: #4CAF50; color: #fff; padding: 12px 24px; border-radius: 4px; text-decoration: none; font-weight: bold;">Go to Food Cart</a>
         </div>
         </div>
       </div>
