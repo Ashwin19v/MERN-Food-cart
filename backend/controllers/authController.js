@@ -40,7 +40,7 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     // Send login notification email (optional, can be styled with HTML/CSS)
-    await sendEmail(
+    sendEmail(
       user.email,
       "Login Successful",
       `
