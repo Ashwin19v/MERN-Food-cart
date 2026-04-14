@@ -14,10 +14,9 @@ exports.register = async (req, res) => {
     const user = await User.create({ name, email, password: hash });
     res.status(201).json("User created successfully");
   } catch (err) {
-    res.status(400).json({ 
-      error: err.message
-
-     });
+    res.status(400).json({
+      error: err.message,
+    });
   }
 };
 
@@ -62,7 +61,7 @@ exports.login = async (req, res) => {
         </div>
         </div>
       </div>
-      `
+      `,
     );
 
     res.json({
@@ -77,7 +76,6 @@ exports.login = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("fghjk");
     res.status(500).json({ error: err.message + "fk" });
   }
 };
@@ -138,7 +136,7 @@ exports.updateCredentials = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $set: updates },
-      { new: true, runValidators: true, select: "-password" }
+      { new: true, runValidators: true, select: "-password" },
     );
 
     res.status(200).json({
