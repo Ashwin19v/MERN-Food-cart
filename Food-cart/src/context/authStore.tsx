@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setToken(data.token);
       toast.success("Login successful!");
     } catch (error: any) {
-      console.log(error.data.error);
+      console.log(error.data);
 
       toast.error("Login failed");
     } finally {
@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       toast.success("Registration successful!");
     } catch (error: any) {
       toast.error("Registration failed " + error);
-      console.log(error.data.error);
+      console.log(error.data);
     } finally {
       setLoading(false);
     }
