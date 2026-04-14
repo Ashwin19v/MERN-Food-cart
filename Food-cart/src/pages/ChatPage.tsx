@@ -5,7 +5,7 @@ import type { User, Message } from "../types/types";
 import { useAuth } from "../context/authStore";
 
 const ChatPage = () => {
-  const socket = io("http://localhost:5000");
+  const socket = io(import.meta.env.VITE_API_URL || "http://localhost:5000");
 
   const { user, fetchAdminList } = useAuth();
 
@@ -19,7 +19,9 @@ const ChatPage = () => {
     getAdminList();
   }, [fetchAdminList]);
 
-  const [selectedAdmin, setSelectedAdmin] = useState<User >(adminList[0] || null);
+  const [selectedAdmin, setSelectedAdmin] = useState<User>(
+    adminList[0] || null,
+  );
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
