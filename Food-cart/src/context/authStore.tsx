@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
+    localStorage.getItem("token"),
   );
   const [userData, setUserData] = useState<User>({
     _id: user?._id || "",
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await api.post("/auth/register", { name, email, password });
       toast.success("Registration successful!");
     } catch (error: any) {
-      toast.error("Registration failed");
+      toast.error("Registration failed " + error);
     } finally {
       setLoading(false);
     }
@@ -127,7 +127,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // settings functions
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -175,7 +175,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return data.data || [];
     } catch (error: any) {
       console.log(
-        error.response?.data?.message || "Failed to fetch admin list"
+        error.response?.data?.message || "Failed to fetch admin list",
       );
     }
   };
@@ -200,7 +200,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-      
     </AuthContext.Provider>
   );
 };
