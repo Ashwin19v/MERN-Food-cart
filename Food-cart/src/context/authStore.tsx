@@ -100,6 +100,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       toast.success("Registration successful!");
     } catch (error: any) {
       toast.error("Registration failed " + error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
