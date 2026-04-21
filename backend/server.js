@@ -16,6 +16,7 @@ const io = new Server(server, {
       "http://localhost:5173",
       "http://localhost:5174",
       "https://mern-food-cart.vercel.app",
+      "https://mern-food-cart-admin-seven.vercel.app",
     ],
   },
 });
@@ -69,6 +70,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "https://mern-food-cart.vercel.app",
+      "https://mern-food-cart-admin-seven.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
