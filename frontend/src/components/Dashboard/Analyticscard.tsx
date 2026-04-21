@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useAdmin } from "../../store/adminStore";
 
 const AnalyticsCards = () => {
-  const { dashboardStats, fetchDashboardStats } = useAdmin();
+  const { dashboardStats } = useAdmin();
 
   // useEffect(() => {
   //   fetchDashboardStats();

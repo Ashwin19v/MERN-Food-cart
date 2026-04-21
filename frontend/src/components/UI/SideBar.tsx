@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
+import type { Dispatch, SetStateAction } from "react";
 import { NavLink } from "react-router-dom";
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+interface SidebarProps {
+  sidebarOpen: boolean;
+  setSidebarOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const navItems = [
     {
       path: "/dashboard",

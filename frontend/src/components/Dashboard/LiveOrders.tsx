@@ -1,6 +1,18 @@
 import { motion } from "framer-motion";
 
-const orders = [
+type OrderStatus =
+  | "Pending"
+  | "Preparing"
+  | "Ready"
+  | "Completed"
+  | "Cancelled";
+
+const orders: {
+  id: string;
+  items: string;
+  status: OrderStatus;
+  time: string;
+}[] = [
   {
     id: "#ORD-001",
     items: "Burger, Fries, Coke",
@@ -33,7 +45,7 @@ const orders = [
   },
 ];
 
-const statusColors = {
+const statusColors: Record<OrderStatus, string> = {
   Pending: "bg-yellow-100 text-yellow-800",
   Preparing: "bg-blue-100 text-blue-800",
   Ready: "bg-green-100 text-green-800",

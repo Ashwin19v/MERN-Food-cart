@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 
-const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
+type TopbarProps = {
+  sidebarOpen: boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Topbar = ({ sidebarOpen, setSidebarOpen }: TopbarProps) => {
   return (
     <header className="bg-white shadow-sm z-10">
       <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
